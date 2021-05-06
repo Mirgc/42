@@ -1,0 +1,5 @@
+Credentials cache: API:97DBB4A4-3327-41B6-B76B-140BE09345F9
+        Principal: migarcia@42URDULIZ.COM
+
+  Issued                Expires               Principal
+Apr 12 17:38:47 2021  Apr 13 03:38:47 2021  krbtgt/42URDULIZ.COM@42URDULIZ.COM
