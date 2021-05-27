@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "ft_isalpha.c"
+#include "ft_isdigit.c"
 
 int main ()
 {
@@ -26,12 +27,12 @@ int main ()
 
 	// isdigit
 	printf ("-----------------\n");
-    printf("Origi idigit - %c - Value1 returned: %i\n", var1, isdigit(var1));
-	//printf("Mi ft_idigit - %c - Value1 returned: %i\n", var1, ft_isdigit(var1));
+	printf("Origi idigit - %c - Value1 returned: %i\n", var1, isdigit(var1));
+	printf("Mi ft_idigit - %c - Value1 returned: %i\n", var1, ft_isdigit(var1));
 	printf("Origi idigit - %c - Value2 returned: %i\n", var2, isdigit(var2));
-	//printf("Mi ft_idigit - %c - Value2 returned: %i\n", var2, ft_isdigit(var2));
+	printf("Mi ft_idigit - %c - Value2 returned: %i\n", var2, ft_isdigit(var2));
 	printf("Origi idigit - %c - Value3 returned: %i\n", var3, isdigit(var3));
-	//printf("Mi ft_idigit - %c - Value3 returned: %i\n", var3, ft_isdigit(var3));
+	printf("Mi ft_idigit - %c - Value3 returned: %i\n", var3, ft_isdigit(var3));
 
 	return (0);
 }
