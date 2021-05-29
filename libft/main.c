@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <string.h>
-#include "ft_strlen.c"
-#include "ft_memset.c"
-#include "ft_bzero.c"
-#include "ft_memcpy.c"
-#include "ft_memccpy.c"
-#include "ft_memmove.c"
-#include "ft_memchr.c"
+#include "libft.h"
+//#include "ft_strlen.c"
+//#include "ft_memset.c"
+//#include "ft_bzero.c"
+//#include "ft_memcpy.c"
+//#include "ft_memccpy.c"
+//#include "ft_memmove.c"
+//#include "ft_memchr.c"
+//#include "ft_memcmp.c"
+//#include "ft_strlcpy.c"
 
 int main ()
 {
@@ -18,10 +21,12 @@ int main ()
 
 	// strlen
 	printf ("-----------------\n");
-	printf("Original strlen= %i\n", strlen(str));
-	printf("-----Mio strlen= %i\n", ft_strlen(str));
+	printf ("-----------------\n");
+	printf("Original strlen= %lu\n", strlen(str));
+	printf("-----Mio strlen= %lu\n", ft_strlen(str));
 
 	// memset
+	printf ("-----------------\n");
 	printf ("-----------------\n");
 	memset(str2,'$',7);
 	printf("Original memset= %s\n", str2);
@@ -29,6 +34,7 @@ int main ()
 	printf("-----Mio memset= %s\n", str3);
 
 	// bzero
+	printf ("-----------------\n");
 	printf ("-----------------\n");
 	bzero(str4, 5);
 	printf("Original bzero= ");
@@ -48,33 +54,36 @@ int main ()
 	
 	// memcpy
 	printf ("-----------------\n");
+	printf ("-----------------\n");
 	const char src[50] = "Hola que tal";
 	char dest[5] = "HOL";
 	const char src2[50] = "Hola que tal";
 	char dest2[5] = "HOL";
 
-        printf("Antes memcpy dest = %s\n", dest);
-	memcpy(dest, src, 12);
+	printf("Antes memcpy dest = %s\n", dest);
+	memcpy(dest, src, 5);
 	printf("Despu memcpy dest = %s\n", dest);
 
 	printf("Antes ft_memcpy dest = %s\n", dest2);
-	ft_memcpy(dest2, src2, 12);
+	ft_memcpy(dest2, src2, 5);
 	printf("Despu ft_memcpy dest = %s\n", dest2);
 
 	// memccpy
+	printf ("-----------------\n");
 	printf ("-----------------\n");
 	char msg[80] = "This is the string: not copied";
 	char buffer[80];
 	char* msg2 = "This is the string: not copied";
 	char buffer2[80];
 
-        memset(buffer, '\0', 80);
+    memset(buffer, '\0', 80);
 	memccpy(buffer, msg, ':', 80);
-        printf("Original memccpy= %s\n", buffer);
+    printf("Original memccpy= %s\n", buffer);
 	ft_memccpy(buffer2, msg2, ':', 80);
 	printf("-----Mio memccpy= %s\n", buffer2);
 
 	// memmove
+	printf ("-----------------\n");
 	printf ("-----------------\n");
 	char dest3[] = "oldstring";
 	char src3[]  = "new";
@@ -90,6 +99,7 @@ int main ()
 
 	// memchr
 	printf ("-----------------\n");
+	printf ("-----------------\n");
 	const char str6[] = "Aqui si que hay un . punto";
 	const char str7[] = "Aqui si que hay un . punto";
 	const char ch = '.';
@@ -102,12 +112,27 @@ int main ()
 	printf(" ft_memchr: ch-|%c| String-|%s|\n", ch, punt2);
 
 	// memcmp
-	char buffer1[] = "DWgaOtP12df0";
-	char buffer2[] = "DWGAOTP12DF0";
+	printf ("-----------------\n");
+	printf ("-----------------\n");
+	char buffer3[] = "esto";
+	char buffer4[] = "esta";
 
 	int n;
+	int m;
 
-	n=memcmp ( buffer1, buffer2, sizeof(buffer1) );
+	n=memcmp(buffer3, buffer4, 4);
+	printf("Original memcmp sale = %i\n", n);
+	m=ft_memcmp(buffer3, buffer4, 4);
+	printf("---Mio ft_memcmp sale = %i\n", n);
+	
+	// strlcpy
+	printf ("-----------------\n");
+	printf ("-----------------\n");
+	char dst5[20] ="";
+	char dst6[20] ="";
+	char str8[] = "Aqui si que hay un . punto";
 
+	printf("Original strlcpy - Longitud %lu, string '%s'\n", strlcpy(dst5, str8, 10), dst5);
+	printf("--Mio ft_strlcpy - Longitud %lu, string '%s'\n", ft_strlcpy(dst6, str8, 10), dst6);
 	return (0);
 }

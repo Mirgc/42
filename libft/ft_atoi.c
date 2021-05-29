@@ -1,25 +1,36 @@
-#include "libft.h"
-int ft_atoi(const char *nptr)
-{
-    char *str;
-    int i;
-    int res;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/26 18:40:38 by migarcia          #+#    #+#             */
+/*   Updated: 2021/05/29 12:19:46 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-    str = (char *)nptr;
-    if (*str < 32 || (*str > 32 && *str < 48) || *str > 57)
-        return (0);
-    else
-    {
-        while (*str == 32)
-            str++;
-        i = 1;
-        res = 0;
-        while (*str >= 48 && *str <= 57)
-        {
-            res = (int)str - '0' *i ;
-            i *= 10;
-            str++;
-        }
-        return(res);
-    }
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	multi;
+
+	multi = 1;
+	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n' || *nptr == '\r'
+		|| *nptr == '\v' || *nptr == '\f')
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			multi = -1;
+		nptr++;
+	}
+	i = 0;
+	while (*nptr >= 48 && *nptr <= 57)
+	{
+		i *= 10;
+		i += (*nptr - '0');
+		nptr++;
+	}
+	return (i * multi);
 }

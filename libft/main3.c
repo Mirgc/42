@@ -9,6 +9,7 @@
 #include "ft_toupper.c"
 #include "ft_tolower.c"
 #include "ft_calloc.c"
+#include "ft_strdup.c"
 
 int main ()
 {
@@ -124,5 +125,15 @@ int main ()
         }
 	printf("\n");
 	free (a);
+
+	// strdup
+	printf ("-----------------\n");
+	char source[] = "Esto si que mola";
+    char *target = strdup(source); 
+	char *target2 = ft_strdup(source);
+
+    printf("Origi strdup: %s\n", target);
+	printf("My ft_strdup: %s\n", target2);
+	free(target2);
 	return (0);
 }

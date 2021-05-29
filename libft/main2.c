@@ -44,12 +44,12 @@ int main ()
 
 	// strncmp
 	printf ("-----------------\n");
-	printf ("Original strncmp = %i\n", strncmp("Esto es una prueba", "Esto es una prueba", 7));
-	printf ("---My ft_strncmp = %i\n", ft_strncmp("Esto es una prueba", "Esto es una prueba", 7));
+	printf ("Original strncmp = %i\n", strncmp("Esto es una prueba", "Esto Es una prueba", 7));
+	printf ("---My ft_strncmp = %i\n", ft_strncmp("Esto es una prueba", "Esto Es una prueba", 7));
 
 	// atoi
 	printf ("-----------------\n");
-	printf ("Original atoi =%i\n", atoi("  123!")); 
-	printf ("---My ft_atoi =%i\n", ft_atoi("  123!")); 
+	printf ("Original atoi =%i\n", atoi("\t\n\r\v\f  469 \n")); 
+	printf ("---My ft_atoi =%i\n", ft_atoi("\t\n\r\v\f  469 \n")); 
 	return (0);
 }

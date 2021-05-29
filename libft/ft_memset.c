@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:35:27 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/24 18:40:30 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:33:06 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	*ft_memset(void *b, int c, size_t len)
 	str = (unsigned char *)b;
 	while (len-- > 0)
 	{
-		*str= (unsigned char)c;
+		*str = (unsigned char) c;
 		str++;
 	}	
 	return (str);
 }
- 
