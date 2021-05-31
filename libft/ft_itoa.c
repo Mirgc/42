@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_cowords(int n)
+#include "libft.h"
+int	ft_cowords(long n)
 {
 	int	co;
 
@@ -20,7 +21,7 @@ int	ft_cowords(int n)
 		n *= -1;
 		co++;
 	}
-	while (n > 0)
+	while (n > 9)
 	{
 		n /= 10;
 		co++;
@@ -30,22 +31,28 @@ int	ft_cowords(int n)
 char *ft_itoa(int n)
 {
 	char	*nbr;
-	int		co;
+	int	co;
+	long	ln;
 
-	co = ft_cowords(n);
+	ln = n;
+	co = ft_cowords(ln);
 	nbr = (char *) malloc(co * sizeof(char) + 1);
 	if (!nbr)
 		return (NULL);
-	if ( n < 0)
+	if (ln == 0)
+	{
+		nbr[0] = '0';
+		return (nbr);
+	}
+	if (ln < 0)
 	{
 		nbr[0] = '-';
-		n *= -1;
+		ln *= -1;
 	}
-	while (n > 0)
+	while (ln > 0)
 	{
-		nbr[co--] = n % 10 + '0';
-		n /= 10; 
-		printf("==%i, %i, %c\n", n, co, nbr[co]);
+		nbr[co--] = ln % 10  + '0';
+		ln /= 10; 
 	}
 	return (nbr);
 }

@@ -12,19 +12,19 @@
 
 char	*ft_strrchr(const char *str, int c)
 {
-	char	ch;
 	int		i;
 
-	ch = (char)c;
 	i = 0;
 	while (*str)
 	{
 		str++;
 		i++;
 	}
-	while (i != 0)
+	if (c == 0)
+		return((char *)str);
+	while (i >= 0)
 	{
-		if (*str == ch)
+		if (*str == c)
 			return ((char *)str);
 		i--;
 		str--;

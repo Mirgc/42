@@ -27,10 +27,11 @@ int main ()
 
 	// strtrim
 	printf ("-----------------\n");
-	char s3[]="hola no sale hola";
+	char s3[]="lorem ipsum dolor sit amet";
+	char    set [] = "tema";
 	char *dst2;
 
-	dst2 = ft_strtrim(s3, "hola");
+	dst2 = ft_strtrim(s3, set);
 	printf("My ft_strtrim: %s\n", dst2);
 
 	// split
@@ -52,7 +53,7 @@ int main ()
 	printf ("-----------------\n");
 	char *nbr;
 	
-	nbr = ft_itoa(-1234);
-	printf("My ft_itoa: '%s'", nbr);
+	nbr = ft_itoa(0);
+	printf("My ft_itoa: '%s'\n", nbr);
 	return (0);
 }

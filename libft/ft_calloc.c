@@ -14,9 +14,13 @@
 void	*ft_calloc(size_t n, size_t size)
 {
 	void	*buff;
-
-	buff = (char *) malloc(n * size);
+	size_t	spac;
+	if (size == 0)
+		spac = n;
+	else
+		spac = n * size;
+	buff = (char *) malloc(spac);
 	if (!buff)
-		return (0);
-	return (ft_memset(buff, '0', size));
+		return (NULL);
+	return (ft_memset(buff, 0, spac));
 }
