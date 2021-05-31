@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 15:18:38 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/28 15:18:40 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/05/31 17:26:51 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@ void	*ft_calloc(size_t n, size_t size)
 {
 	void	*buff;
 	size_t	spac;
+
 	if (size == 0)
 		spac = n;
 	else

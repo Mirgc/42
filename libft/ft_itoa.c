@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 09:38:33 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/29 10:07:01 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/05/31 17:52:27 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int	ft_cowords(long n)
 	}
 	return (co);
 }
-char *ft_itoa(int n)
+
+char	*ft_itoa(int n)
 {
 	char	*nbr;
-	int	co;
+	int		co;
 	long	ln;
 
 	ln = n;
@@ -51,8 +52,8 @@ char *ft_itoa(int n)
 	}
 	while (ln > 0)
 	{
-		nbr[co--] = ln % 10  + '0';
-		ln /= 10; 
+		nbr[co--] = ln % 10 + '0';
+		ln /= 10;
 	}
 	return (nbr);
 }

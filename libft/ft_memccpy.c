@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:54:28 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/28 15:33:28 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/05/31 17:42:02 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ void	*ft_memccpy(void *dest, const void *orig, int c, size_t n)
 {
 	char	*dst;
 	char	*src;
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	dst = (char *)dest;
@@ -24,7 +24,7 @@ void	*ft_memccpy(void *dest, const void *orig, int c, size_t n)
 	{
 		dst[i] = src[i];
 		if (src[i] == (char)c)
-			return(dst + (++i));
+			return (dst + (++i));
 		i++;
 	}
 	return (NULL);

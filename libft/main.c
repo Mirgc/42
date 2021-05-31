@@ -71,15 +71,15 @@ int main ()
 	// memccpy
 	printf ("-----------------\n");
 	printf ("-----------------\n");
-	char msg[80] = "zyxwvutsrqponmlkjihgfedcba";
+	char msg[80] = "This is the string: not copied";
 	char buffer[80];
-	char* msg2 = "zyxwvutsrqponmlkjihgfedcba";
+	char* msg2 = "This is the string: not copied";
 	char buffer2[80];
 
-	memset(buffer, '\0', 80);
-	memccpy(buffer, msg, 'r', 20);
-	printf("Original memccpy= %s\n", buffer);
-	ft_memccpy(buffer2, msg2, 'r', 20);
+    memset(buffer, '\0', 80);
+	memccpy(buffer, msg, ':', 80);
+    printf("Original memccpy= %s\n", buffer);
+	ft_memccpy(buffer2, msg2, ':', 80);
 	printf("-----Mio memccpy= %s\n", buffer2);
 
 	// memmove
@@ -114,25 +114,25 @@ int main ()
 	// memcmp
 	printf ("-----------------\n");
 	printf ("-----------------\n");
-	char buffer3[] = "abcdefghij";
-	char buffer4[] = "abcdefgxyz";
+	char buffer3[] = "esto";
+	char buffer4[] = "esta";
 
 	int n;
 	int m;
 
-	n=memcmp(buffer3, buffer4, 7);
+	n=memcmp(buffer3, buffer4, 4);
 	printf("Original memcmp sale = %i\n", n);
-	m=ft_memcmp(buffer3, buffer4, 7);
+	m=ft_memcmp(buffer3, buffer4, 4);
 	printf("---Mio ft_memcmp sale = %i\n", n);
 	
 	// strlcpy
-	/*printf ("-----------------\n");
+	printf ("-----------------\n");
 	printf ("-----------------\n");
 	char dst5[20] ="";
 	char dst6[20] ="";
 	char str8[] = "Aqui si que hay un . punto";
 
 	printf("Original strlcpy - Longitud %lu, string '%s'\n", strlcpy(dst5, str8, 10), dst5);
-	printf("--Mio ft_strlcpy - Longitud %lu, string '%s'\n", ft_strlcpy(dst6, str8, 10), dst6);*/
+	printf("--Mio ft_strlcpy - Longitud %lu, string '%s'\n", ft_strlcpy(dst6, str8, 10), dst6);
 	return (0);
 }

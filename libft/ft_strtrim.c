@@ -6,51 +6,70 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:21:48 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/28 18:45:51 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/05/31 19:51:01 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h" 
-int	ft_check_ch(char const c, char const *set)
+static int	ft_check_ch(char c, char *set)
 {
-	while (*set)
+	int	i;
+
+	i = 0;
+	while (set[i])
 	{
-		if (*set == c)
+		if (set[i] == c)
 			return (1);
-		set++;
+		i++;
 	}
 	return (0);
-}	
+}
+
+static int	ft_check_start(char const *s1, char const *set)
+{
+	int	a;
+
+	a = 0;
+	while (s1[a])
+	{
+		if (ft_check_ch((char)s1[a], (char *)set) == 0)
+			break ;
+		a++;
+	}
+	return (a);
+}
+
+static int	ft_check_end(char const *s1, char const *set, int lenend)
+{
+	int	b;
+
+	b = 0;
+	while (lenend > 0)
+	{
+		if (ft_check_ch((char)s1[lenend], (char *)set) == 0)
+			break ;
+		lenend--;
+		b++;
+	}
+	return (lenend);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*dst;
 	int		len;
 	int		lenend;
 	int		a;
-	int		b;
 
 	len = ft_strlen(set);
-	lenend = ft_strlen(s1);
-	a = 0;
-	while (a < len)
-	{
-		if (ft_check_ch(*s1, set) == 0)
-			break;
-		s1++;
-		a++;
-	}
-	printf("----%i\n",a);
-	b = 0;
-	while (b < len)
-	{
-		if (ft_check_ch(s1[lenend], set) == 0)
-			break;
-		lenend--;
-		b++;
-	}
-	dst = (char *) malloc (((lenend - a) - b) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	dst = ft_substr(s1, a, (lenend -a) - b);
+	lenend = ft_strlen(s1) - 1;
+	a = ft_check_start(s1, set);
+	if (a == lenend + 1)
+		return (ft_substr(s1, 0, 0));
+	lenend = ft_check_end(s1, set, lenend);
+	if (lenend <= 0)
+		lenend = 1;
+	lenend = (lenend - a) + 1;
+	dst = ft_substr(s1, a, lenend);
 	return (dst);
 }
