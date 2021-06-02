@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:21:48 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 19:51:01 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:29:21 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,13 @@ static int	ft_check_end(char const *s1, char const *set, int lenend)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*dst;
+	int		len;
 	int		lenend;
 	int		a;
 
+	if (!s1 || !set)
+		return (NULL);
+	len = ft_strlen(set);
 	lenend = ft_strlen(s1) - 1;
 	a = ft_check_start(s1, set);
 	if (a == lenend + 1)

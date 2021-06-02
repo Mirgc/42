@@ -6,14 +6,14 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 18:40:38 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/29 12:19:46 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:11:03 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	multi;
+	long	i;
+	long	multi;
 
 	multi = 1;
 	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n' || *nptr == '\r'

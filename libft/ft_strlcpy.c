@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 18:48:21 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:28:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:00:25 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@ size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
 
+	if (!src)
+		return (0);
 	if (!dstsize)
 		return (ft_strlen(src));
 	i = 0;

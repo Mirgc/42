@@ -6,13 +6,15 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:48:26 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:49:51 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:28:45 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 void	ft_putstr_fd(char *s, int fd)
 {
+	if (!s)
+		return ;
 	while (*s)
 	{
 		write(fd, s, 1);

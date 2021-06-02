@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:11:23 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/28 17:21:28 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:34:48 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*dst;
 	int		len;
 
+	if (!s1 || !s2)
+		return (0);
 	len = (ft_strlen(s1)) + ft_strlen(s2) + 1;
-	dst = (char *) malloc(len * sizeof(char));
-	ft_strlcat(dst, s1, len);
-	ft_strlcat(dst, s2, len);
+	dst = malloc(len * sizeof(char) + 1);
+	if (!dst)
+		return (NULL);
+	ft_memmove(dst, s1, len);
+	ft_memmove(dst + ft_strlen(s1), s2, len);
+	dst[len] = '\0';
 	return (dst);
 }

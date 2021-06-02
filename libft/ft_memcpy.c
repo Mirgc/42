@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 18:02:16 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/28 15:34:11 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:08:19 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dest, const void *orig, size_t n)
 
 	src = (char *)orig;
 	dst = (char *)dest;
+	if (!dest && !orig)
+		return (0);
 	while (n--)
 		*(dst++) = *(src++);
 	return (dest);

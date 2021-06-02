@@ -6,13 +6,15 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:45:20 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:45:40 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:28:22 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 void	ft_putendl_fd(char *s, int fd)
 {
+	if (!s)
+		return;
 	while (*s)
 	{
 		write(fd, s, 1);
