@@ -1,34 +1,8 @@
 #include "get_next_line.h"
 
-void	*ft_memmove(char *dst, char *src, int len)
-{
-	int	i;
-
-	if (!dst || !src)
-		return (NULL);
-	if (dst > src)
-	{
-		i = len - 1;
-		while (i >= 0)
-		{
-			dst[i] = src[i];
-			i--;
-		}
-	}
-	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-	}
-	return (dst);
-}
 int	ft_strlen(char *str)
 {
-	int	i;
+	size_t	i;
 
 	if (!str)
 		return (0);
@@ -40,37 +14,64 @@ int	ft_strlen(char *str)
 
 char	*join(char *s1, char *s2)
 {
-	char	*dst;
-	int	s1_len;
-	int	s2_len;
-	int	len_tot;
+	char		*dst;
+	unsigned int	i;
+	unsigned int	j;
 
-	if (!s1 && !s2)
+	if (!s2 || !s1)
+		return (ft_strdup(""));
+	dst = (char *)malloc(sizeof(char) *
+	(ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!dst)
 		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	len_tot = s1_len + s2_len + 1;
-	dst = malloc(sizeof(char) * len_tot);
-	if(!dst)
-		return (NULL);
-	ft_memmove(dst, s1, s1_len);
-	ft_memmove(dst + s1_len, s2, s2_len);
-	dst[len_tot -1] = '\0';
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		dst[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		dst[i + j] = s2[j];
+		j++;
+	}
+	dst[i + j] = '\0';
 	return (dst);
 }
 
-int	check_ch(char *str)
+char	*ft_strdup(char *s1)
 {
-	int	i;
+	char		*s2;
+	unsigned int	l;
+	unsigned int	i;
 
-	if (!str)
-		return (0);
+	l = ft_strlen(s1);
+	s2 = (char *)malloc(l + 1);
 	i = 0;
-	while (str[i])
+	if (s2)
 	{
-		if (str[i] == '\n')
-			return (1);
-		i++;
+		while (s1[i] && i < l)
+		{
+			s2[i] = s1[i];
+			i++;
+		}
+		s2[i] = '\0';
 	}
-	return (0);
+	else
+		return (0);
+	return (s2);
+}
+
+char	*ft_strchr(char *str, int ch)
+{
+	while (*str != '\0')
+	{
+		if (ch == *str)
+			return ((char *)str);
+		str++;
+	}
+	if (ch == '\0' && *str == '\0')
+		return ((char *)str);
+	return (NULL);
 }

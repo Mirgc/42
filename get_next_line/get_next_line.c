@@ -6,9 +6,12 @@ char	*get_line(char *str)
 	int	i;
 
 	if (!str)
-		return (NULL);
+	{
+		dst = ft_strdup("");
+		return (dst);
+	}
 	i = 0;
-	while(str[i] != '\n')
+	while(str[i] && str[i] != '\n')
 		i++;
 	dst = malloc(sizeof(char) * (i + 1));
 	if (!dst)
@@ -62,21 +65,31 @@ int	get_next_line(int fd, char **line)
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (-1);
-	filed = 1;
-	while (!check_ch(str) && filed != 0)
+	while ((filed = read(fd, buff, BUFFER_SIZE)))
 	{
-		if((filed = read(fd, buff, BUFFER_SIZE)) == -1)
+		if(filed == -1)
 		{
 			free(buff);
 			return (-1);
 		}
 		buff[filed] = '\0';
-		str = join(str, buff);
+		if (str)
+			str = join(str, buff);
+		else
+			str = ft_strdup(buff);
+		if(ft_strchr(buff, '\n'))
+			break ;
 	}
-	*line = get_line(str);
-	str = get_str(str);
-	free(buff);
-	if (filed == 0)
+	if (filed <= 0 && !str[0])
+	{
+		//*line = ft_strdup("");
 		return (0);
-	return (1);
+	}
+	else
+	{
+		free(buff);
+		*line = get_line(str);
+		str = get_str(str);
+		return (1);
+	}	
 }
