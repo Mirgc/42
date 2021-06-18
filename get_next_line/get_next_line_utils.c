@@ -63,15 +63,18 @@ char	*ft_strdup(char *s1)
 	return (s2);
 }
 
-char	*ft_strchr(char *str, int ch)
+int     check_ch(char *str)
 {
-	while (*str != '\0')
-	{
-		if (ch == *str)
-			return ((char *)str);
-		str++;
-	}
-	if (ch == '\0' && *str == '\0')
-		return ((char *)str);
-	return (NULL);
+        int     i;
+
+        if (!str)
+                return (0);
+        i = 0;
+        while (str[i])
+        {
+                if (str[i] == '\n')
+                        return (1);
+                i++;
+        }
+        return (0);
 }
