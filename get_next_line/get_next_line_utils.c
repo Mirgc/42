@@ -37,6 +37,7 @@ char	*join(char *s1, char *s2)
 		j++;
 	}
 	dst[i + j] = '\0';
+	free(s1);
 	return (dst);
 }
 
@@ -48,6 +49,8 @@ char	*ft_strdup(char *s1)
 
 	l = ft_strlen(s1);
 	s2 = (char *)malloc(l + 1);
+	if (!s2)
+		return (NULL);
 	i = 0;
 	if (s2)
 	{
