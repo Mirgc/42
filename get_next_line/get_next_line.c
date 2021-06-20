@@ -39,6 +39,7 @@ char	*get_str(char *str, char **line, int filed)
 	{
 		*line = ft_substr(str, 0 , i);
 		dst = ft_substr(str, i + 1, ft_strlen(str));
+		free (str);
 	}
 	else if (filed == 0)
 		*line = str;
@@ -82,5 +83,7 @@ int	get_next_line(int fd, char **line)
 		free(str);
 		return (filed);
 	}
+//	if (buff)
+//		free (buff);
 	return (1);
 }
