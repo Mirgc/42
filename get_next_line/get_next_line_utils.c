@@ -14,14 +14,14 @@ int	ft_strlen(char *str)
 
 char	*join(char *s1, char *s2)
 {
-	char		*dst;
+	char			*dst;
 	unsigned int	i;
 	unsigned int	j;
 
 	if (!s2 || !s1)
 		return (ft_strdup(""));
-	dst = (char *)malloc(sizeof(char) *
-	(ft_strlen(s1) + ft_strlen(s2) + 1));
+	dst = (char *)malloc(sizeof(char)
+			* (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -43,7 +43,7 @@ char	*join(char *s1, char *s2)
 
 char	*ft_strdup(char *s1)
 {
-	char		*s2;
+	char			*s2;
 	unsigned int	l;
 	unsigned int	i;
 
@@ -66,18 +66,18 @@ char	*ft_strdup(char *s1)
 	return (s2);
 }
 
-int     check_ch(char *str)
+int	check_ch(char *str)
 {
-        int     i;
+	int	i;
 
-        if (!str)
-                return (0);
-        i = 0;
-        while (str[i])
-        {
-                if (str[i] == '\n')
-                        return (1);
-                i++;
-        }
-        return (0);
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
