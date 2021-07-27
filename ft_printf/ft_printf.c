@@ -9,26 +9,32 @@ int	ft_putchar(char c)
 	return (1);
 }
 
-void	ft_putstr(char *str_arg)
+int	ft_putstr(char *str_arg)
 {
+	int	c_count;
+
+	c_count = 0;
 	while (*str_arg)
 	{
-		ft_putchar(*str_arg);
+		c_count += ft_putchar(*str_arg);
 		str_arg++;
 	}
+	return (c_count);
 }
 
-void	ft_putnbr(long num)
+int	ft_putnbr(long num)
 {
+	int	c_count;
+
+	c_count = 0;
 	if (num == -2147483648)
 	{
-		ft_putchar('-');
-		ft_putchar('2');
+		c_count += ft_putstr("-2");
 		num = 147483648;
 	}
 	if (num < 0)
 	{
-		ft_putchar('-');
+		c_count += ft_putchar('-');
 		num *= -1;
 	}
 	if (num >= 10)
@@ -37,13 +43,16 @@ void	ft_putnbr(long num)
 		ft_putnbr(num % 10);
 	}
 	else
-		ft_putchar(num + '0');
+		c_count += ft_putchar(num + '0');
+	return (c_count);
 }
 
-void	ft_puthex(unsigned int num, int cap)
+int	ft_puthex(unsigned long long num, int cap)
 {
 	int	tmp;
+	int	c_count;
 
+	c_count = 0;
 	if (num > 0)
 	{
 		ft_puthex(num / 16, cap);
@@ -51,42 +60,48 @@ void	ft_puthex(unsigned int num, int cap)
 		if (tmp > 9)
 		{
 			if (cap == 0)
-				ft_putchar((tmp - 10) + 'a');
+				c_count += ft_putchar((tmp - 10) + 'a');
 			else
-				ft_putchar((tmp - 10) + 'A');
+				c_count += ft_putchar((tmp - 10) + 'A');
 		}
 		else
-			ft_putchar(tmp + '0');
+			c_count += ft_putchar(tmp + '0');
 	}
+	return(c_count);
 }
 
-void	check_flag(char s, va_list arg)
+int	check_flag(char s, va_list arg)
 {
+	int c_count;
+
+	c_count = 0;
 	if (s == 'c')
-		ft_putchar((char)va_arg(arg, int));
+		c_count += ft_putchar((char)va_arg(arg, int));
 	if (s == 's')
-		ft_putstr(va_arg(arg, char *));
+		c_count += ft_putstr(va_arg(arg, char *));
 	if (s == 'p')
 	{
-		write(1, "0x7ffe", 6);
-		ft_puthex(va_arg(arg, unsigned long long), 0);
+		c_count += ft_putstr("0x");
+		c_count += ft_puthex(va_arg(arg, unsigned long long), 0);
 	}
 	if (s == 'd' || s == 'i')
-		ft_putnbr(va_arg(arg, int));
+		c_count += ft_putnbr(va_arg(arg, int));
 	if (s == 'u')
-		ft_putnbr(va_arg(arg, unsigned int));
+		c_count += ft_putnbr(va_arg(arg, unsigned int));
 	if (s == 'x')
-		ft_puthex(va_arg(arg, unsigned int), 0);
+		c_count += ft_puthex(va_arg(arg, unsigned int), 0);
 	if (s == 'X')
-		ft_puthex(va_arg(arg, unsigned int), 1);
+		c_count += ft_puthex(va_arg(arg, unsigned int), 1);
 	if (s == '%')
-		ft_putchar('%');
+		c_count += ft_putchar('%');
+	return (c_count);
 }
 
 int	ft_printf(const char *orig, ...)
 {
 	va_list	arg;
 	char	*str;
+	int	c_count;
 
 	va_start(arg, orig);
 	str = (char *)orig;
@@ -95,12 +110,12 @@ int	ft_printf(const char *orig, ...)
 		if (*str == '%')
 		{
 			str++;
-			check_flag(*str, arg);
+			c_count += check_flag(*str, arg);
 			str++;
 		}
-		ft_putchar(*str);
+		c_count += ft_putchar(*str);
 		str++;
 	}
 	va_end(arg);
-	return (0);
+	return (c_count);
 }

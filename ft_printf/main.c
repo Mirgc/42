@@ -5,7 +5,7 @@ int main()
         char prueba[]= "Primera";
 		char pp[100000];
 		(void)pp;
-		char p[]= "lalalalala";
+		char p[]= "lalalalalalalalala";
 		int x = 12111;
 		int z = -1111111;
 		int i = +2147483647;
