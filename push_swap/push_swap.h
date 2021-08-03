@@ -13,9 +13,11 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # include <unistd.h>
+
 typedef struct s_list{
-	int	num;
-	int	div;
-	struct s_list *next;
-} a_list;
+	int		num;
+	int		ite;
+	struct s_list	*next;
+}	t_list;
+
 # endif
