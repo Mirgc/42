@@ -6,134 +6,88 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 17:48:13 by migarcia          #+#    #+#             */
-/*   Updated: 2021/08/02 17:43:29 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/08/05 19:38:42 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
-#include <stdlib.h>
 
-void ft_printerr()
+void	sort_order(t_list *arr_a)
 {
-	write(1, "Error\n", 6);
-}
-
-void	del_node(t_list **arr)
-{
-	t_list	*del;
-	t_list	*temp;
-
-	temp = *arr;
-	while(temp)
+	if (arr_a->num < arr_a->next->num)
 	{
-		del = temp;
-		temp = temp->next;
-		free(del);
+		if (arr_a->next->num < arr_a->next->next->num)
+			ft_putstr("");
+		else if (arr_a->num < arr_a->next->next->num)
+			ft_putstr("rra\nsa\n");
+		else
+			ft_putstr("rra\n");
 	}
-	*arr = NULL;
-}
-
-int ft_atoi(char *str)
-{
-	int num;
-	int min;
-	int i;
-
-	min = 1;
-	num = 0;
-	i = 0;
-	while (str[i])
+	else if (arr_a->num > arr_a->next->num)
 	{
-		if (str[i] == 45 || str[i] == 43)
+		if (arr_a->next->num < arr_a->next->next->num)
 		{
-			if (str[i] == 45)
-				min = -1;		
-			i++;
-		}
-		if (str[i] >= 48 && str[i] <= 57 )
-		{
-			num *= 10; 
-			num += str[i] - '0';
-			i++;
+			if (arr_a->num < arr_a->next->next->num)
+				ft_putstr("sa\n");
+			else
+				ft_putstr("ra\n");
 		}
 		else
-			return (0);
-	}
-	num = num * min;
-	return (num);
+			ft_putstr("sa\nrra\n");
+	}	
 }
 
-t_list	*add_node(void)
+void	order(t_list *arr_a)
 {
-	t_list *temp;
+	int	len;
 
-	temp = (t_list *)malloc(sizeof(t_list));
-	temp->num = 0;
-	temp->ite = 1;
-	temp->next = NULL;
-
-	return (temp);
-}
-
-int	is_num(char *str)
-{
-	if(str[0] != 48)
-		return(ft_atoi(str));
-	else
-		return(1);	
-}
-
-t_list	*fill_arra(int argc, char **argv)
-{
-	t_list  *f_arr;
-	t_list	*temp;
-	int	err;
-	int	i;
-
-	i = 1;
-	f_arr = add_node();
-	temp = f_arr;
-	while (i < argc)
+	len = ft_arr_len(&arr_a);
+	if (len == 1)
+		ft_putstr("");
+	else if (len == 2)
 	{
-		if (!(is_num(argv[i])))
-		{
-			del_node(&f_arr);
-			return (NULL);
-		}
+		if (arr_a->num >= arr_a->next->num)
+			ft_putstr("rra\n");
 		else
-			temp->num = ft_atoi(argv[i]);
-			if (i < argc - 1)
-			{
-				temp->next = add_node();
-				temp = temp->next;
-			}
-		i++;
+			ft_putstr("");
 	}
-	return (f_arr);
+	else if (len == 3)
+		sort_order(arr_a);
 }
-
 
 int	main(int argc, char **argv)
 {
 	t_list	*arr_a;
 //	t_list	*arr_b;
-	
+
 	if (argc < 1)
 		ft_printerr();
 	else
 	{
-		if (!(arr_a = fill_arra(argc, argv)))
+		arr_a = fill_arra(argc, argv);
+		if (!(arr_a))
 		{
 			ft_printerr();
 			return (0);
 		}
-		while(arr_a->next != NULL)
+		else
+			order(arr_a);
+		ra_rb(&arr_a);
+		printf ("A = ");
+		while (arr_a->next != NULL)
 		{
-			printf("%i = %p\n",arr_a->num, arr_a);
+			printf("%li, ",arr_a->num);
 			arr_a = arr_a->next;
 		}
-		printf("%i = %p\n",arr_a->num, arr_a);
+		printf("%li\n",arr_a->num);
+/*		printf ("B = ");
+        while (arr_b->next != NULL)
+        {
+            printf("%li, ",arr_b->num);
+            arr_b = arr_b->next;
+        }
+        printf("%li\n",arr_b->num);*/
 	}
 	return (0);
 }
