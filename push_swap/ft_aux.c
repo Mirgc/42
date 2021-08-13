@@ -26,12 +26,12 @@ void	ft_putstr(char *str)
 	}
 }
 
-int	ft_arr_len(t_list **arr_a)
+int	ft_arr_len(t_list **arr)
 {
 	t_list	*temp;
 	int	len;
 
-	temp = *arr_a;
+	temp = *arr;
 	len = 0;
 	while(temp->next != NULL)
 	{

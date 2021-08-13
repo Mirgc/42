@@ -23,30 +23,31 @@ void	sa_sb(t_list **arr)
 
 void	pa_pb(t_list **arr_from, t_list **arr_to)
 {
-	t_list *from;
-	t_list *to;
-	t_list *temp;
+	t_list *tmp;
+        t_list *to;
+        t_list *from;
 
-	from = *arr_from;
-	to = *arr_from;
-	if (!from)
-		return ;
-	temp = from;
-	from = from->next;
-	if (!to)
-	{
-		to = temp;
-		to->next = NULL;
-		*arr_to = to;
-	}
-	else
-	{
-		temp->next = to;
-		*arr_to = temp;
-	}
+        to = *arr_to;
+        from = *arr_from;
+        if (!from)
+                return ;
+        tmp = from;
+        from = from->next;
+        *arr_from = from;
+        if (!to)
+        {
+                to = tmp;
+                to->next = NULL;
+                *arr_to = to;
+        }
+        else
+        {
+                tmp->next = to;
+                *arr_to = tmp;
+        }
 }
 
-void 	ra_rb(t_list **arr)
+void 	ra_rb(t_list **arr, char *ope)
 {
 	t_list *first;
 	t_list *last;
@@ -62,6 +63,7 @@ void 	ra_rb(t_list **arr)
 	last = last->next;
 	last->next = NULL;
 	*arr = temp;
+	ft_putstr(ope);
 }
 
 void	rra_rrb(t_list **arr)
@@ -70,5 +72,14 @@ void	rra_rrb(t_list **arr)
 	t_list *prev;
 	t_list *temp;
 
-
+	temp = *arr;
+	last = *arr;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = temp;
+	*arr = last;
 }
