@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	sort_order(t_list *arr_a)
 {
@@ -41,18 +40,25 @@ void	sort_order(t_list *arr_a)
 void	long_order(t_list **arr_a, t_list **arr_b, t_res **final, int len)
 {
 	(void)*arr_b;
+	int	rot;
 	
 	if (is_sorted(arr_a, len))
 		return ;
 	else
-		if (*(arr_a)->ite == 1)
-			rot = div_stack_a(stack1, stack2, result, len);
+	{
+		if ((*arr_a)->ite == 1)
+			rot = div_stack_a(arr_a, arr_b, len);
 		else
-			rot = div_stack_b(stack1, stack2, result, len);
+			rot = div_stack_b(arr_a, arr_b, len);
+		if ((*final)->chang == 1)
+	                rotate_rot(arr_a, rot);
+		if ((*arr_a)->ite == 1 && (len / 2 == 3 || len / 2 == 2))
+			swap_arr(arr_a, arr_b, len);
+	}
 	return ;
 }
 
-void	order(t_list *arr_a, t_list *arr_b, t_res *final, int len)
+void	order(t_list *arr_a, t_list *arr_b, t_res *final)
 {
 	int	len;
 
@@ -88,7 +94,6 @@ int	main(int argc, char **argv)
 	if (argc < 1)
 		ft_printerr();
 	else
-		push_swap(arr_a, arr_b);
 	{
 		arr_a = fill_arra(argc, argv);
 		arr_b = NULL;
@@ -98,7 +103,11 @@ int	main(int argc, char **argv)
 			return (0);
 		}
 		else
-			order(arr_a, arr_b, final, len);
+		{
+			final = (t_res*)malloc(sizeof(t_res));
+		        final->chang = 0;
+			order(arr_a, arr_b, final);
+		}
 		//pa_pb(&arr_a, &arr_b);
 		//pa_pb(&arr_a, &arr_b);
 		printf ("A = ");
@@ -108,13 +117,13 @@ int	main(int argc, char **argv)
 			arr_a = arr_a->next;
 		}
 		printf("%li, \n",arr_a->num);
-//		printf ("B = ");
-//	        while (arr_b->next != NULL)
-//	        {
-//	            printf("%li, ",arr_b->num);
-//	            arr_b = arr_b->next;
-//	        }
-//	        printf("%li, \n",arr_b->num);
+/*		printf ("B = ");
+	        while (arr_b->next != NULL)
+	        {
+	            printf("%li, ",arr_b->num);
+	            arr_b = arr_b->next;
+	        }
+	        printf("%li, \n",arr_b->num);*/
 	}
 	return (0);
 }

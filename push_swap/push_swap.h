@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H  
 # include <unistd.h>
 # include <stdlib.h>
+#include <stdio.h>
 
 typedef struct s_list{
 	long		num;
@@ -29,9 +30,16 @@ typedef struct	s_res
 
 void	sa_sb(t_list **arr);
 void	pa_pb(t_list **arr_from, t_list **arr_to);
-void	ra_rb(t_list **arr, char *ope);
+void	ra_rb(t_list **arr);
 void	rra_rrb(t_list **arr);
-int     is_sorted(t_list *arr_a, int len);
+void    rotate_rot(t_list **arr, int back);
+void    swap_three(t_list **arr);
+void    swap_two(t_list **arr);
+int     get_mid(t_list *arr, int len);
+void    quick_sort(long *array, int start, int end);
+int	div_stack_a(t_list **arr_a, t_list **arr_b, int len);
+int	div_stack_b(t_list **arr_a, t_list **arr_b, int len);
+int     is_sorted(t_list **arr, int len);
 t_list  *ft_lstnew(long content);
 t_list  *ft_lstlast(t_list *lst);
 void    ft_lstadd_back(t_list **lst, t_list *new);
@@ -47,5 +55,4 @@ t_list	*add_node(void);
 long	isisnum(char *str);
 long	is_num(char *str, t_list **f_arr);
 t_list	*fill_arra(int argc, char **argv);
-void    push_swap(t_list **arr_a, t_list **arr_b);
 # endif

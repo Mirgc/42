@@ -21,6 +21,31 @@ void	ft_swap(long *a, long *b)
 	*b = tmp;
 }
 
+void    swap_three(t_list **arr)
+{
+        if ((*arr)->ite == 1)
+		ft_putstr("a");
+//                swap_three_a(arr, final);
+        else
+		ft_putstr("b");
+//                swap_three_b(arr, final);
+}
+
+void    swap_two(t_list **arr)
+{
+        if ((*arr)->ite == 1 && ((*arr)->num > (*arr)->next->num))
+        {
+                sa_sb(arr);
+                ft_putstr("sa\n");
+        }
+        else if ((*arr)->ite == 2 && ((*arr)->num < (*arr)->next->num))
+        {
+                sa_sb(arr);
+                ft_putstr("sb\n");
+        }
+}
+
+
 long int	get_min(t_list **arr)
 {
 	t_list *tmp;
@@ -68,36 +93,35 @@ long int	get_avg(t_list **arr, int len)
 	return (i/len);
 }
 
-//void	split_to_a(t_list *arr_a, t_list *arr_b, int avg, int len)
-//{
-//	while (l-- > 0)
-//	{
-//		if (len = 13)	
-//	}
-//}
-
-void	push_swap(t_list **arr_a, t_list **arr_b)
+long	*create_array_from_list(t_list *stack, int len)
 {
-	t_list *a;
-	t_list *b;
-        int max;
-	int len_a;
-	int len_b;
+        long             *array;
+        int             i;
 
-	a = *arr_a;
-	b = *arr_b;
-        max = get_max(b);
-	len_a = ft_arr_len(&arr_a);
-	len_b = ft_arr_len(&arr_b);
-        if (len_b == 0)
-                return ;
-//        split_to_a(a, b, pw_get_avg(b), len_b);
-        while ((*(a + (len_a - 1)) == *(a + 1) ||
-                *(a + (len_a - 1)) == 1) && !is_sorted(a, len_a))
-                ra_rb(a, "ra");
-        push_swap(a, b);
-        //if (get_size(a, max) >= 20)
-        //        pw_backtrack_split(a, b, max);
-        //pw_backtrack(a, b, max);
-
+        array = (long*)malloc(sizeof(long) * len);
+        i = 0;
+        while (i < len)
+        {
+                array[i] = stack->num;
+                stack = stack->next;
+                i++;
+        }
+        return (array);
 }
+
+int	get_mid(t_list *arr, int len)
+{
+        long	*array;
+        int	mid;
+	int	arr_len;
+
+	arr_len = ft_arr_len(&arr);
+	if (arr_len < len)
+		len = arr_len;
+        array = create_array_from_list(arr, len);
+        quick_sort(array, 0, len - 1);
+        mid = array[len / 2];
+        free(array);
+        return (mid);
+}
+

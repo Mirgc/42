@@ -47,7 +47,7 @@ void	pa_pb(t_list **arr_from, t_list **arr_to)
         }
 }
 
-void 	ra_rb(t_list **arr, char *ope)
+void 	ra_rb(t_list **arr)
 {
 	t_list *first;
 	t_list *last;
@@ -63,7 +63,6 @@ void 	ra_rb(t_list **arr, char *ope)
 	last = last->next;
 	last->next = NULL;
 	*arr = temp;
-	ft_putstr(ope);
 }
 
 void	rra_rrb(t_list **arr)
