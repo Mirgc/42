@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 17:48:13 by migarcia          #+#    #+#             */
-/*   Updated: 2021/08/05 19:38:42 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/08/19 18:30:42 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,37 @@ void	sort_order(t_list **arr_a)
 	}	
 }
 
-void	long_order(t_list **arr_a, t_list **arr_b, int change, int len)
+void	long_order(t_list **arr_a, t_list **arr_b, int *change, int len)
 {
 	int	rot;
-	
-		printf("ite: %i\n",(*arr_a)->ite);
+
 		if (len == 2 || len == 3)
 			return ;
 		if ((*arr_a)->ite == 1)
-			rot = div_stack_a(arr_a, arr_b, len);
+			rot = div_arr_a(arr_a, arr_b, len);
 		else
-			rot = div_stack_b(arr_a, arr_b, len);
-		if (change == 1)
-	                rotate_rot(arr_a, rot);
-		if (((*arr_a)->ite == 1 || (*arr_a)->ite == 2)&& (len / 2 == 3 || len / 2 == 2))
+			rot = div_arr_b(arr_a, arr_b, len);
+		if (*change == 1)
+	          rotate_rot(arr_a, rot);
+		if (((*arr_a)->ite == 1 || (*arr_a)->ite == 2) && (len / 2 == 3 || len / 2 == 2))
 			swap_arr(arr_a, arr_b, change, len);
 		if ((*arr_a)->ite != 1)
 		{
 			long_order(arr_a, arr_b, change, len / 2);
-			long_order(arr_a, arr_b, change, len - len / 2);
+			long_order(arr_b, arr_a, change, len - len / 2);
 		}
-		else
+		else if ((*arr_a)->ite == 1)	
 		{
 			long_order(arr_a, arr_b, change, len - len / 2);
-		//	long_order(arr_a, arr_b, change, len / 2);
+			long_order(arr_b, arr_a, change, len / 2);
 		}
+		if ((*arr_a)->ite == 1)
+			arr_push_back(arr_a, arr_b, len / 2);
+		else
+			arr_push_back(arr_a, arr_b, len - len / 2);
 }
 
-void	order(t_list **arr_a, t_list **arr_b, int change)
+void	order(t_list **arr_a, t_list **arr_b, int *change)
 {
 	int	len;
 
@@ -72,7 +75,7 @@ void	order(t_list **arr_a, t_list **arr_b, int change)
 	if (is_sorted(arr_a, len))
 	{
 		ft_putstr("");
-		//del_node(&arr_a);
+		del_node(arr_a);
 	}
 	else if (len == 2)
 	{
@@ -80,12 +83,12 @@ void	order(t_list **arr_a, t_list **arr_b, int change)
 			ft_putstr("rra\n");
 		else
 			ft_putstr("");
-		//del_node(&arr_a);
+		del_node(arr_a);
 	}
 	else if (len == 3)
 	{
 		sort_order(arr_a);
-		//del_node(&arr_a);
+		del_node(arr_a);
 	}
 	else
 		long_order(arr_a, arr_b, change, len);
@@ -103,7 +106,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		arr_a = fill_arra(argc, argv);
-		arr_b = NULL;
+		arr_b =	NULL;
 		if (!(arr_a))
 		{
 			ft_printerr();
@@ -111,8 +114,8 @@ int	main(int argc, char **argv)
 		}
 		else
 		{
-		        change = 0;
-			order(&arr_a, &arr_b, change);
+	        change = 0;
+			order(&arr_a, &arr_b, &change);
 		}
 		printf ("A = ");
 		while (arr_a->next != NULL)

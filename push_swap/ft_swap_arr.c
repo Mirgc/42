@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_swap_arr.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/18 15:41:51 by migarcia          #+#    #+#             */
+/*   Updated: 2021/08/19 16:56:02 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "push_swap.h"
 
-static int	create_len_a(t_list **arr, int change, int len)
+static int	create_len_a(t_list **arr, int *change, int len)
 {
 	int	s_len;
 
-	change = change;
 	if ((*arr)->ite == 1)
 	{
-		change = 1;
+		*change = 1;
 		s_len = len -len / 2;
 	}
 	else
@@ -16,14 +27,13 @@ static int	create_len_a(t_list **arr, int change, int len)
 	return (s_len);
 }
 
-static int	create_len_b(t_list **arr, int change, int len)
+static int	create_len_b(t_list **arr, int *change, int len)
 {
 	int	s_len;
 
-	change = change;
 	if ((*arr)->ite == 1)
 	{
-		change = 1;
+		*change = 1;
 		s_len = len / 2;
 	}
 	else
@@ -31,7 +41,7 @@ static int	create_len_b(t_list **arr, int change, int len)
 	return (s_len);
 }
 
-static void	swap_len_two(t_list **arr_a, t_list **arr_b, int change, int len)
+static void	swap_len_two(t_list **arr_a, t_list **arr_b, int *change, int len)
 {
 	int	len_1;
 	int	len_2;
@@ -54,7 +64,7 @@ static void	swap_len_two(t_list **arr_a, t_list **arr_b, int change, int len)
 	}
 }
 
-static void	swap_len_three(t_list **arr_a, t_list **arr_b, int change, int len)
+static void	swap_len_three(t_list **arr_a, t_list **arr_b, int *change, int len)
 {
 	int	len_1;
 	int	len_2;
@@ -81,7 +91,7 @@ static void	swap_len_three(t_list **arr_a, t_list **arr_b, int change, int len)
 		swap_three(arr_b);
 }
 
-void	swap_arr(t_list **arr_a, t_list **arr_b, int change, int len)
+void	swap_arr(t_list **arr_a, t_list **arr_b, int *change, int len)
 {
 	int		len_1;
 

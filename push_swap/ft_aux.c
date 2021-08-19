@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:10:01 by migarcia          #+#    #+#             */
-/*   Updated: 2021/08/05 16:49:20 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/08/19 18:21:18 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_arr_len(t_list **arr)
 
 	temp = *arr;
 	len = 0;
+	if (!temp)
+		return (0);
 	while(temp->next != NULL)
 	{
 		len++;

@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 18:03:50 by migarcia          #+#    #+#             */
-/*   Updated: 2021/08/03 20:25:09 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/08/19 16:54:38 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ typedef struct s_list{
 	struct s_list	*next;
 }	t_list;
 
-typedef struct	s_res
-{
-	int	chang;
-	char	*result;
-}	t_res;
-
 void	sa_sb(t_list **arr);
 void	pa_pb(t_list **arr_from, t_list **arr_to);
 void	ra_rb(t_list **arr);
@@ -41,14 +35,15 @@ void    op_6(t_list **arr);
 void    op_7(t_list **arr);
 void    op_8(t_list **arr);
 void    op_9(t_list **arr);
+void    arr_push_back(t_list **arr_a, t_list **arr_b, int half);
 void    rotate_rot(t_list **arr, int back);
 void    swap_three(t_list **arr);
 void    swap_two(t_list **arr);
-void    swap_arr(t_list **arr_a, t_list **arr_b, int change, int len);
+void    swap_arr(t_list **arr_a, t_list **arr_b, int *change, int len);
 int     get_mid(t_list *arr, int len);
 void    sort_array(long *array);
-int	div_stack_a(t_list **arr_a, t_list **arr_b, int len);
-int	div_stack_b(t_list **arr_a, t_list **arr_b, int len);
+int	div_arr_a(t_list **arr_a, t_list **arr_b, int len);
+int	div_arr_b(t_list **arr_a, t_list **arr_b, int len);
 int     is_sorted(t_list **arr, int len);
 t_list  *ft_lstnew(long content);
 t_list  *ft_lstlast(t_list *lst);

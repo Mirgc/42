@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 18:27:24 by migarcia          #+#    #+#             */
-/*   Updated: 2021/08/05 19:00:46 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/08/19 16:13:37 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,17 +173,17 @@ long	*create_array_from_list(t_list *arr, int len)
 
 int	get_mid(t_list *arr, int len)
 {
-        long	*array;
-        int	mid;
-	int	arr_len;
+	long	*array;
+	int		mid;
+	int		arr_len;
 
 	arr_len = ft_arr_len(&arr);
 	if (arr_len < len)
 		len = arr_len;
-        array = create_array_from_list(arr, len);
+	array = create_array_from_list(arr, len);
 	sort_array(array);
-        mid = array[len / 2];
-        free(array);
-        return (mid);
+	mid = array[len / 2];
+	//free(array);
+	return (mid);
 }
 
