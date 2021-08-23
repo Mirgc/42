@@ -15,30 +15,30 @@
 
 static int	create_len_a(t_list **arr, int *change, int len)
 {
-	int	s_len;
+	int	a_len;
 
 	if ((*arr)->ite == 1)
 	{
 		*change = 1;
-		s_len = len -len / 2;
+		a_len = len -len / 2;
 	}
 	else
-		s_len = len / 2;
-	return (s_len);
+		a_len = len / 2;
+	return (a_len);
 }
 
 static int	create_len_b(t_list **arr, int *change, int len)
 {
-	int	s_len;
+	int	a_len;
 
 	if ((*arr)->ite == 1)
 	{
 		*change = 1;
-		s_len = len / 2;
+		a_len = len / 2;
 	}
 	else
-		s_len = len - len / 2;
-	return (s_len);
+		a_len = len - len / 2;
+	return (a_len);
 }
 
 static void	swap_len_two(t_list **arr_a, t_list **arr_b, int *change, int len)

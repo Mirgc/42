@@ -41,30 +41,28 @@ void	long_order(t_list **arr_a, t_list **arr_b, int *change, int len)
 {
 	int	rot;
 
-		if (len == 2 || len == 3)
-			return ;
-		if ((*arr_a)->ite == 1)
-			rot = div_arr_a(arr_a, arr_b, len);
-		else
-			rot = div_arr_b(arr_a, arr_b, len);
-		if (*change == 1)
-	          rotate_rot(arr_a, rot);
-		if (((*arr_a)->ite == 1 || (*arr_a)->ite == 2) && (len / 2 == 3 || len / 2 == 2))
-			swap_arr(arr_a, arr_b, change, len);
-		if ((*arr_a)->ite != 1)
-		{
-			long_order(arr_a, arr_b, change, len / 2);
-			long_order(arr_b, arr_a, change, len - len / 2);
-		}
-		else if ((*arr_a)->ite == 1)	
-		{
-			long_order(arr_a, arr_b, change, len - len / 2);
-			long_order(arr_b, arr_a, change, len / 2);
-		}
-		if ((*arr_a)->ite == 1)
-			arr_push_back(arr_a, arr_b, len / 2);
-		else
-			arr_push_back(arr_a, arr_b, len - len / 2);
+	if (len == 2 || len == 3)
+		return ;
+	if ((*arr_a)->ite == 1)
+		rot = div_arr_a(arr_a, arr_b, len);
+	else
+		rot = div_arr_b(arr_a, arr_b, len);
+	if (*change == 1)
+	        rotate_rot(arr_a, rot);
+	if (((*arr_a)->ite == 1 || (*arr_a)->ite == 2) && (len / 2 == 3 || len / 2 == 2))
+		swap_arr(arr_a, arr_b, change, len);
+	if ((*arr_a)->ite != 1)
+		long_order(arr_a, arr_b, change, len / 2);
+	else
+		long_order(arr_a, arr_b, change, len - len / 2);
+	if ((*arr_a)->ite == 1)	
+		long_order(arr_b, arr_a, change, len / 2);
+	else	
+		long_order(arr_b, arr_a, change, len - len / 2);
+	if ((*arr_a)->ite == 1)
+		arr_push_back(arr_a, arr_b, len / 2);
+	else
+		arr_push_back(arr_a, arr_b, len - len / 2);
 }
 
 void	order(t_list **arr_a, t_list **arr_b, int *change)
@@ -92,7 +90,6 @@ void	order(t_list **arr_a, t_list **arr_b, int *change)
 	}
 	else
 		long_order(arr_a, arr_b, change, len);
-
 }
 
 int	main(int argc, char **argv)
@@ -117,7 +114,7 @@ int	main(int argc, char **argv)
 	        change = 0;
 			order(&arr_a, &arr_b, &change);
 		}
-		printf ("A = ");
+/*		printf ("A = ");
 		while (arr_a->next != NULL)
 		{
 			printf("%li(%i), ",arr_a->num, arr_a->ite);
@@ -130,7 +127,7 @@ int	main(int argc, char **argv)
 	            printf("%li(%i), ",arr_b->num, arr_b->ite);
 	            arr_b = arr_b->next;
 	        }
-	        printf("%li(%i)\n",arr_b->num, arr_b->ite);
+	        printf("%li(%i)\n",arr_b->num, arr_b->ite);*/
 	}
 	return (0);
 }
