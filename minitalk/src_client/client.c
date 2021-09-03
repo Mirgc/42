@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <stdio.h>
 
 int	ft_atoi(char *str)
 {
@@ -46,8 +45,9 @@ void	send_signals(char *message, int pid)
    			if (kill(pid, SIGUSR1) == -1)
    				exit (1);
    		}
-//   		usleep(3);
+   		usleep(3);
    	}
+	shift = -1;
    	i++;
    }
 }
@@ -58,12 +58,11 @@ int	main(int argc, char *argv[])
 
    if (argc != 3)
    {
-   	printf("ERROR - Use:> ./client SERVER_PID MESSAGE\n");
+   	write(1, "ERROR - Use:> ./client SERVER_PID MESSAGE\n", 43);
    	return (1);
    }
    pid = ft_atoi(argv[1]);
    send_signals(argv[2], pid);
-	while(1)
-		pause();
+   send_signals("\n", pid);
    return (0);
 }

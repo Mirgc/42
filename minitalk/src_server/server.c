@@ -1,30 +1,25 @@
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "server.h" 
 
-// server.c
+char	c;
+
 void	handler_sigusr(int signum)
 {
-   static char	c = 0xFF;
-   static int	bits = 0;
+   static int	bits;
 
    if (signum == SIGUSR1)
    {
-   	printf("0");
-   	c ^= 0x80 >> bits;
+   	c ^= 128 >> bits;
    }
    else if (signum == SIGUSR2)
    {
-   	printf("1");
-   	c |= 0x80 >> bits;
+   	c |= 128 >> bits;
    }
    bits++;
    if (bits == 8)
    {
-   	printf("-> %c\n", c);
+   	write(1, &c, 1);
    	bits = 0;
-   	c = 0xFF;
+   	c = 255;
    }
 }
 
@@ -32,8 +27,11 @@ int	main(void)
 {
    pid_t		pid;
 
+   c = 255;
    pid = getpid();
-   printf("PID: %d\n", pid);
+   write(1, "Server PID: ", 12);
+   ft_putnbr(pid);
+   write(1, "\n", 2);
    signal(SIGUSR1, handler_sigusr);
    signal(SIGUSR2, handler_sigusr);
    while (1)
