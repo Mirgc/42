@@ -52,6 +52,11 @@ void	send_signals(char *message, int pid)
    }
 }
 
+void recev()
+{
+	write(1, "Message has been received", 25);
+}
+
 int	main(int argc, char *argv[])
 {
    int		pid;
@@ -61,6 +66,7 @@ int	main(int argc, char *argv[])
    	write(1, "ERROR - Use:> ./client SERVER_PID MESSAGE\n", 43);
    	return (1);
    }
+   signal(SIGUSR1, recev);
    pid = ft_atoi(argv[1]);
    send_signals(argv[2], pid);
    send_signals("\n", pid);
