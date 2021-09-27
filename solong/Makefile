@@ -4,7 +4,7 @@ NAME = fdf
 INCLUDES = -I mlx
 LIBS = libft/libft.a -framework OpenGL -framework AppKit
 SRC = src
-SRC_FILES = $(SRC)/main.c
+SRC_FILES = $(SRC)/main.c $(SRC)/draw.c
 OBJ_DIR = obj
 OBJ_FILES = $(patsubst $(SRC)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 

@@ -6,7 +6,7 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 14:44:05 by migarcia          #+#    #+#             */
-/*   Updated: 2021/09/25 13:09:10 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:16:50 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,18 @@ void	ft_get_matrix(char *argv, t_map *map)
 //	map->matrix[i] = NULL;
 }
 
+void	init_map(t_map *map)
+{
+	map->width = 0;
+	map->height = 0;
+}
+
 int read_map(char *argv, t_map *map)
 {
 	int fd;
 	char *line;
 
+	init_map(map);
 	fd = open(argv, O_RDONLY);
 	while ((line = get_next_line(fd)))
 	{
@@ -93,35 +100,35 @@ int read_map(char *argv, t_map *map)
 	return (0);
 }
 
-void	init_map(t_map *map)
+int	deal_key(int key, void *map)
 {
-	map->width = 0;
-	map->height = 0;
+	(void)map;
+	printf("%d", key);
+	return(0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_map *map;
-	char *pru;
 
-	pru = malloc(sizeof(char*)* 15);
-	
-	if (argc == 2)
-	{
-		map = malloc(sizeof(map));
-		if (!map)
-			return (0);
-		init_map(map);
-		if (read_map(argv[1], map) == 1)
-		{
-			free(map);
-			return(0);
-		}
-	}
-	else
+	if (argc != 2)
 	{
 		ft_putstr_fd("##ERROR## Usage: ./fdf <filename>\n", 1);
 		return (0);
 	}
+	map = malloc(sizeof(map));
+	if (!map)
+		return (0);
+	if (read_map(argv[1], map) == 1)
+	{
+		free(map);
+		return(0);
+	}
+	map->mlx_ptr = mlx_init();
+	map->win_ptr = mlx_new_window(map->mlx_ptr, 1000, 1000, "FDF");
+	draw_map(map);
+	mlx_key_hook(map->win_ptr, deal_key, NULL);
+//	mlx_hook(map->mlx_ptr, 17, 0, (void *)exit, 0);
+	mlx_loop(map->mlx_ptr);
 	system("leaks fdf");
 }
