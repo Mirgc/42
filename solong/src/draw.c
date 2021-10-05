@@ -1,96 +1,104 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 07:49:27 by migarcia          #+#    #+#             */
-/*   Updated: 2021/09/27 20:16:47 by migarcia         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fdf.h"
-#include "stdio.h"
+#include <math.h>
 
-void	draw_ho(float x0, float y0, float x1, float y1, t_map *map)
+void    draw(t_map *map, int x, int y, int color)
 {
-	float dx;
-	float dy;
-	float p;
-	float x;
-	float y;
+    char    *dst;
 
-	x0 *= 20;
-	y0 *= 20;
-	x1 *= 20;
-	y1 *= 20;
-	dx = x1 - x0;
-	dy = y1 - y0;
-	x = x0;
-	y = y0;
-	p = 2 * dy - dx;
-	while(x < x1 || y < y1)
+    dst = map->img.data + (y * map->img.size + x * (map->img.bpp / 8));
+    *(unsigned int*)dst = color;
+}
+
+
+static void	draw_pix(t_map *map)
+{
+	double	x;
+	double	y;
+	double	dx;
+	double	dy;
+	double	p;
+
+	x = map->x0;
+	y = map->y0;
+	dx = map->x1 - map->x0;
+	dy = map->y1 - map->y0;
+	p = sqrt((pow(dx, 2)) + (pow(dy, 2)));
+	dx /= p;
+	dy /= p;
+	while (p > 0)
 	{
-		mlx_pixel_put(map->mlx_ptr, map->win_ptr, x, y, 0xffffff);
-		printf("%f, %f, %f, %f, %f\n", x, x1, y, y1, p);
-		if(p >= 0)
-		{
-			y++; 
-			p += 2 * dy - 2 * dx;
-		}
-		else
-			p += 2 * dy;
-		x++;
+		draw(map, x, y, 0xFF0000);
+		x += dx;
+		y += dy;
+		p -= 1;
 	}
 }
 
-void    draw_ver(float x0, float y0, float x1, float y1, t_map *map)
+static void	draw_to_xaxis(t_map *map, int x, int y)
 {
-    float dx;
-    float dy;
-    float p;
-    float x;
-    float y;
+	int		dx;
+	int		dy;
 
-    x0 *= 20;
-    y0 *= 20;
-    x1 *= 20;
-    y1 *= 20;
-    dx = x1 - x0;
-    dy = y1 - y0;
-    x = x0;
-    y = y0;
-    p = 2 * dy - dx;
-    while(y < y1)
-    {
-        mlx_pixel_put(map->mlx_ptr, map->win_ptr, x, y, 0xffffff);
-        printf("%f, %f, %f, %f, %f\n", x, x1, y, y1, p);
-        if(p >= 0)
-        {
-            y++;
-            p += 2 * dy - 2 * dx;
-        }
-        else
-            p += 2 * dy;
-    }
+	dx = x - map->width / 2;
+	dy = y - map->height / 2;
+	map->x0 = map->angle_x * (dx - dy) * map->scalin;
+	map->y0 = map->angle_y * (dx + dy) * map->scalin;
+	map->y0 -= map->matrix[y][x] * map->z_value;
+	map->x1 = map->angle_x * ((dx + 1) - dy) * map->scalin;
+	map->y1 = map->angle_y * ((dx + 1) + dy) * map->scalin;
+	map->y1 -= map->matrix[y][x + 1] * map->z_value;
+	map->x0 += (P_WIDTH / 2) + map->coord_x;
+	map->y0 += (P_HEIGHT / 2) + map->coord_y;
+	map->x1 += (P_WIDTH / 2) + map->coord_x;
+	map->y1 += (P_HEIGHT / 2) + map->coord_y;
+	draw_pix(map);
 }
 
-void	draw_map(t_map *map)
+static void	draw_to_yaxis(t_map *map, int x, int y)
 {
-	int x;
-	int y;
+	int		dx;
+	int		dy;
+
+	dx = x - map->width / 2;
+	dy = y - map->height / 2;
+	map->x0 = map->angle_x * (dx - dy) * map->scalin;
+	map->y0 = map->angle_y * (dx + dy) * map->scalin;
+	map->y0 -= map->matrix[y][x] * map->z_value;
+	map->x1 = map->angle_x * (dx - (dy + 1)) * map->scalin;
+	map->y1 = map->angle_y * (dx + (dy + 1)) * map->scalin;
+	map->y1 -= map->matrix[y + 1][x] * map->z_value;
+	map->x0 += (P_WIDTH / 2) + map->coord_x;
+	map->y0 += (P_HEIGHT / 2) + map->coord_y;
+	map->x1 += (P_WIDTH / 2) + map->coord_x;
+	map->y1 += (P_HEIGHT / 2) + map->coord_y;
+	draw_pix(map);
+}
+
+int			draw_map(t_map *map)
+{
+	int	x;
+	int	y;
 
 	y = 0;
-	while (y < map->height)
+	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
+	map->img.data = mlx_get_data_addr(map->mlx.img, &map->img.bpp, \
+			&map->img.size, &map->img.endian);
+	while (map->height > y)
 	{
 		x = 0;
-		while (x < map->width)
+		while (map->width > x)
 		{
-			draw_ho(x, y, x + 1, y, map);
-			draw_ver(x, y, x, y + 1, map);
+			map->x0 = x;
+			map->y0 = y;
+			if (map->width > x + 1)
+				draw_to_xaxis(map, x, y);
+			if (map->height > y + 1)
+				draw_to_yaxis(map, x, y);
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
+	mlx_destroy_image(map->mlx.init, map->mlx.img);
+	return (0);
 }

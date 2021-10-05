@@ -14,98 +14,31 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int	ft_wordcount(char *line)
-{
-	int		count;
-
-	count = 0;
-	while (*line)
-	{
-		while (*line && (*line == ' '))
-            line++;
-        while (*line && *line != ' ')
-            line++;
-		count++;
-	}
-	return (count);
-}
-
-void	fill_matrix(int *matrix, char *line)
-{
-	char **tab;
-	int		i;
-
-	tab = ft_split(line, ' ');
-	i = 0;
-	while(tab[i])
-	{
-		matrix[i] = ft_atoi(tab[i]);
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-void	ft_get_matrix(char *argv, t_map *map)
-{
-	int fd;
-	char *line;
-	int i;
-
-	fd = open(argv, O_RDONLY);
-	map->matrix = (int **)malloc(sizeof(int *) * (map->height + 1));
-	i = -1;
-	while (i++ < map->height)
-		map->matrix[i] = (int *)malloc(sizeof(int) * (map->width + 1));
-	i = 0;
-	while ((line = get_next_line(fd)))
-	{
-		fill_matrix(map->matrix[i], line);
-		i++;
-		free(line);
-	}
-	close(fd);
-//	map->matrix[i] = NULL;
-}
-
-void	init_map(t_map *map)
-{
-	map->width = 0;
-	map->height = 0;
-}
-
-int read_map(char *argv, t_map *map)
-{
-	int fd;
-	char *line;
-
-	init_map(map);
-	fd = open(argv, O_RDONLY);
-	while ((line = get_next_line(fd)))
-	{
-		map->width = ft_wordcount(line);
-		map->height++;
-		free(line);
-	}        
-	if (map->width == 0)
-	{
-		if (fd < 0)
-			ft_putstr_fd("##ERROR## Can't read file!\n", 1);
-		else
-			ft_putstr_fd("##ERROR## Map is Wrong!\n", 1);
-		return (1);
-	}
-	close(fd);
-	ft_get_matrix(argv, map);
-	return (0);
-}
-
-int	deal_key(int key, void *map)
+int	deal_key(int key, t_map *map)
 {
 	(void)map;
-	printf("%d", key);
+	printf("%i\n", key);
+//	if (key == KEY_ESCAPE)
+//        exit(0);
 	return(0);
 }
+
+void    nomalize_map(t_map *map)
+{
+    map->coord_x = 0;
+    map->coord_y = 0;
+    map->z_value = 2.00;
+    map->angle_x = cos(M_PI / 3);
+    map->angle_y = map->angle_x * sin(M_PI / 6);
+    map->scalin = ceil((map->width > map->height)) \
+        ? (P_WIDTH / map->width) + MAGNIFY \
+        : (P_HEIGHT / map->height) + MAGNIFY;
+    map->isometric = 1;
+    map->color.r = 0x4F;
+    map->color.g = 0x4F;
+    map->color.b = 0x4F;
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -113,7 +46,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putstr_fd("##ERROR## Usage: ./fdf <filename>\n", 1);
+		ft_putstr_fd("##ERROR## Usage: ./map <filename>\n", 1);
 		return (0);
 	}
 	map = malloc(sizeof(map));
@@ -124,11 +57,11 @@ int	main(int argc, char **argv)
 		free(map);
 		return(0);
 	}
-	map->mlx_ptr = mlx_init();
-	map->win_ptr = mlx_new_window(map->mlx_ptr, 1000, 1000, "FDF");
+	map->mlx.init = mlx_init();
+	map->mlx.win = mlx_new_window(map->mlx.init, 1080, 720, "FDF");
+	nomalize_map(map);
 	draw_map(map);
-	mlx_key_hook(map->win_ptr, deal_key, NULL);
-//	mlx_hook(map->mlx_ptr, 17, 0, (void *)exit, 0);
-	mlx_loop(map->mlx_ptr);
-	system("leaks fdf");
+	mlx_hook(map->mlx.win, 2, 3, deal_key, map);
+	mlx_loop(map->mlx.init);
+	system("leaks map");
 }
