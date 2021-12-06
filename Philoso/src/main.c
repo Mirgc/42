@@ -78,7 +78,6 @@ int	main(int argc, char **argv)
     i = -1;
     while (tab.n_philos > ++i)
     {
-        printf("philo: %i\n", i);
         if (pthread_create(&tid[i], NULL, &philo_life, (void *)&tab.philo[i]))
 	    {
 	        write(1, "Error: cannot create thread\n", 28);
@@ -86,6 +85,11 @@ int	main(int argc, char **argv)
             free(tid);
             return (1);
         }
+		usleep(1000);
     }
+//	i = -1;
+//	while (tab.n_philos > ++i)
+		//pthread_join(tid[0], NULL);
+
 	return (0);
 }
