@@ -50,6 +50,7 @@ void    fill_philo(t_args *tab)
 
 void    fill_tab(int argc, char **argv, t_args *tab)
 {
+    tab->t_init = get_time();
 	tab->n_philos = ft_atoi(argv[1]);
     tab->t_die = ft_atoi(argv[2]);
     tab->t_eat = ft_atoi(argv[3]);
@@ -70,7 +71,6 @@ int	main(int argc, char **argv)
 
 	if (check_args(argv, argc))
 		return (1);
-    tab.t_init = get_time();
 	fill_tab(argc, argv, &tab);
     tid = (pthread_t *)malloc(tab.n_philos * sizeof(pthread_t));
     if (!tid)
@@ -85,11 +85,14 @@ int	main(int argc, char **argv)
             free(tid);
             return (1);
         }
-		usleep(1000);
+		pthread_mutex_lock(&tab.check);
+		tab.philo[i].last_eat = tab.t_init;
+		pthread_mutex_unlock(&tab.check);
     }
-//	i = -1;
-//	while (tab.n_philos > ++i)
-		//pthread_join(tid[0], NULL);
+    check_dead(&tab);
+	i = -1;
+	while (tab.n_philos > ++i)
+		pthread_join(tid[i], NULL);
 
 	return (0);
 }

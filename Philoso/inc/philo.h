@@ -33,7 +33,9 @@ typedef struct s_args
 }				t_args;
 
 int     ft_is_num(char *string);
-int     get_time(void);
+size_t     get_time(void);
+void	ft_sleep(size_t time);
 int     ft_atoi(const char *nptr);
 void    *philo_life(void *arg);
+void	check_dead(t_args *tab);
 #endif

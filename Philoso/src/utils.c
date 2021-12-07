@@ -14,12 +14,26 @@ int	ft_is_num(char *string)
     return (0);
 }
 
-int	get_time(void)
+size_t	get_time(void)
 {
-	static struct timeval	tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	ft_sleep(size_t time)
+{
+	size_t	t;
+
+	t = get_time();
+    printf("time:%li\n", time);
+	while (1)
+	{
+		if (get_time() - t >= time)
+			break ;
+		usleep(100);
+	}
 }
 
 int ft_atoi(const char *nptr)
