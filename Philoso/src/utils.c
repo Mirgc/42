@@ -38,25 +38,25 @@ void	ft_sleep(size_t time)
 
 int ft_atoi(const char *nptr)
 {
-    char *str;
-    int i;
-    int res;
+    long    i;
+    long    multi;
 
-    str = (char *)nptr;
-    if (*str < 32 || (*str > 32 && *str < 48) || *str > 57)
-        return (0);
-    else
+    multi = 1;
+    while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n' || *nptr == '\r'
+        || *nptr == '\v' || *nptr == '\f')
+        nptr++;
+    if (*nptr == '-' || *nptr == '+')
     {
-        while (*str == 32)
-            str++;
-        i = 1;
-        res = 0;
-        while (*str >= 48 && *str <= 57)
-        {
-            res = (int)*str - '0' *i ;
-            i *= 10;
-            str++;
-        }
-        return(res);
+        if (*nptr == '-')
+            multi = -1;
+        nptr++;
     }
+    i = 0;
+    while (*nptr >= 48 && *nptr <= 57)
+    {
+        i *= 10;
+        i += (*nptr - '0');
+        nptr++;
+    }
+    return (i * multi);
 }
