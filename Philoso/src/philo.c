@@ -31,27 +31,24 @@ void	check_dead(t_args *tab)
 
 void    philo_eat(t_philo *philo)
 {
-    t_args	*tab;
-
-	tab = philo->tab;
 	pthread_mutex_lock(&philo->fork);
     printf("\033[1;34mPhilo %i: has taken a fork.\n", philo->id);
     if (philo->tab->n_philos == 1)
     {
-        //ft_sleep(philo->tab, philo->tab->t_die);
-        printf("\033[1;31mPhilo %i: is dead.\n", tab->philo->id);
+        ft_sleep(philo->tab->t_die);
+        printf("\033[1;31mPhilo %i: is dead.\n", philo->tab->philo->id);
         pthread_mutex_unlock(&philo->fork);
         philo->tab->dead = 1;
         return ;
     }
     pthread_mutex_lock(&philo->r_philo->fork);
     printf("\033[1;34mPhilo %i: has taken a fork.\n", philo->id);
-    pthread_mutex_lock(&tab->check);
+    pthread_mutex_lock(&philo->tab->check);
     philo->eat_cnt++;
     printf("\033[0mPhilo %i: is eating. \033[1;90m%i\n", philo->id, philo->eat_cnt);
     philo->last_eat = get_time();
-    pthread_mutex_unlock(&tab->check);
-    //ft_sleep(tab, tab->t_eat);
+    pthread_mutex_unlock(&philo->tab->check);
+    ft_sleep(philo->tab->t_eat);
     pthread_mutex_unlock(&philo->fork);
 	pthread_mutex_unlock(&philo->r_philo->fork);
 }

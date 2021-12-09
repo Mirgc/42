@@ -27,7 +27,6 @@ void	ft_sleep(size_t time)
 	size_t	t;
 
 	t = get_time();
-    printf("time:%li\n", time);
 	while (1)
 	{
 		if (get_time() - t >= time)
