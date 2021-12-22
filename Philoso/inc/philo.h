@@ -26,6 +26,8 @@ typedef struct s_args
 	int				n_philos;
 	int				eaten_all;
 	int				dead;
+	int				st;
+	size_t			t_start;
 	size_t			t_init;
 	t_philo			*philo;
 	pthread_mutex_t	print;
@@ -36,6 +38,7 @@ int     ft_is_num(char *string);
 size_t     get_time(void);
 void	ft_sleep(size_t time);
 int     ft_atoi(const char *nptr);
+void	ft_printf(char *str, t_philo *philo, int eat);
 void    *philo_life(void *arg);
 void	check_dead(t_args *tab);
 #endif

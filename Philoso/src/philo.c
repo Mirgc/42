@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/19 17:37:39 by migarcia          #+#    #+#             */
+/*   Updated: 2021/12/19 19:48:44 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	check_dead(t_args *tab)
@@ -12,7 +24,7 @@ void	check_dead(t_args *tab)
 			pthread_mutex_lock(&tab->check);
 			if (get_time() - tab->philo[i].last_eat > (size_t)tab->t_die)
 			{
-				printf("\033[1;31mPhilo %i: is dead.\n", tab->philo->id);
+				printf("\033[1;31m[%lu] Philo %i: is dead.\n", get_time() - tab->t_init, tab->philo->id);
 				tab->dead = 1;
 			}
 			pthread_mutex_unlock(&tab->check);
@@ -31,24 +43,28 @@ void	check_dead(t_args *tab)
 
 void    philo_eat(t_philo *philo)
 {
+    t_args	*tab;
+
+	tab = philo->tab;
 	pthread_mutex_lock(&philo->fork);
-    printf("\033[1;34mPhilo %i: has taken a fork.\n", philo->id);
+    ft_printf("has taken a fork.", philo, 0);
     if (philo->tab->n_philos == 1)
     {
         ft_sleep(philo->tab->t_die);
-        printf("\033[1;31mPhilo %i: is dead.\n", philo->tab->philo->id);
+		printf("\033[1;31m[%lu] Philo %i: is dead.\n", get_time() - tab->t_init, tab->philo->id);
+        //printf("\033[1;31mPhilo %i: is dead.\n", tab->philo->id);
         pthread_mutex_unlock(&philo->fork);
         philo->tab->dead = 1;
         return ;
     }
     pthread_mutex_lock(&philo->r_philo->fork);
-    printf("\033[1;34mPhilo %i: has taken a fork.\n", philo->id);
-    pthread_mutex_lock(&philo->tab->check);
+    ft_printf("has taken a fork.", philo, 0);
+    pthread_mutex_lock(&tab->check);
     philo->eat_cnt++;
-    printf("\033[0mPhilo %i: is eating. \033[1;90m%i\n", philo->id, philo->eat_cnt);
+    ft_printf("is eating. \033[1;90m", philo, 1);
     philo->last_eat = get_time();
-    pthread_mutex_unlock(&philo->tab->check);
-    ft_sleep(philo->tab->t_eat);
+    pthread_mutex_unlock(&tab->check);
+    ft_sleep(tab->t_eat);
     pthread_mutex_unlock(&philo->fork);
 	pthread_mutex_unlock(&philo->r_philo->fork);
 }
@@ -58,16 +74,19 @@ void    *philo_life(void *arg)
     t_philo     *philo;
 
     philo = (t_philo *)arg;
+	while (1)
+	{
+	   	if (philo->tab->st)
+			break ;
+	}
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	while (!philo->tab->dead && !philo->tab->eaten_all)
 	{
 		philo_eat(philo);
-        if (!philo->tab->dead && !philo->tab->eaten_all)
-		    printf("\033[0mPhilo %i: is sleeping.\n", philo->id);
+		ft_printf("is sleeping.", philo, 0);
 		ft_sleep(philo->tab->t_slp);
-        if (!philo->tab->dead && !philo->tab->eaten_all)
-	        printf("\033[0mPhilo %i: is thinking.\n", philo->id);
+		ft_printf("is thinking.", philo, 0);
 	}
     return (NULL);
 }
