@@ -9,7 +9,8 @@ NAME = philo
 SRCS_DIR = src/
 SRCS_FILE =	main.c \
 			utils.c \
-			philo.c
+			philo.c \
+			print.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILE))
 OBJS = $(SRCS:%.c=%.o)
