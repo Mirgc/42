@@ -1,101 +1,84 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-void ft_putchar(char c)
-{
-	write(STDERR_FILENO, &c, 1);
-}
+#include <sys/wait.h>
+
+int fd_in;
+int fd_pipe[2];
+pid_t pid;
 
 int error(char *str)
 {
-	while (*str)
-		ft_putchar(*str++);
-	return (1);
+	while(*str)
+		write(STDERR_FILENO, str++, 1);
+	return(1);
 }
 
-int fatal(char **free_ptr)
+int fatal(char **cmd)
 {
-	free(free_ptr);
+	free(cmd);
 	exit(error("error: fatal\n"));
 }
 
-int size_cmd(char **cmd)
+int len_cmd(char **cmd)
 {
-	int i;
+	int i = -1;
 
-	if (!cmd)
-		return (0);
-	i = -1;
-	while (cmd[++i]);
+	if(!cmd)
+		return(0);
+	while(cmd[i])
+		++i;
 	return (i);
 }
 
-int	size_cmd_char(char **cmd, char *str)
+int len_to_char(char **cmd, char *c)
 {
-	int i;
+	int i = -1;
 
-	if (!cmd)
-		return (0);
-	i = -1;
+	if(!cmd)
+		return(0);
 	while(cmd[++i])
-		if (!strcmp(cmd[i], str))
-			return (i);
-	return (i);
+		if(!strcmp(cmd[i], c))
+			break ;
+	return(i);
 }
 
-char **next_pipe(char **cmd)
+char **ft_pipe(char **cmd)
 {
-	int i;
-
+	int i = -1;
+	
 	if (!cmd)
 		return (0);
-	i = -1;
-	while (cmd[++i])
-		if (!strcmp(cmd[i], "|"))
-			return (&cmd[i + 1]);
-	return (NULL);
+	while(cmd[++i])
+		if(!strcmp(cmd[i], "|"))
+			return(&cmd[i + 1]);
+	return(NULL);
 }
 
-char **add_cmd(char **argv, int *i)
+char **split_cmd(char **argv, int *i)
 {
-	int size;
-	int j;
 	char **tmp;
+	int len, j;
 
-	size = size_cmd_char(&argv[*i], ";");
-	if (!size)
-		return (NULL);
-	tmp = malloc(sizeof(*tmp) * (size + 1));
+	len = len_to_char(&argv[*i], ";");
+	if (!len)
+		return(NULL);
+	tmp = malloc(sizeof(*tmp) * (len + 1));
 	if (!tmp)
 		fatal(NULL);
 	j = -1;
-	while(++j < size)
+	while(++j < len)
 		tmp[j] = argv[j + *i];
 	tmp[j] = NULL;
-	*i += size;
+	*i += len;
 	return (tmp);
 }
 
-int ft_cd(char **cmd)
+int exec_cmd(char **cmd, char **env, char **tmp)
 {
-	if (size_cmd(cmd) != 2)
-		return(error("error: cd: bad arguments\n"));
-	if (chdir(cmd[1]) < 0)
-	{
-		error("error: cd: cannot change directory ");
-		error(cmd[1]);
-		error("\n");
-	}
-	return (0);
-}
-
-int exec_cmd(char **cmd, char **env, char **free_ptr)
-{
-	pid_t pid;
-
 	pid = fork();
 	if (pid < 0)
-		fatal(free_ptr);
+		fatal(tmp);
 	if (pid == 0)
 	{
 		if (execve(cmd[0], cmd, env) < 0)
@@ -109,56 +92,51 @@ int exec_cmd(char **cmd, char **env, char **free_ptr)
 	return (0);
 }
 
-int exec_child(char **cmd, char **env, char **tmp, int fd_in, int fd_pipe[2])
+int child(char **cmd, char **env, char **tmp)
 {
 	if (dup2(fd_in, STDIN_FILENO) < 0)
 		fatal(cmd);
-	if (next_pipe(tmp) && dup2(fd_pipe[1], STDOUT_FILENO) < 0)
+	if (ft_pipe(tmp) && dup2(fd_pipe[1], STDOUT_FILENO) < 0)
 		fatal(cmd);
 	close(fd_in);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
-	tmp[size_cmd_char(tmp, "|")] = NULL;
+	tmp[len_to_char(tmp, "|")] = NULL;
 	exec_cmd(tmp, env, cmd);
 	free(cmd);
 	exit(0);
 }
 
-int execute(char **cmd, char **env)
+int exec(char **cmd, char **env)
 {
-	if (!next_pipe(cmd))
-		return(exec_cmd(cmd, env, cmd));
 
-	int fd_in;
-	int fd_pipe[2];
 	char **tmp;
-	int nb_wait;
-	pid_t pid;
+	int nwait = 0;
 
+	if (!ft_pipe(cmd))
+		return(exec_cmd(cmd, env, cmd));
 	tmp = cmd;
-	nb_wait = 0;
-
 	fd_in = dup(STDIN_FILENO);
-	if(fd_in < 0)
+	if (fd_in < 0)
 		return(fatal(cmd));
 	while(tmp)
 	{
 		if (pipe(fd_pipe) < 0 || (pid = fork()) < 0)
 			fatal(cmd);
 		if (pid == 0)
-			exec_child(cmd, env, tmp, fd_in, fd_pipe);
+			child(cmd, env, tmp);
 		else
 		{
 			if (dup2(fd_pipe[0], fd_in) < 0)
 				fatal(cmd);
 			close(fd_pipe[0]);
 			close(fd_pipe[1]);
-			++nb_wait;
-			tmp = next_pipe(tmp);
+			++nwait;
+			tmp = ft_pipe(tmp);
 		}
 	}
 	close(fd_in);
-	while(nb_wait-- >= 0)
+	while(nwait-- >= 0)
 		waitpid(0, NULL, 0);
 	return (0);
 }
@@ -170,14 +148,22 @@ int main(int argc, char **argv, char **env)
 
 	while (++i < argc)
 	{
-		cmd = add_cmd(argv, &i);
+		cmd = split_cmd(argv, &i);
 		if (cmd && !strcmp(cmd[0], "cd"))
-			ft_cd(cmd);
+		{
+			if (len_cmd(cmd) != 2)
+				return(error("error: cd: bad arguments\n"));
+			if (chdir(cmd[1]) < 0)
+			{
+				error("error: cd: cannot change directory to ");
+				error(cmd[1]);
+				error("\n");
+			}
+		}
 		else if (cmd)
-			execute(cmd, env);
+			exec(cmd, env);
 		free(cmd);
 		cmd = NULL;
 	}
 	return (0);
 }
-

@@ -1,4 +1,4 @@
-gcc microshell.c -o microshell -Wall -Wextra -Werror
+#gcc microshell.c -o microshell -Wall -Wextra -Werror
 ./microshell /bin/ls
 ./microshell /bin/cat microshell.c
 ./microshell /bin/ls microshell.c
