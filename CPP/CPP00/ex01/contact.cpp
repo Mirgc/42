@@ -32,22 +32,22 @@ string Contact::get_secret(){
 	return(this->secret); 
 }
 
-string Contact::set_first(string str){
+void Contact::set_first(string str){
 	this->first = str; 
 }
 
-string Contact::set_last(string str){
+void Contact::set_last(string str){
 	this->last = str;
 }
 
-string Contact::set_nickname(string str){
+void Contact::set_nickname(string str){
 	this->nickname = str;
 }
 
-string Contact::set_phone(string str){
+void Contact::set_phone(string str){
 	this->phone = str; 
 }
 
-string Contact::set_secret(string str){
+void Contact::set_secret(string str){
 	this->secret = str; 
 }

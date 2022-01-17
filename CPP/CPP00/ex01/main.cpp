@@ -1,27 +1,33 @@
-#include <string.h>
+#include <unistd.h>
 #include "contact.hpp"
-
-void get_action(string &action){
-	cout << "añadido" << endl;
-}
+#include "phonebook.hpp"
 
 int main(){
 
-	Contact people[7];
+	Phonebook phonebook;
 	string action;
 	
-	cout << "### PHONEBOOK ###" << endl;
 	while(1){
+		system("clear");
+		cout << "### PHONEBOOK ###" << endl;
+		cout << endl;
 		cout << "Choose an action:" << endl;
 		cout << "[ADD/SEARCH/EXIT]" << endl;
-		get_action(action);
-	
-		if (action.compare("ADD") == 0){
-				Phonebook.add();
+		phonebook.get_action(action);
+		if (action.compare("ADD") == 0 || action.compare("add") == 0){
+			phonebook.add();
+			sleep(1);
+		}
+		else if (action.compare("SEARCH") == 0 || action.compare("search") == 0){
+			phonebook.search();
+			sleep(1);
+		}
+		else if (action.compare("EXIT") == 0 || action.compare("exit") == 0){
+			break ;
 		}
 		else{
-			cout << "Choose an action:" << endl;
-			cout << "ADD / SEARCH / EXIT" << endl;
+			cout << "¡¡Invalid option!!" << endl;
+			sleep(1);
 		}
 	}
 

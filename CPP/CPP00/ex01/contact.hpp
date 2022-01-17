@@ -16,15 +16,15 @@ class Contact{
 	public://Metodos publicos
 		Contact(void); //Constructor
 		~Contact(); //Destructor
-		void set_first();	
-		void set_last();	
-		void set_nickname();	
-		void set_phone();	
-		void set_secret();	
-		void get_first();	
-		void get_last();	
-		void get_nickname();	
-		void get_phone();	
-		void get_secret();	
+		void set_first(string str);	
+		void set_last(string str);	
+		void set_nickname(string str);	
+		void set_phone(string str);	
+		void set_secret(string str);	
+		string get_first();	
+		string get_last();	
+		string get_nickname();	
+		string get_phone();	
+		string get_secret();	
 };
 #endif

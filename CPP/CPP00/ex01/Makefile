@@ -3,7 +3,8 @@ CC		= clang++
 CFLAGS	= -Wall -Wextra -Werror
 
 SRCS	= contact.cpp \
-		  main.cpp
+	  phonebook.cpp \
+	  main.cpp
 OBJS	= $(SRCS:cpp=o)
 
 
