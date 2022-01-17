@@ -9,6 +9,7 @@ int main(){
 	
 	while(1){
 		system("clear");
+		action.clear();
 		cout << "### PHONEBOOK ###" << endl;
 		cout << endl;
 		cout << "Choose an action:" << endl;

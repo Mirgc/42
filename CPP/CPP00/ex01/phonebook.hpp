@@ -19,6 +19,7 @@ class Phonebook{
 		void add();
 		void print_in_col(string str);
 		void print_table();
+		void print_contact(int num);
 		void search();
 };
 #endif
