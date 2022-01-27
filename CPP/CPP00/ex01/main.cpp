@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/20 18:51:12 by migarcia          #+#    #+#             */
+/*   Updated: 2022/01/27 13:14:10 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "contact.hpp"
 #include "phonebook.hpp"
@@ -5,15 +17,15 @@
 int main(){
 
 	Phonebook phonebook;
-	string action;
+	std::string action;
 	
 	while(1){
 		system("clear");
 		action.clear();
-		cout << "### PHONEBOOK ###" << endl;
-		cout << endl;
-		cout << "Choose an action:" << endl;
-		cout << "[ADD/SEARCH/EXIT]" << endl;
+		std::cout << "### PHONEBOOK ###" << std::endl;
+		std::cout << std::endl;
+		std::cout << "Choose an action:" << std::endl;
+		std::cout << "[ADD/SEARCH/EXIT]" << std::endl;
 		phonebook.get_action(action);
 		if (action.compare("ADD") == 0 || action.compare("add") == 0){
 			phonebook.add();
@@ -27,7 +39,7 @@ int main(){
 			break ;
 		}
 		else{
-			cout << "¡¡Invalid option!!" << endl;
+			std::cout << "¡¡Invalid option!!" << std::endl;
 			sleep(1);
 		}
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phonebook.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/20 18:50:55 by migarcia          #+#    #+#             */
+/*   Updated: 2022/01/27 13:13:53 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "phonebook.hpp"
 #include <cstdio>
 
@@ -6,55 +18,55 @@ Phonebook::Phonebook(void):pos(0), contacts(0){
 }
 
 Phonebook::~Phonebook(){
-	cout << "### See you soon! ###" << endl;
+	std::cout << "### See you soon! ###" << std::endl;
 }
 
-void Phonebook::get_action(string &str){
-	getline(cin, str);
-	if (cin.bad())
+void Phonebook::get_action(std::string &str){
+	getline(std::cin, str);
+	if (std::cin.bad())
 	{
-		cin.clear();
-		cout << "Invalid input! Closing App..." << endl;
+		std::cin.clear();
+		std::cout << "Invalid input! Closing App..." << std::endl;
 		exit(1);
 	}
 }
 
 void Phonebook::add(){
-	string str;
+	std::string str;
 
 	if (this->pos == 8)
 		this->pos = 0;
-	cout << "Insert first name: ";
-	getline(cin, str);
+	std::cout << "Insert first name: ";
+	getline(std::cin, str);
 	list[pos].set_first(str);
-	cout << "Insert last name: ";
-	getline(cin, str);
+	std::cout << "Insert last name: ";
+	getline(std::cin, str);
 	list[pos].set_last(str);
-	cout << "Insert nickname: ";
-	getline(cin, str);
+	std::cout << "Insert nickname: ";
+	getline(std::cin, str);
 	list[pos].set_nickname(str);
-	cout << "Insert phone: ";
-	getline(cin, str);
+	std::cout << "Insert phone: ";
+	getline(std::cin, str);
 	list[pos].set_phone(str);
-	cout << "Insert darkest secret: ";
-	getline(cin, str);
+	std::cout << "Insert darkest secret: ";
+	getline(std::cin, str);
 	list[pos].set_secret(str);
-	cout << endl;
+	std::cout << std::endl;
 	if (contacts < 8)
 		contacts++;
 	this->pos++;
 }
 
-void Phonebook::print_in_col(string str){
-	string tmp;
+void Phonebook::print_in_col(std::string str){
+	std::string tmp;
 
-	cout << setw(10);
+	std::cout << std::setw(10);
 	if (str.length() <= 10)
-		cout << str;
+		std::cout << str;
 	else{
 		tmp = str.substr(0, 9);
 		tmp += ".";
-		cout << tmp;
+		std::cout << tmp;
 	}		
 }
 
@@ -62,68 +74,65 @@ void Phonebook::print_table(){
 	int i = 0;
 	
 	while (i < contacts){
-		cout << "|";
-		cout << setw(10);
-		cout << setiosflags(ios::right);
-		cout << i + 1;
-		cout << "|";
+		std::cout << "|";
+		std::cout << std::setw(10);
+		std::cout << std::setiosflags(std::ios::right);
+		std::cout << i + 1;
+		std::cout << "|";
 		Phonebook::print_in_col(list[i].get_first());
-		cout << "|";
+		std::cout << "|";
 		Phonebook::print_in_col(list[i].get_last());
-		cout << "|";
+		std::cout << "|";
 		Phonebook::print_in_col(list[i].get_nickname());
-		cout << "|" << endl;
+		std::cout << "|" << std::endl;
 		i++;
 	}
 }
 
 void Phonebook::print_contact(int num){
-	string	str;
+	std::string	str;
 	
 	if (num < 1 || num > contacts)
-		cout << "Invalid Index!!" << endl;
+		std::cout << "Invalid Index!!" << std::endl;
 	else{
-		cout << endl;
-		cout << "First name	: "; cout << list[num - 1].get_first() << endl;
-		cout << "Last name	: "; cout << list[num - 1].get_last() << endl;
-		cout << "Nickname	: "; cout << list[num - 1].get_nickname() << endl;
-		cout << "Phone number	: "; cout << list[num - 1].get_phone() << endl;
-		cout << "Darkest secret	: "; cout << list[num - 1].get_secret() << endl;
-		cout << "Press a key to main menu.....";
-		getline(cin, str);
+		std::cout << std::endl;
+		std::cout << "First name	: "; std::cout << list[num - 1].get_first() << std::endl;
+		std::cout << "Last name	: "; std::cout << list[num - 1].get_last() << std::endl;
+		std::cout << "Nickname	: "; std::cout << list[num - 1].get_nickname() << std::endl;
+		std::cout << "Phone number	: "; std::cout << list[num - 1].get_phone() << std::endl;
+		std::cout << "Darkest secret	: "; std::cout << list[num - 1].get_secret() << std::endl;
+		std::cout << "Press a key to main menu.....";
+		getline(std::cin, str);
 	}
 }
 
 void Phonebook::search(){
-	string	str;
+	std::string	str;
 	int	num;
 
 	if (contacts == 0)
-		cout << "No contacts to search!!" << endl;
+		std::cout << "No contacts to search!!" << std::endl;
 	else{
-		cout << endl;
-		cout << setiosflags(ios::right); 
-		cout << "|";
+		std::cout << std::endl;
+		std::cout << std::setiosflags(std::ios::right); 
+		std::cout << "|";
 		Phonebook::print_in_col("index");
-		cout << "|";
+		std::cout << "|";
 		Phonebook::print_in_col("first name");
-		cout << "|";
+		std::cout << "|";
 		Phonebook::print_in_col("last name");
-		cout << "|";
+		std::cout << "|";
 		Phonebook::print_in_col("nickname");
-		cout << "|" << endl;
+		std::cout << "|" << std::endl;
 		Phonebook::print_table();
-		cout << "Select index: ";
-		getline(cin, str);
+		std::cout << "Select index: ";
+		getline(std::cin, str);
             	if (str.length() == 1)
             	{
                 	num = str[0] - '0';
 			Phonebook::print_contact(num);
 		}
 		else
-                	cout <<"Invalid Index!!" << endl;
-		//else {
-	        //	cout << "Invalid Index!!";
-		//}
+                	std::cout <<"Invalid Index!!" << std::endl;
 	}
 }
