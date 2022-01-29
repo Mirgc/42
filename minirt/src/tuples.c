@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:01:00 by migarcia          #+#    #+#             */
-/*   Updated: 2022/01/27 20:04:35 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/01/29 12:36:10 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,21 @@ double	v_dot(t_tup	a, t_tup b)
 
 t_tup	v_cross(t_tup a, t_tup b)
 {
-	t_tup tmp;
+	t_tup	tmp;
 
 	tmp.x = a.y * b.z - a.z * b.y;
 	tmp.y = a.z * b.x - a.x * b.z;
 	tmp.z = a.x * b.y - a.y * b.x;
 	tmp.w = 0;
+	return (tmp);
+}
+
+t_proj	tick(t_env env, t_proj proj)
+{
+	t_proj	tmp;
+
+	tmp.pos = v_add(proj.pos, proj.vel);
+	tmp.vel = v_add(v_add(proj.vel, env.grav), env.wind);
 	return (tmp);
 }
 
