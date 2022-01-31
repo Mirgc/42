@@ -21,6 +21,7 @@ typedef struct s_env
 	t_tup	wind;
 }	t_env;
 
+
 t_tup	v_create(double x, double y, double z, int v);
 t_tup	v_add(t_tup a, t_tup b);
 t_tup	v_substract(t_tup a, t_tup b);

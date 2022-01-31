@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/tuples.h"
+#include "tuples.h"
 #include <unistd.h>
 #include <math.h>
 

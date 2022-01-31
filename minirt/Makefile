@@ -1,31 +1,65 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SANITIZE    = -fsanitize=address -g3
+NAME	= miniRT
 
-NAME = minirt 
+HEAD	= includes
 
-SRCS_DIR = src/
-SRCS_FILE =	main.c \
-			tuples.c
+SRCDIR	= srcs/
 
-SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILE))
-OBJS = $(SRCS:%.c=%.o)
+LIB		= lib/
 
-$(NAME) :	$(OBJS)
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+FILES	=	main.c \
+			tuples.c \
+			canvas.c \
 
-all		:	$(NAME)
+SRCS	= $(addprefix $(SRCDIR), $(FILES))
 
-s:
-	$(CC) $(CFLAGS) $(SANITIZE) -o $(NAME) $(OBJS)
+OBJS	= ${SRCS:.c=.o}
 
-clean	:	
-			rm -rf $(OBJS)
+CC		= gcc -g3
 
-fclean	:	clean
-			rm -rf $(NAME)
+RM		= rm -f
 
-re		:	fclean all
+CFLAGS	= -Wall -Wextra -Werror -I $(HEAD)
 
-.PHONY	:	all clean fclean re
+#FLAGS = -L $(LIB)libft -lft -L $(LIB)libvector -lvct
 
+MACOS_MACRO = -D MACOS
+
+LINUX_MACRO = -D LINUX
+
+MACOS_FLAGS = -L $(LIB)minilibx_opengl_20191021 -lmlx -framework OpenGL -framework AppKit 
+
+LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext -lpthread
+
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Darwin)
+	NUM_THREADS = $(shell sysctl -n hw.ncpu)
+	CFLAGS += $(MACOS_MACRO)
+	FLAGS += $(MACOS_FLAGS)
+endif
+ifeq ($(UNAME),Linux)
+	NUM_THREADS = $(shell nproc --all)
+	CFLAGS += $(LINUX_MACRO)
+	FLAGS += $(LINUX_FLAGS)
+endif
+
+${NAME}:	${OBJS}
+#			make -C $(LIB)libft
+#			make -C $(LIB)libvector
+			${CC} ${CFLAGS} $(OBJS) $(FLAGS) -o ${NAME}
+
+all:		${NAME}
+
+clean:
+#			make clean -C $(LIB)libft
+#			make clean -C $(LIB)libvector
+			${RM} ${OBJS}
+
+fclean:		clean
+#			make fclean -C $(LIB)libft
+#			make fclean -C $(LIB)libvector
+			${RM} ${NAME}
+
+re:			fclean all
+
+PHONY:		all clean fclean re
