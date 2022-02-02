@@ -8,17 +8,16 @@
 # include <math.h>
 # include <stdio.h>
 
-# ifdef MACOS
-#  define OS_NAME 1
-# endif
-
-# ifdef LINUX
-#  define OS_NAME 2
-# endif
-
 # define EPSILON 0.00001
 # define P_WIDTH 900 
 # define P_HEIGHT 550
+
+typedef struct s_matrix
+{
+	float m[4][4];
+	int	rows;
+	int	cols;
+}	t_matrix;
 
 typedef struct s_color
 {
@@ -56,5 +55,11 @@ t_color addcolor(t_color a, t_color b);
 t_color subcolor(t_color a, t_color b);
 t_color multicolor(t_color a, int b);
 t_color hadacolor(t_color a, t_color b);
+void	free_mat(float **mat);
+float	**m_multi(t_matrix a, t_matrix b);
+t_tup   m_multi_tup(t_matrix a, t_tup b);
+t_matrix	m_identity(void);
+t_matrix	m_trans(t_matrix a);
+float   m_det(t_matrix a, int n);
 
 #endif

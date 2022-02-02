@@ -43,11 +43,7 @@ int	map_draw(t_map *map)
 		w = 0;
 		while (w < P_HEIGHT)
 		{
-			if (w == (int)p.pos.y && h == (int)p.pos.x )
-			{
-				p = tick(e, p);
-				draw(map, h, 550 - w);
-			}
+			draw(map, h, 550 - w);
 			w++;
 		}
 		h++;
@@ -62,7 +58,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_map   map;
+/*	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -74,6 +70,67 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
+*/
+	t_matrix a;
+//	t_matrix b;
+//	float **tmp;
+
+	a.m[0][0] = 1;
+	a.m[0][1] = 7;
+	a.m[0][2] = 14;
+	a.m[0][3] = 0;
+	a.m[1][0] = 9;
+	a.m[1][1] = 4;
+	a.m[1][2] = 18;
+	a.m[1][3] = 18;
+	a.m[2][0] = 2;
+	a.m[2][1] = 4;
+	a.m[2][2] = 5;
+	a.m[2][3] = 5;
+	a.m[3][0] = 1;
+	a.m[3][1] = 7;
+	a.m[3][2] = 1;
+	a.m[3][3] = 11;
+
+/*	b.m[0][0] = -2;
+	b.m[0][1] = 1;
+	b.m[0][2] = 2;
+	b.m[0][3] = 3;
+	b.m[1][0] = 3;
+	b.m[1][1] = 2;
+	b.m[1][2] = 1;
+	b.m[1][3] = -1;
+	b.m[2][0] = 4;
+	b.m[2][1] = 3;
+	b.m[2][2] = 6;
+	b.m[2][3] = 5;
+	b.m[3][0] = 1;
+	b.m[3][1] = 2;
+	b.m[3][2] = 7;
+	b.m[3][3] = 8;
+*/
+//	t_tup tup;
+//	tup = v_create(1, 2, 3, 1);
+//	tup = m_multi_tup(a, tup);
+//	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
+//	tmp = m_multi(a, b);
+//	b = m_identity();
+/*	int w, h;
+	w = 0;
+        while (w < 4)
+        {
+                h = 0;
+                while (h < 4)
+		{
+			printf("%f ", a.m[w][h]);
+			h++;
+		}
+		printf("\n");
+		w++;
+	}
+	printf("\n");*/
+	printf("%f\n", m_det(a, 4));
+	//free_mat(tmp);
         return (0);
 
 }

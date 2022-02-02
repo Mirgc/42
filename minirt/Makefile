@@ -9,6 +9,7 @@ LIB		= lib/
 FILES	=	main.c \
 			tuples.c \
 			canvas.c \
+			matrix.c \
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 
