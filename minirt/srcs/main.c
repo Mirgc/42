@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/01/31 21:08:46 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:13:25 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
 */
 	t_matrix a;
-//	t_matrix b;
+	t_matrix b;
 //	float **tmp;
 
 	a.m[0][0] = 1;
@@ -91,6 +91,8 @@ int	main(int argc, char **argv)
 	a.m[3][1] = 7;
 	a.m[3][2] = 1;
 	a.m[3][3] = 11;
+	a.rows = 4;
+	a.cols = 4;
 
 /*	b.m[0][0] = -2;
 	b.m[0][1] = 1;
@@ -115,12 +117,29 @@ int	main(int argc, char **argv)
 //	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
 //	tmp = m_multi(a, b);
 //	b = m_identity();
-/*	int w, h;
+	b = m_init(4, 4);
+	b = m_submatrix(a, 0, 2);
+	printf("%f\n", m_minor(b, 0, 2));
+	printf("%i, %i\n", b.cols, b.rows);
+	int w, h;
 	w = 0;
-        while (w < 4)
-        {
+	while (w < b.rows)
+	{
                 h = 0;
-                while (h < 4)
+                while (h < b.cols)
+		{
+			printf("%f ", b.m[w][h]);
+			h++;
+		}
+		printf("\n");
+		w++;
+	}
+	printf("\n");
+	w = 0;
+	while (w < a.rows)
+	{
+		h = 0;
+        while (h < a.cols)
 		{
 			printf("%f ", a.m[w][h]);
 			h++;
@@ -128,8 +147,8 @@ int	main(int argc, char **argv)
 		printf("\n");
 		w++;
 	}
-	printf("\n");*/
-	printf("%f\n", m_det(a, 4));
+	printf("\n");
+	//printf("%f\n", m_det(a, 4));
 	//free_mat(tmp);
         return (0);
 

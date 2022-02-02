@@ -60,6 +60,9 @@ float	**m_multi(t_matrix a, t_matrix b);
 t_tup   m_multi_tup(t_matrix a, t_tup b);
 t_matrix	m_identity(void);
 t_matrix	m_trans(t_matrix a);
-float   m_det(t_matrix a, int n);
+t_matrix    m_init(int rows, int cols);
+t_matrix	m_submatrix(t_matrix	m, int row, int col);
+float		m_minor(t_matrix    a, int row, int col);
+//float   m_det(t_matrix a, int n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/01/31 21:08:42 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:13:28 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,70 @@ t_matrix	m_trans(t_matrix a)
 	return (tmp);
 }
 
-float	m_det(t_matrix a, int n) 
+t_matrix	m_init(int rows, int cols)
+{
+	t_matrix a;
+
+	a.m[0][0] = 0;
+    a.m[0][1] = 0;
+    a.m[0][2] = 0;
+    a.m[0][3] = 0;
+    a.m[1][0] = 0;
+    a.m[1][1] = 0;
+    a.m[1][2] = 0;
+    a.m[1][3] = 0;
+    a.m[2][0] = 0;
+    a.m[2][1] = 0;
+    a.m[2][2] = 0;
+    a.m[2][3] = 0;
+    a.m[3][0] = 0;
+    a.m[3][1] = 0;
+    a.m[3][2] = 0;
+    a.m[3][3] = 0;
+	a.rows = rows;
+	a.cols = cols;
+	return (a);
+}
+
+t_matrix	m_submatrix(t_matrix	a, int row, int col)
+{
+	t_matrix	b;
+	int		i;
+	int		j;
+	int		h;
+	int		k;
+
+	b.cols = a.cols - 1;
+	b.rows = a.rows - 1;
+	h = 0;
+	i = -1;
+	while (++i < a.rows)
+	{
+		k = 0;
+		j = -1;
+		while (++j < a.cols)
+		{
+			b.m[h][k] = a.m[i][j];
+			if (j != col)
+				k++;
+		}
+		if (i != row)
+			h++;
+	}
+	return (b);
+}
+
+float	m_minor(t_matrix	a, int row, int col)
+{
+	t_matrix	b;
+	float		det;
+
+	b = m_submatrix(a, row, col);
+	det = b.m[0][0] * b.m[1][1] - b.m[0][1] * b.m[1][0];
+	return (det);	
+}
+
+/*float	m_det(t_matrix a, int n) 
 { 
 	float	c;
 	float	r;
@@ -134,4 +197,4 @@ float	m_det(t_matrix a, int n)
 	while (++i < n)
         	r *=a.m[i][i];
 	return r;
-} 
+} */
