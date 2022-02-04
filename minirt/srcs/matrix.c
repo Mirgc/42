@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/02 20:13:28 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:53:32 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,4 +230,26 @@ t_matrix	m_translation(float x, float y, float z)
 	a.m[1][3] = y;
 	a.m[2][3] = z;
 	return (a);
+}
+
+t_matrix	m_scaling(float	x, float y, float z)
+{
+	t_matrix	a;
+	
+	a = identity();
+	a.m[0][0] = x;
+	a.m[1][1] = y;
+	a.m[2][2] = z;
+	return (a);
+}
+
+t_matrix	m_rotationx(float rad)
+{
+	t_matrix	a;
+
+	a = identity();
+	a[1][1] = cos(rad);
+	a[1][2] = -(sin(rad));
+	a[2][1] = sin(rad);
+	a[2][2] = cos(rad);
 }

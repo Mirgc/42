@@ -66,6 +66,9 @@ float		m_minor(t_matrix    a, int row, int col, int c);
 float		m_cofactor(t_matrix     a, int row, int col, int c);
 float		m_det(t_matrix	a, int c);
 t_matrix	m_invertible(t_matrix a);
+t_matrix	m_translation(float x, float y, float z);
+t_matrix	m_scaling(float x, float y, float z);
+t_matrix	m_rotationx(float rad);
 //float   m_det(t_matrix a, int n);
 
 #endif
