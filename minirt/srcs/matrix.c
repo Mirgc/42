@@ -26,20 +26,39 @@ void	free_mat(float **mat)
 	free(mat);
 }
 
-float	**m_multi(t_matrix a, t_matrix b)
+t_matrix	m_init(int rows, int cols)
 {
-	int	w;
-	int	h;
-	int	k;
-	float **tmp;
+	t_matrix a;
 
-	tmp = (float **)malloc(sizeof(float *) * 4);
-        k = 0;
-        while (k < 4)
-        {
-                tmp[k] = (float *)malloc(sizeof(float) * 4);
-                k++;
-        }
+	a.m[0][0] = 0;
+	a.m[0][1] = 0;
+	a.m[0][2] = 0;
+	a.m[0][3] = 0;
+	a.m[1][0] = 0;
+	a.m[1][1] = 0;
+	a.m[1][2] = 0;
+	a.m[1][3] = 0;
+	a.m[2][0] = 0;
+	a.m[2][1] = 0;
+	a.m[2][2] = 0;
+	a.m[2][3] = 0;
+	a.m[3][0] = 0;
+	a.m[3][1] = 0;
+	a.m[3][2] = 0;
+	a.m[3][3] = 0;
+	a.rows = rows;
+	a.cols = cols;
+	return (a);
+}
+
+t_matrix	m_multi(t_matrix a, t_matrix b)
+{
+	int		w;
+	int		h;
+	int		k;
+	t_matrix 	tmp;
+
+	tmp = m_init(4, 4);
 	w = 0;
 	while (w < 4)
 	{
@@ -49,7 +68,7 @@ float	**m_multi(t_matrix a, t_matrix b)
 			k = 0;
 			while (k < 4)
 			{
-				tmp[w][h] += a.m[w][k] * b.m[k][h];
+				tmp.m[w][h] += a.m[w][k] * b.m[k][h];
 				k++;
          		}
 		h++;
@@ -109,31 +128,6 @@ t_matrix	m_trans(t_matrix a)
 	return (tmp);
 }
 
-t_matrix	m_init(int rows, int cols)
-{
-	t_matrix a;
-
-	a.m[0][0] = 0;
-    a.m[0][1] = 0;
-    a.m[0][2] = 0;
-    a.m[0][3] = 0;
-    a.m[1][0] = 0;
-    a.m[1][1] = 0;
-    a.m[1][2] = 0;
-    a.m[1][3] = 0;
-    a.m[2][0] = 0;
-    a.m[2][1] = 0;
-    a.m[2][2] = 0;
-    a.m[2][3] = 0;
-    a.m[3][0] = 0;
-    a.m[3][1] = 0;
-    a.m[3][2] = 0;
-    a.m[3][3] = 0;
-	a.rows = rows;
-	a.cols = cols;
-	return (a);
-}
-
 t_matrix	m_submatrix(t_matrix	a, int row, int col)
 {
 	t_matrix	b;
@@ -162,39 +156,78 @@ t_matrix	m_submatrix(t_matrix	a, int row, int col)
 	return (b);
 }
 
-float	m_minor(t_matrix	a, int row, int col)
+float	m_minor(t_matrix	a, int row, int col, int c)
 {
 	t_matrix	b;
 	float		det;
 
+	det = 0;
 	b = m_submatrix(a, row, col);
-	det = b.m[0][0] * b.m[1][1] - b.m[0][1] * b.m[1][0];
+	det += m_det(b, c - 1);
 	return (det);	
 }
 
-/*float	m_det(t_matrix a, int n) 
-{ 
-	float	c;
-	float	r;
+float	m_cofactor(t_matrix	a, int row, int	col, int c)
+{
+	if ((row + col) % 2)
+		return(m_minor(a, row, col, c) * -1);
+	else
+		return(m_minor(a, row, col, c) * 1);
+}
+
+float	m_det(t_matrix	a, int	c)
+{
+	float	det;
 	int	i;
-	int	k;
-	int	j;
-	
+
+	det = 0;
 	i = -1;
-	while (++i < n)
+	if (c == 2)
+		det += a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
+	else
 	{
-		k = i;
-		while (++k < n)
+		while (++i < c)
+			det += a.m[0][i] * m_cofactor(a, 0, i, c);
+	}
+	return (det);
+}
+
+t_matrix	m_invertible(t_matrix a)
+{
+	t_matrix	b;
+	float		det;
+	int		i;
+	int		j;
+
+	b = m_init(4, 4);
+	det = m_det(a, 4);
+	if ((int)det != 0)
+	{
+		i = -1;
+		while (++i < a.rows)
 		{
-            		c = a.m[k][i] / a.m[i][i];
-			j = i - 1;
-			while (++j < n)
-				a.m[k][j]= a.m[k][j] - c*a.m[i][j];
-        	}
-    	}
-	r = 1;
-	i = -1;
-	while (++i < n)
-        	r *=a.m[i][i];
-	return r;
-} */
+			j = -1;
+			while (++j < a.cols)
+			{
+				b.m[j][i] = m_cofactor(a, i, j, 4) / det;
+			}
+		}	
+	}
+	else
+	{
+		b.cols = 0;
+		b.rows = 0;
+	}
+	return (b);
+}
+
+t_matrix	m_translation(float x, float y, float z)
+{
+	t_matrix	a;
+
+	a = m_identity();
+	a.m[0][3] = x;
+	a.m[1][3] = y;
+	a.m[2][3] = z;
+	return (a);
+}

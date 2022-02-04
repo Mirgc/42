@@ -73,54 +73,61 @@ int	main(int argc, char **argv)
 */
 	t_matrix a;
 	t_matrix b;
+	t_matrix c;
+	t_matrix d;
 //	float **tmp;
 
-	a.m[0][0] = 1;
-	a.m[0][1] = 7;
-	a.m[0][2] = 14;
-	a.m[0][3] = 0;
-	a.m[1][0] = 9;
-	a.m[1][1] = 4;
-	a.m[1][2] = 18;
-	a.m[1][3] = 18;
-	a.m[2][0] = 2;
+	a.m[0][0] = 3;
+	a.m[0][1] = -9;
+	a.m[0][2] = 7;
+	a.m[0][3] = 3;
+	a.m[1][0] = 3;
+	a.m[1][1] = -8;
+	a.m[1][2] = 2;
+	a.m[1][3] = -9;
+	a.m[2][0] = -4;
 	a.m[2][1] = 4;
-	a.m[2][2] = 5;
-	a.m[2][3] = 5;
-	a.m[3][0] = 1;
-	a.m[3][1] = 7;
-	a.m[3][2] = 1;
-	a.m[3][3] = 11;
+	a.m[2][2] = 4;
+	a.m[2][3] = 1;
+	a.m[3][0] = -6;
+	a.m[3][1] = 5;
+	a.m[3][2] = -1;
+	a.m[3][3] = 1;
 	a.rows = 4;
 	a.cols = 4;
 
-/*	b.m[0][0] = -2;
-	b.m[0][1] = 1;
+	b.m[0][0] = 8;
+	b.m[0][1] = 2;
 	b.m[0][2] = 2;
-	b.m[0][3] = 3;
+	b.m[0][3] = 2;
 	b.m[1][0] = 3;
-	b.m[1][1] = 2;
-	b.m[1][2] = 1;
-	b.m[1][3] = -1;
-	b.m[2][0] = 4;
-	b.m[2][1] = 3;
-	b.m[2][2] = 6;
-	b.m[2][3] = 5;
-	b.m[3][0] = 1;
-	b.m[3][1] = 2;
-	b.m[3][2] = 7;
-	b.m[3][3] = 8;
-*/
+	b.m[1][1] = -1;
+	b.m[1][2] = 7;
+	b.m[1][3] = 0;
+	b.m[2][0] = 7;
+	b.m[2][1] = 0;
+	b.m[2][2] = 5;
+	b.m[2][3] = 4;
+	b.m[3][0] = 6;
+	b.m[3][1] = -2;
+	b.m[3][2] = 0;
+	b.m[3][3] = 5;
+	b.rows = 4;
+	b.cols = 4;
 //	t_tup tup;
 //	tup = v_create(1, 2, 3, 1);
 //	tup = m_multi_tup(a, tup);
 //	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
 //	tmp = m_multi(a, b);
 //	b = m_identity();
-	b = m_init(4, 4);
-	b = m_submatrix(a, 0, 2);
-	printf("%f\n", m_minor(b, 0, 2));
-	printf("%i, %i\n", b.cols, b.rows);
+//	b = m_init(4, 4);
+//	b = m_submatrix(a, 0, 2);
+//	printf("%f\n", m_minor(b, 1, 2));
+//	printf("inver:%i\n", m_invertible(b));
+//	printf("%f\n", m_det(b, b.cols));
+//	printf("%i, %i\n", b.cols, b.rows);
+	c = m_multi(a, b);
+	d = m_multi(c, m_invertible(b));
 	int w, h;
 	w = 0;
 	while (w < b.rows)
@@ -128,7 +135,7 @@ int	main(int argc, char **argv)
                 h = 0;
                 while (h < b.cols)
 		{
-			printf("%f ", b.m[w][h]);
+			printf("%0.5f ", a.m[w][h]);
 			h++;
 		}
 		printf("\n");
@@ -141,7 +148,7 @@ int	main(int argc, char **argv)
 		h = 0;
         while (h < a.cols)
 		{
-			printf("%f ", a.m[w][h]);
+			printf("%0.5f ", d.m[w][h]);
 			h++;
 		}
 		printf("\n");
