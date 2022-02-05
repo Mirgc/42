@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/04 20:53:29 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/05 15:52:23 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ int	main(int argc, char **argv)
 	c = m_multi(a, b);
 	d = m_multi(c, m_invertible(b));
 	t_tup	p1, p2;
-	p1 = v_create(0, 1, 0, 1);
-	p2 = m_multi_tup(m_rotationx(90), p1);
+	p1 = v_create(2, 3, 4, 1);
+	p2 = m_multi_tup(m_shearing(0,0,0,0,0,1), p1);
 	printf("%f, %f, %f \n", p2.x, p2.y, p2.z);
 	int w, h;
 	w = 0;

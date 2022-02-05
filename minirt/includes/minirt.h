@@ -68,9 +68,10 @@ float		m_det(t_matrix	a, int c);
 t_matrix	m_invertible(t_matrix a);
 t_matrix	m_translation(float x, float y, float z);
 t_matrix	m_scaling(float x, float y, float z);
-t_matrix        m_rotationx(int angle);
-t_matrix	m_rotationy(int rad);
-t_matrix	m_rotationz(int rad);
+t_matrix	m_rotationx(int angle);
+t_matrix	m_rotationy(int angle);
+t_matrix	m_rotationz(int angle);
+t_matrix	m_shearing(float xy, float xz, float yx, float yz, float zx, float zy);
 //float   m_det(t_matrix a, int n);
 
 #endif

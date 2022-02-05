@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/04 20:53:32 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/05 15:52:19 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ t_matrix	m_rotationx(int angle)
 	a.m[1][2] = -(sin(rad));
 	a.m[2][1] = sin(rad);
 	a.m[2][2] = cos(rad);
-        return (a);
+	return (a);
 }
 
 t_matrix	m_rotationy(int angle)
@@ -268,7 +268,7 @@ t_matrix	m_rotationy(int angle)
 	a.m[0][2] = sin(rad);
 	a.m[2][0] = -(sin(rad));
 	a.m[2][2] = cos(rad);
-        return (a);
+	return (a);
 }
 
 t_matrix	m_rotationz(int angle)
@@ -282,5 +282,19 @@ t_matrix	m_rotationz(int angle)
 	a.m[0][1] = -(sin(rad));
 	a.m[1][0] = sin(rad);
 	a.m[1][1] = cos(rad);
-        return (a);
+	return (a);
+}
+
+t_matrix	m_shearing(float xy, float xz, float yx, float yz, float zx, float zy)
+{
+	t_matrix	a;
+
+	a = m_identity();
+	a.m[0][1] = xy;
+	a.m[0][2] = xz;
+	a.m[1][0] = yx;
+	a.m[1][2] = yz;
+	a.m[2][0] = zx;
+	a.m[2][1] = zy;
+	return (a);	
 }
