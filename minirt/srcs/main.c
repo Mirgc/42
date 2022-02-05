@@ -128,8 +128,10 @@ int	main(int argc, char **argv)
 //	printf("%i, %i\n", b.cols, b.rows);
 	c = m_multi(a, b);
 	d = m_multi(c, m_invertible(b));
-	t_tup	p1;
+	t_tup	p1, p2;
 	p1 = v_create(0, 1, 0, 1);
+	p2 = m_multi_tup(m_rotationx(90), p1);
+	printf("%f, %f, %f \n", p2.x, p2.y, p2.z);
 	int w, h;
 	w = 0;
 	while (w < b.rows)
@@ -148,7 +150,7 @@ int	main(int argc, char **argv)
 	while (w < a.rows)
 	{
 		h = 0;
-        while (h < a.cols)
+        	while (h < a.cols)
 		{
 			printf("%0.5f ", d.m[w][h]);
 			h++;

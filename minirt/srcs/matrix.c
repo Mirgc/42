@@ -236,7 +236,7 @@ t_matrix	m_scaling(float	x, float y, float z)
 {
 	t_matrix	a;
 	
-	a = identity();
+	a = m_identity();
 	a.m[0][0] = x;
 	a.m[1][1] = y;
 	a.m[2][2] = z;
@@ -246,60 +246,41 @@ t_matrix	m_scaling(float	x, float y, float z)
 t_matrix	m_rotationx(int angle)
 {
 	t_matrix	a;
-	t_tup		row1;
-	t_tup		row2;
-	t_tup		row3;
 	float		rad;
 
 	rad = angle * M_PI / 180;
-	a = identity();
-	a[1][1] = cos(rad);
-	a[1][2] = -(sin(rad));
-	a[2][1] = sin(rad);
-	a[2][2] = cos(rad);
-	row1 = (t_p3){1, 0, 0};
-        row2 = (t_p3){0, cos(rad_angle), -sin(rad_angle)};
-        row3 = (t_p3){0, sin(rad_angle), cos(rad_angle)};
-        rotated.x = vec.x * row1.x + vec.y * row1.y + vec.z * row1.z;
-        rotated.y = vec.x * row2.x + vec.y * row2.y + vec.z * row2.z;
-        rotated.z = vec.x * row3.x + vec.y * row3.y + vec.z * row3.z;
-        return (rotated);
-
+	a = m_identity();
+	a.m[1][1] = cos(rad);
+	a.m[1][2] = -(sin(rad));
+	a.m[2][1] = sin(rad);
+	a.m[2][2] = cos(rad);
+        return (a);
 }
 
-t_p3            y_axis_rotation(t_p3 vec, double angle)
+t_matrix	m_rotationy(int angle)
 {
-        t_p3    row1;
-        t_p3    row2;
-        t_p3    row3;
-        t_p3    rotated;
-        double  rad_angle;
+	t_matrix	a;
+	float		rad;
 
-        rad_angle = angle * M_PI / 180;
-        row1 = (t_p3){cos(rad_angle), 0, sin(rad_angle)};
-        row2 = (t_p3){0, 1, 0};
-        row3 = (t_p3){-sin(rad_angle), 0, cos(rad_angle)};
-        rotated.x = vec.x * row1.x + vec.y * row1.y + vec.z * row1.z;
-        rotated.y = vec.x * row2.x + vec.y * row2.y + vec.z * row2.z;
-        rotated.z = vec.x * row3.x + vec.y * row3.y + vec.z * row3.z;
-        return (rotated);
+	rad = angle * M_PI / 180;
+	a = m_identity();
+	a.m[0][0] = cos(rad);
+	a.m[0][2] = sin(rad);
+	a.m[2][0] = -(sin(rad));
+	a.m[2][2] = cos(rad);
+        return (a);
 }
 
-t_p3            z_axis_rotation(t_p3 vec, double angle)
+t_matrix	m_rotationz(int angle)
 {
-        t_p3    row1;
-        t_p3    row2;
-        t_p3    row3;
-        t_p3    rotated;
-        double  rad_angle;
+	t_matrix	a;
+	float		rad;
 
-        rad_angle = angle * M_PI / 180;
-        row1 = (t_p3){cos(rad_angle), -sin(rad_angle), 0};
-        row2 = (t_p3){sin(rad_angle), cos(rad_angle), 0};
-        row3 = (t_p3){0, 0, 1};
-        rotated.x = vec.x * row1.x + vec.y * row1.y + vec.z * row1.z;
-        rotated.y = vec.x * row2.x + vec.y * row2.y + vec.z * row2.z;
-        rotated.z = vec.x * row3.x + vec.y * row3.y + vec.z * row3.z;
-        return (rotated);
+	rad = angle * M_PI / 180;
+	a = m_identity();
+	a.m[0][0] = cos(rad);
+	a.m[0][1] = -(sin(rad));
+	a.m[1][0] = sin(rad);
+	a.m[1][1] = cos(rad);
+        return (a);
 }
-
