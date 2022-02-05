@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/05 15:52:23 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:29:22 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	map_draw(t_map *map)
 {
 	int	w;
 	int	h;
+	t_tup		p;
 
+	p = v_create(275, 450, 0, 1);
+			//p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(30))), p);
+			printf("%f, %f\n", p.x, p.y);
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
 	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, \
                         &map->image.size, &map->image.endian);
@@ -43,7 +47,10 @@ int	map_draw(t_map *map)
 		w = 0;
 		while (w < P_HEIGHT)
 		{
-			draw(map, h, 550 - w);
+			p = m_multi_tup(m_multi(m_scaling(5, 5, 5), m_rotationx(30)), p);
+			printf("%f, %f\n", p.x, p.y);
+			if ((int)p.x == w && (int)p.y == h)	
+				draw(map, h, 550 - w);
 			w++;
 		}
 		h++;
@@ -58,7 +65,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-/*	t_map   map;
+	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -70,8 +77,8 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-*/
-	t_matrix a;
+
+	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
 	t_matrix d;
@@ -129,8 +136,8 @@ int	main(int argc, char **argv)
 	c = m_multi(a, b);
 	d = m_multi(c, m_invertible(b));
 	t_tup	p1, p2;
-	p1 = v_create(2, 3, 4, 1);
-	p2 = m_multi_tup(m_shearing(0,0,0,0,0,1), p1);
+	p1 = v_create(1, 0, 1, 1);
+	p2 = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(90))), p1);
 	printf("%f, %f, %f \n", p2.x, p2.y, p2.z);
 	int w, h;
 	w = 0;
@@ -159,7 +166,7 @@ int	main(int argc, char **argv)
 		w++;
 	}
 	printf("\n");
-
+*/
 	//printf("%f\n", m_det(a, 4));
 	//free_mat(tmp);
         return (0);
