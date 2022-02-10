@@ -3,6 +3,7 @@
 
 # include "mlx.h"
 # include "tuples.h"
+# include "ray.h"
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>

@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/05 17:29:22 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/10 20:39:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	map_draw(t_map *map)
 {
 	int	w;
 	int	h;
-        int     vs_x;
-        int     vs_y;
+	int	vs_x;
+		int     vs_y;
 	int color = 0;
 	t_tup		p;
 	(void)w;
@@ -144,7 +144,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-
+/*
 	t_map   map;
 
 //        if (argc == 2)
@@ -159,7 +159,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-
+*/
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -202,11 +202,18 @@ int	main(int argc, char **argv)
 	b.m[3][2] = 0;
 	b.m[3][3] = 5;
 	b.rows = 4;
-	b.cols = 4;
-//	t_tup tup;
-//	tup = v_create(1, 2, 3, 1);
+	b.cols = 4;*/
+	t_tup	tup1;
+	t_tup	tup2;
+	t_tup	tup;
+	t_ray	a;
+	tup1 = v_create(2, 3, 4, 1);
+	tup2 = v_create(1, 0, 0, 1);
+	a.ori = tup1;
+	a.dst = tup2;
+	tup = r_position(a, 2.5);
 //	tup = m_multi_tup(a, tup);
-//	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
+	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
 //	tmp = m_multi(a, b);
 //	b = m_identity();
 //	b = m_init(4, 4);
@@ -215,7 +222,7 @@ int	main(int argc, char **argv)
 //	printf("inver:%i\n", m_invertible(b));
 //	printf("%f\n", m_det(b, b.cols));
 //	printf("%i, %i\n", b.cols, b.rows);
-	c = m_multi(a, b);
+/*	c = m_multi(a, b);
 	d = m_multi(c, m_invertible(b));
 	t_tup	p1, p2;
 	p1 = v_create(1, 0, 1, 1);

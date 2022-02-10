@@ -10,6 +10,7 @@ FILES	=	main.c \
 			tuples.c \
 			canvas.c \
 			matrix.c \
+			ray.c \
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 
