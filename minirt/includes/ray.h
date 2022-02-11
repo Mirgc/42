@@ -17,7 +17,8 @@ typedef struct s_inter
 	int			count;
 	float		point[2];
 	t_sphere	s;
-}
+} t_inter;
 
 t_tup	r_position(t_ray a, float i);
+double	r_intersection(t_ray ray, t_tup p);
 #endif

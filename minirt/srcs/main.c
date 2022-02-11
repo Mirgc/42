@@ -214,6 +214,7 @@ int	main(int argc, char **argv)
 	tup = r_position(a, 2.5);
 //	tup = m_multi_tup(a, tup);
 	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
+	printf("%f \n",	r_intersection(a, tup));
 //	tmp = m_multi(a, b);
 //	b = m_identity();
 //	b = m_init(4, 4);
