@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/10 20:39:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/11 20:27:30 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	map_draw(t_map *map)
 	int	w;
 	int	h;
 	int	vs_x;
-		int     vs_y;
+	int	vs_y;
 	int color = 0;
 	t_tup		p;
 	(void)w;
@@ -207,14 +207,15 @@ int	main(int argc, char **argv)
 	t_tup	tup2;
 	t_tup	tup;
 	t_ray	a;
-	tup1 = v_create(2, 3, 4, 1);
-	tup2 = v_create(1, 0, 0, 1);
+	tup1 = v_create(0, 2, -5, 1);
+	tup2 = v_create(0, 0, 1, 1);
 	a.ori = tup1;
 	a.dst = tup2;
-	tup = r_position(a, 2.5);
+	t_inter inter;
+	inter = r_intersection(inter.o, a);
 //	tup = m_multi_tup(a, tup);
 	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
-	printf("%f \n",	r_intersection(a, tup));
+	printf("%f, %f, %d\n",	inter.point[0], inter.point[1], inter.count);
 //	tmp = m_multi(a, b);
 //	b = m_identity();
 //	b = m_init(4, 4);

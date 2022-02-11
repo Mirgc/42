@@ -7,18 +7,21 @@ typedef struct s_ray
 	t_tup	dst;
 } t_ray;
 
-typedef struct s_sphere
+typedef struct s_obj
 {
 	char	id;
-} t_sphere;
+	float	t;
+} t_obj;
 
 typedef struct s_inter
 {
 	int			count;
 	float		point[2];
-	t_sphere	s;
+	float		t;
+	t_obj		o;
 } t_inter;
 
 t_tup	r_position(t_ray a, float i);
-double	r_intersection(t_ray ray, t_tup p);
+t_inter	r_intersect(t_obj o, t_ray ray);
+t_inter	r_intersection(float t, char id);
 #endif

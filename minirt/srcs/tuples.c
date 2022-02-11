@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:01:00 by migarcia          #+#    #+#             */
-/*   Updated: 2022/01/29 12:36:10 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:16:09 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_tup	v_normalize(t_tup a)
 
 double	v_dot(t_tup	a, t_tup b)
 {
-	return((a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w));
+	return((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
 }
 
 t_tup	v_cross(t_tup a, t_tup b)
