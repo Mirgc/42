@@ -1,5 +1,6 @@
 #include "tuples.h"
 #include "ray.h"
+#include "matrix.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +17,26 @@ t_sphere	r_create_sphere()
 	s.center = v_create(0,0,0,1);
 	s.id = 's';
 	s.r = 0;
+	s.transform = m_identity();
 	return (s);
+}
+
+t_ray	r_transform(t_ray a, t_matrix m)
+{
+	t_ray	tmp;
+	
+  printf("%f, %f, %f,\n",a.dir.x, a.dir.y, a.dir.z);
+  printf("%f, %f, %f,\n",a.ori.x, a.ori.y, a.ori.z);
+	tmp.ori = m_multi_tup(m, a.ori);
+	tmp.dir = m_multi_tup(m, a.dir);
+  printf("%f, %f, %f,\n",tmp.dir.x, tmp.dir.y, tmp.dir.z);
+  printf("%f, %f, %f,\n",tmp.ori.x, tmp.ori.y, tmp.ori.z);
+	return (tmp);
+}
+
+void	set_transform(t_sphere s, t_matrix m)
+{
+	s.transform = m;
 }
 
 t_arr_inter	r_intersect(t_sphere s, t_ray ray)
@@ -28,14 +48,16 @@ t_arr_inter	r_intersect(t_sphere s, t_ray ray)
 	double	i;
 	t_inter	t1;
 	t_inter	t2;
+	t_ray	raytr;
 
-	sp_to_ray = v_substract(ray.ori, s.center);
-	a = v_dot(ray.dir, ray.dir);
-	b = 2 * v_dot(ray.dir, sp_to_ray);
+	raytr = r_transform(ray, m_invertible(s.transform));
+	sp_to_ray = v_substract(raytr.ori, s.center);
+	a = v_dot(raytr.dir, raytr.dir);
+	b = 2 * v_dot(raytr.dir, sp_to_ray);
 	c = v_dot(sp_to_ray, sp_to_ray) - 1;
 	i = powf(b, 2) - (4 * a * c);
 	t1.t = 0;
-	t1.t = 0;
+	t2.t = 0;
 	if (i < 0)
 		return (r_intersections(t1, t2));
 	i = sqrtf(i);
@@ -72,15 +94,10 @@ t_arr_inter r_intersections(t_inter i1, t_inter i2)
 
 float	r_hit(t_arr_inter inter)
 {
-	if (inter.a[0].t > 0 && inter.a[1] > 0)
-		return (fmin(inter.a[0].t, inter.a[1]));
-	if (inter.a[0].t > 0 || inter.a[1] > 0)
-		return (fmax(inter.a[0].t, inter.a[1]));
+	if (inter.a[0].t > 0 && inter.a[1].t > 0)
+		return (fmin(inter.a[0].t, inter.a[1].t));
+	if (inter.a[0].t > 0 || inter.a[1].t > 0)
+		return (fmax(inter.a[0].t, inter.a[1].t));
 	return(-1);
-}
-
-t_ray	r_transform(t_ray a, t_matrix m)
-{
-	
 }
 

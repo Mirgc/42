@@ -1,15 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-# include "tuples.h"
+# include "structs.h"
 # include <math.h>
-
-typedef struct s_matrix
-{
-	float m[4][4];
-	int	rows;
-	int	cols;
-}	t_matrix;
 
 void		free_mat(float **mat);
 t_matrix	m_init(int rows, int cols);

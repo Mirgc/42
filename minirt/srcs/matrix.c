@@ -6,11 +6,12 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/09 19:24:53 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/16 20:30:24 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <minirt.h>
 
 void	free_mat(float **mat)
@@ -107,6 +108,8 @@ t_matrix	m_identity()
 				i.m[w][h] = 0;
 		}
 	}
+	i.rows = 4;
+	i.cols = 4;
 	return (i);
 }
 
@@ -204,10 +207,10 @@ t_matrix	m_invertible(t_matrix a)
 	if ((int)det != 0)
 	{
 		i = -1;
-		while (++i < a.rows)
+		while (++i < 4)
 		{
 			j = -1;
-			while (++j < a.cols)
+			while (++j < 4)
 			{
 				b.m[j][i] = m_cofactor(a, i, j, 4) / det;
 			}

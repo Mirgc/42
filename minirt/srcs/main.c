@@ -6,11 +6,14 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/11 20:27:30 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/16 20:30:41 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "tuples.h"
+#include "matrix.h"
+#include "ray.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -205,17 +208,19 @@ int	main(int argc, char **argv)
 	b.cols = 4;*/
 	t_arr_inter arr;
 	t_ray ray;
-	t_matrix a;
-	ray.ori = v_create(1,2,3,1);
-	ray.dir = v_create(0,1,0,0);
-	m = m_translation(3, 4, 5);
+//	t_matrix m;
+	ray.ori = v_create(0,0,-5,1);
+	ray.dir = v_create(0,0,1,0);
+//	t_ray ray2;
+//	ray2 = r_transform(ray, m);
 	t_sphere s;
-	s.center = v_create(0,0,0,1);
-	s.id = 's';
+	s = r_create_sphere();
+	set_transform(s, m_scaling(2, 2, 2));
 	arr = r_intersect(s, ray);
 //	tup = m_multi_tup(a, tup);
-//	printf("%f %f %f %d\n", tup.x, tup.y, tup.z, tup.w);
-	printf("c:%i , %f %c, %f %c,\n",arr.count, arr.a[0].t, arr.a[0].o.id, arr.a[1].t, arr.a[1].o.id);
+	printf("%f %f %d\n", arr.a[0].t, arr.a[1].t, arr.count);
+//	printf("%f, %f, %f,\n",ray2.dir.x, ray2.dir.y, ray2.dir.z);
+//	printf("%f, %f, %f,\n",ray2.ori.x, ray2.ori.y, ray2.ori.z);
 //	tmp = m_multi(a, b);
 //	b = m_identity();
 //	b = m_init(4, 4);

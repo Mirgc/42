@@ -1,26 +1,7 @@
 #ifndef TUPLES_H
 #define TUPLES_H
 
-typedef struct s_tup
-{
-	double	x;
-	double	y;
-	double	z;
-	int		w;
-}	t_tup;
-
-typedef struct s_proj
-{
-	t_tup	pos;
-	t_tup	vel;
-}	t_proj;
-
-typedef struct s_env
-{
-	t_tup	grav;
-	t_tup	wind;
-}	t_env;
-
+# include "structs.h"
 
 t_tup	v_create(double x, double y, double z, int v);
 t_tup	v_add(t_tup a, t_tup b);
