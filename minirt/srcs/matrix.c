@@ -83,10 +83,10 @@ t_tup	m_multi_tup(t_matrix a, t_tup b)
 {
 	t_tup	tmp;
 
-	tmp.x = a.m[0][0] * b.x + a.m[0][1] * b.y + a.m[0][2] * b.z + a.m[0][3] * b.w;
-	tmp.y = a.m[1][0] * b.x + a.m[1][1] * b.y + a.m[1][2] * b.z + a.m[1][3] * b.w;
-	tmp.z = a.m[2][0] * b.x + a.m[2][1] * b.y + a.m[2][2] * b.z + a.m[2][3] * b.w;
-	tmp.w = a.m[3][0] * b.x + a.m[3][1] * b.y + a.m[3][2] * b.z + a.m[3][3] * b.w;
+	tmp.x = b.x * a.m[0][0] + b.y * a.m[1][0] + b.z * a.m[2][0] + a.m[3][0];
+	tmp.y = b.x * a.m[0][1] + b.y * a.m[1][1] + b.z * a.m[2][1] + a.m[3][1];
+	tmp.z = b.x * a.m[0][2] + b.y * a.m[1][2] + b.z * a.m[2][2] + a.m[3][2];
+	//tmp.w = a.m[3][0] * b.x + a.m[3][1] * b.y + a.m[3][2] * b.z;
 	return(tmp);
 }
 

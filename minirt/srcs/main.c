@@ -215,7 +215,20 @@ int	main(int argc, char **argv)
 //	ray2 = r_transform(ray, m);
 	t_sphere s;
 	s = r_create_sphere();
-	set_transform(s, m_scaling(2, 2, 2));
+	set_transform(&s, m_translation(5, 0, 0));
+	int w, h;
+        w = 0;
+        while (w < 4)
+        {
+                h = 0;
+                while (h < 4)
+                {
+                        printf("%0.5f ", s.transform.m[w][h]);
+                        h++;
+                }
+                printf("\n");
+                w++;
+        }
 	arr = r_intersect(s, ray);
 //	tup = m_multi_tup(a, tup);
 	printf("%f %f %d\n", arr.a[0].t, arr.a[1].t, arr.count);
