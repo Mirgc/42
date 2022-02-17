@@ -6,7 +6,7 @@ typedef struct s_tup
 	double	x;
 	double	y;
 	double	z;
-	int		w;
+	double	w;
 }	t_tup;
 
 typedef struct s_proj

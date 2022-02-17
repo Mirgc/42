@@ -25,12 +25,8 @@ t_ray	r_transform(t_ray a, t_matrix m)
 {
 	t_ray	tmp;
 	
-	printf("%f, %f, %f\n", a.ori.x, a.ori.y, a.ori.z);
-	printf("%f, %f, %f\n", a.dir.x, a.dir.y, a.dir.z);
 	tmp.ori = m_multi_tup(m, a.ori);
 	tmp.dir = m_multi_tup(m, a.dir);
-	printf("%f, %f, %f\n", tmp.ori.x, tmp.ori.y, tmp.ori.z);
-	printf("%f, %f, %f\n", tmp.dir.x, tmp.dir.y, tmp.dir.z);
 	return (tmp);
 }
 
@@ -60,7 +56,7 @@ t_arr_inter	r_intersect(t_sphere s, t_ray ray)
 	t_inter	t1;
 	t_inter	t2;
 	t_ray	raytr;
-
+	
 	raytr = r_transform(ray, m_invertible(s.transform));
 	sp_to_ray = v_substract(raytr.ori, s.center);
 	a = v_dot(raytr.dir, raytr.dir);
@@ -69,7 +65,6 @@ t_arr_inter	r_intersect(t_sphere s, t_ray ray)
 	i = powf(b, 2) - (4 * a * c);
 	t1.t = 0;
 	t2.t = 0;
-	printf("%f\n", i);
 	if (i < 0)
 		return (r_intersections(t1, t2));
 	i = sqrtf(i);

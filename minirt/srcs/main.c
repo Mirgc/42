@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/16 20:30:41 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/17 20:45:04 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,8 @@ int	main(int argc, char **argv)
 //	ray2 = r_transform(ray, m);
 	t_sphere s;
 	s = r_create_sphere();
-	set_transform(&s, m_translation(5, 0, 0));
+	s.transform = m_translation(5, 0, 0);
+//	set_transform(&s, m);
 	int w, h;
         w = 0;
         while (w < 4)

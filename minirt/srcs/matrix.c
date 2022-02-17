@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/16 20:30:24 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/17 20:45:09 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ t_tup	m_multi_tup(t_matrix a, t_tup b)
 {
 	t_tup	tmp;
 
-	tmp.x = b.x * a.m[0][0] + b.y * a.m[1][0] + b.z * a.m[2][0] + a.m[3][0];
-	tmp.y = b.x * a.m[0][1] + b.y * a.m[1][1] + b.z * a.m[2][1] + a.m[3][1];
-	tmp.z = b.x * a.m[0][2] + b.y * a.m[1][2] + b.z * a.m[2][2] + a.m[3][2];
-	//tmp.w = a.m[3][0] * b.x + a.m[3][1] * b.y + a.m[3][2] * b.z;
+	tmp.x = b.x * a.m[0][0] + b.y * a.m[0][1] + b.z * a.m[0][2] + b.w * a.m[0][3];
+	tmp.y = b.x * a.m[1][0] + b.y * a.m[1][1] + b.z * a.m[1][2] + b.w * a.m[1][3];
+	tmp.z = b.x * a.m[2][0] + b.y * a.m[2][1] + b.z * a.m[2][2] + b.w * a.m[2][3];
+	tmp.w = b.x * a.m[3][0] + b.y * a.m[3][1] + b.z * a.m[3][2] + b.w * a.m[3][3];
 	return(tmp);
 }
 
