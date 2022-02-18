@@ -30,17 +30,15 @@ LINUX_MACRO = -D LINUX
 
 MACOS_FLAGS = -L $(LIB)minilibx_opengl_20191021 -lmlx -framework OpenGL -framework AppKit 
 
-LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext -lpthread
+LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext
 
 UNAME := $(shell uname)
 
 ifeq ($(UNAME),Darwin)
-	NUM_THREADS = $(shell sysctl -n hw.ncpu)
 	CFLAGS += $(MACOS_MACRO)
 	FLAGS += $(MACOS_FLAGS)
 endif
 ifeq ($(UNAME),Linux)
-	NUM_THREADS = $(shell nproc --all)
 	CFLAGS += $(LINUX_MACRO)
 	FLAGS += $(LINUX_FLAGS)
 endif

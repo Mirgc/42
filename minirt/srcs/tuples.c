@@ -11,10 +11,15 @@
 /* ************************************************************************** */
 
 #include "tuples.h"
-#include <unistd.h>
+#include <stdio.h>
 #include <math.h>
 
-t_tup	v_create(double x, double y, double z, int w)
+void	print_tuple(t_tup t)
+{
+	printf("x:%f, y:%f, z:%f, w:%f\n", t.x, t.y, t.z, t.w);
+}
+
+t_tup	v_create(double x, double y, double z, float w)
 {
 	t_tup	tuple;
 

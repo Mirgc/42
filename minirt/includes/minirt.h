@@ -8,15 +8,14 @@
 # include <math.h>
 # include <stdio.h>
 
-# define EPSILON 0.00001
-# define P_WIDTH 900 
-# define P_HEIGHT 550
+# define P_WIDTH 100 
+# define P_HEIGHT 100
 
 
-t_color addcolor(t_color a, t_color b);
-t_color subcolor(t_color a, t_color b);
-t_color multicolor(t_color a, int b);
-t_color hadacolor(t_color a, t_color b);
+t_color		addcolor(t_color a, t_color b);
+t_color		subcolor(t_color a, t_color b);
+t_color		multicolor(t_color a, int b);
+t_color		hadacolor(t_color a, t_color b);
 void		free_mat(float **mat);
 t_matrix	m_init(int rows, int cols);
 t_matrix	m_multi(t_matrix a, t_matrix b);

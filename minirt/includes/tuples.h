@@ -3,7 +3,7 @@
 
 # include "structs.h"
 
-t_tup	v_create(double x, double y, double z, int v);
+t_tup	v_create(double x, double y, double z, float v);
 t_tup	v_add(t_tup a, t_tup b);
 t_tup	v_substract(t_tup a, t_tup b);
 t_tup	v_negate(t_tup a);

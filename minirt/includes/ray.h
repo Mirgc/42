@@ -10,5 +10,5 @@ void		set_transform(t_sphere *s, t_matrix m);
 t_arr_inter	r_intersect(t_sphere s, t_ray ray);
 t_inter		r_intersection(float t, char id);
 t_arr_inter	r_intersections(t_inter i1, t_inter i2);
-float		hit(t_arr_inter inter);
+float		r_hit(t_arr_inter inter);
 #endif

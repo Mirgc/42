@@ -4,6 +4,7 @@
 # include "structs.h"
 # include <math.h>
 
+void		print_matrix(t_matrix m);
 void		free_mat(float **mat);
 t_matrix	m_init(int rows, int cols);
 t_matrix	m_multi(t_matrix a, t_matrix b);
@@ -21,6 +22,5 @@ t_matrix	m_rotationx(int angle);
 t_matrix	m_rotationy(int angle);
 t_matrix	m_rotationz(int angle);
 t_matrix	m_shearing(float xy, float xz, float yx, float yz, float zx, float zy);
-//float   m_det(t_matrix a, int n);
 
 #endif

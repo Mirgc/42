@@ -11,8 +11,26 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <minirt.h>
+
+void	print_matrix(t_matrix m)
+{
+	int	w;
+	int	h;
+
+        w = 0;
+        while (w < 4)
+        {
+                h = 0;
+                while (h < 4)
+                {
+                        printf("%0.5f ", m.m[w][h]);
+                        h++;
+                }
+                printf("\n");
+                w++;
+        }
+}
 
 void	free_mat(float **mat)
 {

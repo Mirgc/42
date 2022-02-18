@@ -52,66 +52,62 @@ int	map_draw(t_map *map)
 	int	h;
 	int	vs_x;
 	int	vs_y;
+	float	world_x;
+	float	world_y;
 	int color = 0;
-	t_tup		p;
+	float wall_z;
+	float wall_size;
+	float canvas_pixel;
+	float pixel_size;
+	float half;
+	t_tup	p;
+	t_ray	ray;
+	t_sphere	sp;
+	t_arr_inter		inter;
 	(void)w;
 	(void)h;
 	(void)vs_x;
 	(void)vs_y;
 	(void)color;
 
-	p = v_create(0, 0, 1, 1);
-	printf("%f, %f, %f\n", p.x, p.y, p.z);
-	p = m_multi_tup(m_scaling(0,0,5), p);
-	printf("%f, %f, %f\n", p.x, p.y, p.z);
-	//p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(30))), p);
+	sp = r_create_sphere();
+	ray.ori = v_create(0, 0, -5, 1);
+	wall_z = 10;
+	canvas_pixel = 100;
+	wall_size = 7;
+	pixel_size = wall_size / canvas_pixel;
+	half = wall_size / 2;
+	color = get_trgb(255, 0, 0);
+
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
-	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, \
-                        &map->image.size, &map->image.endian);
-	color = get_trgb(255, 200, 200);
-/*	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	draw(map, 450 - p.x, 225 - p.z, color);
-			printf("%f, %f\n", p.x, p.y);*/
-	draw(map, 450 - p.x, 225 - p.z, color);
-	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-	while ((int)p.x != 0)
+	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
+
+	vs_y = 0;
+	while (vs_y < canvas_pixel -1)
 	{
-		p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
-		draw(map, 450 - p.x, 225 - p.z, color);
+		world_y = half - (pixel_size * vs_y);
+		vs_x = 0;
+		while (vs_x < canvas_pixel -1)
+		{
+			world_x = -half + (pixel_size * vs_x);
+			p = v_create(world_x, world_y, wall_z, 1);
+			ray.dir = v_normalize(v_substract(p, ray.ori));
+			inter = r_intersect(sp, ray);
+			if (r_hit(inter))
+				draw(map, 50 - vs_x, 50 - vs_y, color);
+			vs_x++;
+		}
+		vs_y++;
 	}
+
+//	color = get_trgb(255, 0, 0);
+//	draw(map, 450 - p.x, 225 - p.z, color);
+//	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
+//	while ((int)p.x != 0)
+//	{
+//		p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
+//		draw(map, 450 - p.x, 225 - p.z, color);
+//	}
 //	double d;
 /*	h = 0;
 	while (h < P_WIDTH)
@@ -147,7 +143,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-/*
+
 	t_map   map;
 
 //        if (argc == 2)
@@ -162,7 +158,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-*/
+
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -205,8 +201,9 @@ int	main(int argc, char **argv)
 	b.m[3][2] = 0;
 	b.m[3][3] = 5;
 	b.rows = 4;
-	b.cols = 4;*/
+	b.cols = 4;
 	t_arr_inter arr;
+	(void)arr;
 	t_ray ray;
 //	t_matrix m;
 	ray.ori = v_create(0,0,-5,1);
@@ -217,22 +214,8 @@ int	main(int argc, char **argv)
 	s = r_create_sphere();
 	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);
-	int w, h;
-        w = 0;
-        while (w < 4)
-        {
-                h = 0;
-                while (h < 4)
-                {
-                        printf("%0.5f ", s.transform.m[w][h]);
-                        h++;
-                }
-                printf("\n");
-                w++;
-        }
 	arr = r_intersect(s, ray);
 //	tup = m_multi_tup(a, tup);
-	printf("%f %f %d\n", arr.a[0].t, arr.a[1].t, arr.count);
 //	printf("%f, %f, %f,\n",ray2.dir.x, ray2.dir.y, ray2.dir.z);
 //	printf("%f, %f, %f,\n",ray2.ori.x, ray2.ori.y, ray2.ori.z);
 //	tmp = m_multi(a, b);
@@ -243,42 +226,14 @@ int	main(int argc, char **argv)
 //	printf("inver:%i\n", m_invertible(b));
 //	printf("%f\n", m_det(b, b.cols));
 //	printf("%i, %i\n", b.cols, b.rows);
-/*	c = m_multi(a, b);
+	c = m_multi(a, b);
 	d = m_multi(c, m_invertible(b));
 	t_tup	p1, p2;
 	p1 = v_create(1, 0, 1, 1);
 	p2 = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(90))), p1);
-	printf("%f, %f, %f \n", p2.x, p2.y, p2.z);
-	int w, h;
-	w = 0;
-	while (w < b.rows)
-	{
-                h = 0;
-                while (h < b.cols)
-		{
-			printf("%0.5f ", a.m[w][h]);
-			h++;
-		}
-		printf("\n");
-		w++;
-	}
-	printf("\n");
-	w = 0;
-	while (w < a.rows)
-	{
-		h = 0;
-        	while (h < a.cols)
-		{
-			printf("%0.5f ", d.m[w][h]);
-			h++;
-		}
-		printf("\n");
-		w++;
-	}
-	printf("\n");
-*/
+
 	//printf("%f\n", m_det(a, 4));
-	//free_mat(tmp);
+	//free_mat(tmp);*/
         return (0);
 
 }
