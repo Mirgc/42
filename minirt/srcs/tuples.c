@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:01:00 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/17 20:45:07 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/18 20:31:38 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ double	v_magnitude(t_tup vec)
 {
     double res;
 	
-	res = sqrt(pow(vec.x,2) + pow(vec.y,2) + pow(vec.z,2));
+	res = sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
     return (res);
 }
 

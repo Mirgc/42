@@ -1,6 +1,7 @@
 #include "tuples.h"
 #include "ray.h"
 #include "matrix.h"
+#include "light.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,7 @@ t_sphere	r_create_sphere()
 	s.id = 's';
 	s.r = 0;
 	s.transform = m_identity();
+	s.material = m_create_material();
 	return (s);
 }
 
@@ -92,7 +94,6 @@ t_arr_inter r_intersections(t_inter i1, t_inter i2)
 		arr.count = 0;
 		return (arr);
 	}
-	printf("%f, %f\n", i1.t, i2.t);
 	arr.a = (t_inter *)malloc(sizeof(t_inter) * 2);
 	arr.count = 2;
 	arr.a[0] = i1;
@@ -102,10 +103,35 @@ t_arr_inter r_intersections(t_inter i1, t_inter i2)
 
 float	r_hit(t_arr_inter inter)
 {
-	if (inter.a[0].t > 0 && inter.a[1].t > 0)
-		return (fmin(inter.a[0].t, inter.a[1].t));
-	if (inter.a[0].t > 0 || inter.a[1].t > 0)
-		return (fmax(inter.a[0].t, inter.a[1].t));
+	if (inter.count != 0)
+	{
+		if (inter.a[0].t > 0 && inter.a[1].t > 0)
+			return(fmin(inter.a[0].t, inter.a[1].t));
+		if (inter.a[0].t > 0 || inter.a[1].t > 0)
+			return(fmax(inter.a[0].t, inter.a[1].t));
+	}
 	return(-1);
 }
 
+t_tup	r_normal_at(t_sphere s, t_tup p)
+{
+	t_tup	o_point;
+	t_tup	o_normal;
+	t_tup	w_normal;
+
+	o_point = m_multi_tup(m_invertible(s.transform), p);
+	o_normal = v_substract(o_point, s.center);
+	w_normal = m_multi_tup(m_trans(m_invertible(s.transform)), o_normal);
+	w_normal.w = 0;
+	return(v_normalize(w_normal));
+}
+
+t_tup	r_reflect(t_tup t, t_tup p)
+{
+	double	dot;
+	t_tup	mul;
+
+	dot = v_dot(t, p);
+	mul = v_multi(p, 2);
+	return(v_substract(t, v_multi(mul, dot)));
+}

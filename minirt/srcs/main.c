@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/17 20:45:04 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/18 20:31:47 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ int	map_draw(t_map *map)
 			p = v_create(world_x, world_y, wall_z, 1);
 			ray.dir = v_normalize(v_substract(p, ray.ori));
 			inter = r_intersect(sp, ray);
-			if (r_hit(inter))
-				draw(map, 50 - vs_x, 50 - vs_y, color);
+			if (r_hit(inter) != -1)
+			{
+				draw(map, vs_x, vs_y, color);
+			}
 			vs_x++;
 		}
 		vs_y++;
@@ -135,7 +137,7 @@ int	map_draw(t_map *map)
 		h++;
 	}*/
 	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
-	mlx_destroy_image(map->mlx.init, map->mlx.img);
+//	mlx_destroy_image(map->mlx.init, map->mlx.img);
 	return (0);
 }
 
@@ -144,7 +146,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_map   map;
+/*	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -158,7 +160,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-
+*/
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -201,7 +203,7 @@ int	main(int argc, char **argv)
 	b.m[3][2] = 0;
 	b.m[3][3] = 5;
 	b.rows = 4;
-	b.cols = 4;
+	b.cols = 4;*/
 	t_arr_inter arr;
 	(void)arr;
 	t_ray ray;
@@ -210,11 +212,16 @@ int	main(int argc, char **argv)
 	ray.dir = v_create(0,0,1,0);
 //	t_ray ray2;
 //	ray2 = r_transform(ray, m);
-	t_sphere s;
-	s = r_create_sphere();
-	s.transform = m_translation(5, 0, 0);
+	t_tup p;
+	t_tup t;
+	t_tup r;
+	p = v_create(0, -1, 0, 0);
+	t = v_create(0.70710678118, 0.70710678118, 0, 0);
+	r = r_reflect(p, t);
+	print_tuple(r);
+//	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);
-	arr = r_intersect(s, ray);
+//	arr = r_intersect(s, ray);
 //	tup = m_multi_tup(a, tup);
 //	printf("%f, %f, %f,\n",ray2.dir.x, ray2.dir.y, ray2.dir.z);
 //	printf("%f, %f, %f,\n",ray2.ori.x, ray2.ori.y, ray2.ori.z);
@@ -226,14 +233,14 @@ int	main(int argc, char **argv)
 //	printf("inver:%i\n", m_invertible(b));
 //	printf("%f\n", m_det(b, b.cols));
 //	printf("%i, %i\n", b.cols, b.rows);
-	c = m_multi(a, b);
-	d = m_multi(c, m_invertible(b));
-	t_tup	p1, p2;
-	p1 = v_create(1, 0, 1, 1);
-	p2 = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(90))), p1);
+//	c = m_multi(a, b);
+//	d = m_multi(c, m_invertible(b));
+//	t_tup	p1, p2;
+//	p1 = v_create(1, 0, 1, 1);
+//	p2 = m_multi_tup(m_multi(m_translation(10, 5, 7), m_multi(m_scaling(5, 5, 5), m_rotationx(90))), p1);
 
 	//printf("%f\n", m_det(a, 4));
-	//free_mat(tmp);*/
+	//free_mat(tmp);
         return (0);
 
 }

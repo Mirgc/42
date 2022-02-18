@@ -1,6 +1,16 @@
 
 #include "minirt.h"
 
+t_color set_color(double r, double g, double b)
+{
+	t_color tmp;
+
+	tmp.r = r;
+	tmp.g = g;
+	tmp.b = b;
+	return (tmp);
+}
+
 t_color	addcolor(t_color a, t_color b)
 {
 	t_color	tmp;
