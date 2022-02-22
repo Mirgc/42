@@ -31,7 +31,7 @@ t_color	subcolor(t_color a, t_color b)
 	return (tmp);
 }
 
-t_color	multicolor(t_color a, int b)
+t_color	multicolor(t_color a, float b)
 {
 	t_color	tmp;
 
@@ -47,10 +47,9 @@ t_color hadacolor(t_color a, t_color b)
 
 	tmp.r = a.r * b.r;
 	tmp.g = a.g * b.g;
-	tmp.g = a.b * b.b;
+	tmp.b = a.b * b.b;
 	return (tmp);
 }
-
 
 
 

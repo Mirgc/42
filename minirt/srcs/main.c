@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/18 20:31:47 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "tuples.h"
 #include "matrix.h"
 #include "ray.h"
+#include "canvas.h"
+#include "light.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,6 +47,19 @@ int     get_trgb(int r, int g, int b)
 	return ((r << 16) | (g << 8) | (b));
 }
 
+t_color	check_color(t_color col)
+{
+	t_color tmp;
+
+	tmp = col;
+	if (col.r > 1)
+		tmp.r = 1;
+	if (col.g > 1)
+		tmp.g = 1;
+	if (col.b > 1)
+		tmp.b = 1;
+	return (tmp);
+}
 
 int	map_draw(t_map *map)
 {
@@ -60,17 +75,63 @@ int	map_draw(t_map *map)
 	float canvas_pixel;
 	float pixel_size;
 	float half;
+	float hit;
 	t_tup	p;
+	t_tup	point;
+	t_tup	normal;
 	t_ray	ray;
 	t_sphere	sp;
 	t_arr_inter		inter;
+	t_light	li;
+	t_color c_col;
 	(void)w;
 	(void)h;
 	(void)vs_x;
 	(void)vs_y;
 	(void)color;
 
+	
 	sp = r_create_sphere();
+	ray.ori = v_create(0, 0, -5, 1);
+	wall_z = 10;
+	canvas_pixel = 100;
+	wall_size = 7;
+	pixel_size = wall_size / canvas_pixel;
+	half = wall_size / 2;
+
+	sp.material.color = set_color(1, 1, 0.5);
+	li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
+	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
+	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
+	vs_y = 0;
+	while (vs_y < canvas_pixel -1)
+	{
+		world_y = half - (pixel_size * vs_y);
+		vs_x = 0;
+		while (vs_x < canvas_pixel -1)
+		{
+			world_x = -half + (pixel_size * vs_x);
+			p = v_create(world_x, world_y, wall_z, 1);
+			ray.dir = v_normalize(v_substract(p, ray.ori));
+			inter = r_intersect(sp, ray);
+			hit = r_hit(inter);
+			if (hit != -1)
+			{
+				point = r_position(ray, hit);
+				normal = r_normal_at(inter.a[0].o, point);
+				c_col = lighting(inter.a[0].o.material, li, point, v_negate(ray.dir), normal);
+				c_col = check_color(c_col);
+				c_col = multicolor(c_col, 255);
+				color = get_trgb(c_col.r, c_col.g, c_col.b);
+				draw(map, vs_x, vs_y, color);
+			}
+			vs_x++;
+		}
+		vs_y++;
+	}
+
+
+/*	sp = r_create_sphere();
 	ray.ori = v_create(0, 0, -5, 1);
 	wall_z = 10;
 	canvas_pixel = 100;
@@ -100,7 +161,7 @@ int	map_draw(t_map *map)
 			vs_x++;
 		}
 		vs_y++;
-	}
+	}*/
 
 //	color = get_trgb(255, 0, 0);
 //	draw(map, 450 - p.x, 225 - p.z, color);
@@ -146,7 +207,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-/*	t_map   map;
+	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -160,7 +221,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-*/
+
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -203,7 +264,7 @@ int	main(int argc, char **argv)
 	b.m[3][2] = 0;
 	b.m[3][3] = 5;
 	b.rows = 4;
-	b.cols = 4;*/
+	b.cols = 4;
 	t_arr_inter arr;
 	(void)arr;
 	t_ray ray;
@@ -215,10 +276,22 @@ int	main(int argc, char **argv)
 	t_tup p;
 	t_tup t;
 	t_tup r;
+	//////////////////////////////////////
+	t_color	color;
+	t_material m;
+	t_light li;
+	m = m_create_material();
+	m.color = set_color(1, 0.2, 1);
+	li = l_point_light(v_create(0,10,-10, 1), set_color(1, 1, 1));
+
+	/////////////////////////////////////
+	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
+	printf("color:%f, %f, %f\n", color.r, color.b, color.g);
 	p = v_create(0, -1, 0, 0);
 	t = v_create(0.70710678118, 0.70710678118, 0, 0);
 	r = r_reflect(p, t);
 	print_tuple(r);
+	*/
 //	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);
 //	arr = r_intersect(s, ray);

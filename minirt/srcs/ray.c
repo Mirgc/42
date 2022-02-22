@@ -70,18 +70,17 @@ t_arr_inter	r_intersect(t_sphere s, t_ray ray)
 	if (i < 0)
 		return (r_intersections(t1, t2));
 	i = sqrtf(i);
-	t1 = r_intersection((-b - i) / (2 * a), s.id);
-	t2 = r_intersection((-b + i) / (2 * a), s.id);
-	
+	t1 = r_intersection((-b - i) / (2 * a), s);
+	t2 = r_intersection((-b + i) / (2 * a), s);
 	return (r_intersections(t1, t2));
 }
 
-t_inter	r_intersection(float t, char id)
+t_inter	r_intersection(float t, t_sphere o)
 {
 	t_inter	inter;
 
 	inter.t = t;
-	inter.o.id = id;
+	inter.o = o;
 	return (inter);
 }
 
