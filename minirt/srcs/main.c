@@ -99,7 +99,7 @@ int	map_draw(t_map *map)
 	pixel_size = wall_size / canvas_pixel;
 	half = wall_size / 2;
 
-	sp.material.color = set_color(1, 1, 0.5);
+	sp.material.color = set_color(0.2, 0.2, 1);
 	li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
 	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);

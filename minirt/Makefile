@@ -12,6 +12,7 @@ FILES	=	main.c \
 			matrix.c \
 			ray.c \
 			light.c \
+			world.c \
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 

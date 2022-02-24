@@ -71,6 +71,19 @@ typedef struct s_arr_inter
 	t_inter	*a;
 } t_arr_inter;
 
+typedef struct	s_light
+{
+	t_tup	position;
+	t_color	intensity;
+}	t_light;
+
+typedef struct s_world
+{
+	t_light		li;
+	t_sphere	s1;
+	t_sphere	s2;
+} t_world;
+
 typedef struct  s_mlx
 {
 	void    *init;
@@ -96,10 +109,5 @@ typedef struct  s_map
 	t_color color;
 }	t_map;
 
-typedef struct	s_light
-{
-	t_tup	position;
-	t_color	intensity;
-}	t_light;
 
 #endif
