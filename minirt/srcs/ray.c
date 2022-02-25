@@ -100,6 +100,43 @@ t_arr_inter r_intersections(t_inter i1, t_inter i2)
 	return(arr);
 }
 
+void	r_order(t_arr_inter wo)
+{
+	int		i;
+	float	tmp;
+
+	i = -1;
+    while ( ++i < 4 )
+    {
+        if (wo.a[i].t < wo.a[i-1].t )
+        {
+            tmp = wo.a[i].t;
+            wo.a[i].t = wo.a[i-1].t;
+			wo.a[i-1].t = tmp;
+			i = 0;
+		}
+	}
+}
+
+t_arr_inter	r_intersect_world(t_world w, t_ray r)
+{
+	t_arr_inter	wo_arr;
+	t_arr_inter	tmp1_arr;
+	t_arr_inter	tmp2_arr;
+
+	wo_arr.a = (t_inter *)malloc(sizeof(t_inter) * 4);
+	tmp1_arr = r_intersect(w.s1, r);
+	tmp2_arr = r_intersect(w.s2, r);
+	wo_arr.count = tmp1_arr.count;
+	wo_arr.count += tmp2_arr.count;
+	wo_arr.a[0] = tmp1_arr.a[0];
+	wo_arr.a[1] = tmp1_arr.a[1];
+	wo_arr.a[2] = tmp2_arr.a[0];
+	wo_arr.a[3] = tmp2_arr.a[1];
+	r_order(wo_arr);
+	return (wo_arr);
+}
+
 float	r_hit(t_arr_inter inter)
 {
 	if (inter.count != 0)

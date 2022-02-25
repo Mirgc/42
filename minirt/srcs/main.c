@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/25 19:45:34 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ray.h"
 #include "canvas.h"
 #include "light.h"
+#include "world.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -131,38 +132,6 @@ int	map_draw(t_map *map)
 	}
 
 
-/*	sp = r_create_sphere();
-	ray.ori = v_create(0, 0, -5, 1);
-	wall_z = 10;
-	canvas_pixel = 100;
-	wall_size = 7;
-	pixel_size = wall_size / canvas_pixel;
-	half = wall_size / 2;
-	color = get_trgb(255, 0, 0);
-
-	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
-	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
-
-	vs_y = 0;
-	while (vs_y < canvas_pixel -1)
-	{
-		world_y = half - (pixel_size * vs_y);
-		vs_x = 0;
-		while (vs_x < canvas_pixel -1)
-		{
-			world_x = -half + (pixel_size * vs_x);
-			p = v_create(world_x, world_y, wall_z, 1);
-			ray.dir = v_normalize(v_substract(p, ray.ori));
-			inter = r_intersect(sp, ray);
-			if (r_hit(inter) != -1)
-			{
-				draw(map, vs_x, vs_y, color);
-			}
-			vs_x++;
-		}
-		vs_y++;
-	}*/
-
 //	color = get_trgb(255, 0, 0);
 //	draw(map, 450 - p.x, 225 - p.z, color);
 //	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
@@ -207,7 +176,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_map   map;
+/*	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -221,7 +190,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-
+*/
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -265,12 +234,32 @@ int	main(int argc, char **argv)
 	b.m[3][3] = 5;
 	b.rows = 4;
 	b.cols = 4;
+	*/
 	t_arr_inter arr;
 	(void)arr;
 	t_ray ray;
+	t_world w;
+	w = default_world();
+//	w.li = l_point_light(v_create(0, 0.25, 0, 1), set_color(1, 1, 1));
 //	t_matrix m;
 	ray.ori = v_create(0,0,-5,1);
-	ray.dir = v_create(0,0,1,0);
+	ray.dir = v_create(0,1,0,0);
+//	t_sphere	shape;
+//	t_inter		i;
+	t_comps		comps;
+	t_color		col;
+//	shape = w.s2;
+//	i = r_intersection(0.5, shape);
+//	comps = prepare_computations(i, ray);
+//	col = shade_hit(w, comps);
+	col = color_at(w, ray);
+	printf("color:%f, %f, %f\n", col.r, col.g, col.b);
+	printf("inside:%i\n", comps.inside);
+	print_tuple(comps.point);
+	print_tuple(comps.eyev);
+	print_tuple(comps.normalv);
+	arr = r_intersect_world(w, ray);
+//	printf("world: count:%i, 1:%f, 2:%f, 3:%f, 4:%f\n", arr.count, arr.a[0].t, arr.a[1].t, arr.a[2].t, arr.a[3].t);
 //	t_ray ray2;
 //	ray2 = r_transform(ray, m);
 	t_tup p;
@@ -286,12 +275,11 @@ int	main(int argc, char **argv)
 
 	/////////////////////////////////////
 	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
-	printf("color:%f, %f, %f\n", color.r, color.b, color.g);
 	p = v_create(0, -1, 0, 0);
 	t = v_create(0.70710678118, 0.70710678118, 0, 0);
 	r = r_reflect(p, t);
 	print_tuple(r);
-	*/
+	
 //	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);
 //	arr = r_intersect(s, ray);

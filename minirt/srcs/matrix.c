@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/18 20:31:45 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/25 17:11:05 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ t_matrix	m_invertible(t_matrix a)
 
 	b = m_init(4, 4);
 	det = m_det(a, 4);
-	if ((int)det != 0)
-	{
+//	if ((int)det != 0)
+//	{
 		i = -1;
 		while (++i < 4)
 		{
@@ -233,12 +233,12 @@ t_matrix	m_invertible(t_matrix a)
 				b.m[j][i] = m_cofactor(a, i, j, 4) / det;
 			}
 		}	
-	}
-	else
-	{
-		b.cols = 0;
-		b.rows = 0;
-	}
+//	}
+//	else
+//	{
+//		b.cols = 0;
+//		b.rows = 0;
+//	}
 	return (b);
 }
 

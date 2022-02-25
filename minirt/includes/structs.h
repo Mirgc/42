@@ -82,7 +82,17 @@ typedef struct s_world
 	t_light		li;
 	t_sphere	s1;
 	t_sphere	s2;
-} t_world;
+}	t_world;
+
+typedef struct s_comps
+{
+	float		t;
+	t_sphere	o;
+	int			inside;
+	t_tup		point;
+	t_tup		eyev;
+	t_tup		normalv;
+}	t_comps;
 
 typedef struct  s_mlx
 {
