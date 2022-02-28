@@ -84,6 +84,17 @@ typedef struct s_world
 	t_sphere	s2;
 }	t_world;
 
+typedef struct s_camera
+{
+	double			hsize;
+	double			vsize;
+	double			fov;
+	double			pixel_size;
+	double			hw;
+	double			hh;
+	t_matrix		transform;
+}	t_camera;
+
 typedef struct s_comps
 {
 	float		t;

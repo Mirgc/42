@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/25 19:45:34 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:34:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "canvas.h"
 #include "light.h"
 #include "world.h"
+#include "camera.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -234,7 +235,7 @@ int	main(int argc, char **argv)
 	b.m[3][3] = 5;
 	b.rows = 4;
 	b.cols = 4;
-	*/
+	
 	t_arr_inter arr;
 	(void)arr;
 	t_ray ray;
@@ -264,10 +265,19 @@ int	main(int argc, char **argv)
 ////////////////	arr = r_intersect_world(w, ray);
 //	printf("world: count:%i, 1:%f, 2:%f, 3:%f, 4:%f\n", arr.count, arr.a[0].t, arr.a[1].t, arr.a[2].t, arr.a[3].t);
 //	t_ray ray2;
-//	ray2 = r_transform(ray, m);
+//	ray2 = r_transform(ray, m);*/
 //	t_tup p;
 //	t_tup t;
 //	t_tup r;
+//	t_matrix	m;
+//	p = v_create(1, 3, 2, 1);
+//	t = v_create(4, -2, 8, 1);
+//	r = v_create(1, 1, 0, 0);
+//	m = view_transform(p, t, r);
+//	print_matrix(m);
+	t_camera cam;
+	cam = set_camera(125, 200, 1.570796);
+	print_camera(cam);
 	//////////////////////////////////////
 //	t_color	color;
 //	t_material m;

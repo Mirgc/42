@@ -7,6 +7,7 @@
 void		print_matrix(t_matrix m);
 void		free_mat(float **mat);
 t_matrix	m_init(int rows, int cols);
+t_matrix	m_init_with_tuple(t_tup a, t_tup b, t_tup c);
 t_matrix	m_multi(t_matrix a, t_matrix b);
 t_tup		m_multi_tup(t_matrix a, t_tup b);
 t_matrix	m_identity(void);

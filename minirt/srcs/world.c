@@ -56,6 +56,18 @@ t_color	color_at(t_world w, t_ray r)
 	return (col);
 }
 
-t_tup	view_transform(t_tup from, t_tup to, t_tup up)
+t_matrix	view_transform(t_tup from, t_tup to, t_tup up)
 {
+	t_tup		forward;
+	t_tup		upn;
+	t_tup		left;
+	t_tup		true_up;
+	t_matrix	orientation;
+
+	forward = v_normalize(v_substract(to, from));
+	upn = v_normalize(up);
+	left = v_cross(forward, upn);
+	true_up = v_cross(left, forward);
+	orientation = m_init_with_tuple(left, true_up, v_negate(forward));
+	return (m_multi(orientation, m_translation(-from.x, -from.y, -from.z)));	
 }

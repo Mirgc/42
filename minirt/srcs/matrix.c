@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/25 17:11:05 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:06:39 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,31 @@ t_matrix	m_init(int rows, int cols)
 	a.rows = rows;
 	a.cols = cols;
 	return (a);
+}
+
+t_matrix	m_init_with_tuple(t_tup a, t_tup b, t_tup c)
+{
+	t_matrix	m;
+
+	m.m[0][0] = a.x;
+	m.m[0][1] = a.y;
+	m.m[0][2] = a.z;
+	m.m[0][3] = 0;
+	m.m[1][0] = b.x;
+	m.m[1][1] = b.y;
+	m.m[1][2] = b.z;
+	m.m[1][3] = 0;
+	m.m[2][0] = c.x;
+	m.m[2][1] = c.y;
+	m.m[2][2] = c.z;
+	m.m[2][3] = 0;
+	m.m[3][0] = 0;
+	m.m[3][1] = 0;
+	m.m[3][2] = 0;
+	m.m[3][3] = 1;
+	m.rows = 4;
+	m.cols = 4;
+	return (m);
 }
 
 t_matrix	m_multi(t_matrix a, t_matrix b)
