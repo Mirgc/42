@@ -76,7 +76,7 @@ int	map_draw(t_map *map)
 	float canvas_pixel;
 	float pixel_size;
 	float half;
-	float hit;
+	t_inter hit;
 	t_tup	p;
 	t_tup	point;
 	t_tup	normal;
@@ -116,9 +116,9 @@ int	map_draw(t_map *map)
 			ray.dir = v_normalize(v_substract(p, ray.ori));
 			inter = r_intersect(sp, ray);
 			hit = r_hit(inter);
-			if (hit != -1)
+			if (hit.t != -1)
 			{
-				point = r_position(ray, hit);
+				point = r_position(ray, hit.t);
 				normal = r_normal_at(inter.a[0].o, point);
 				c_col = lighting(inter.a[0].o.material, li, point, v_negate(ray.dir), normal);
 				c_col = check_color(c_col);
@@ -242,43 +242,46 @@ int	main(int argc, char **argv)
 	w = default_world();
 //	w.li = l_point_light(v_create(0, 0.25, 0, 1), set_color(1, 1, 1));
 //	t_matrix m;
-	ray.ori = v_create(0,0,-5,1);
-	ray.dir = v_create(0,1,0,0);
+	ray.ori = v_create(0,0,0.75,1);
+	ray.dir = v_create(0,0,-1,0);
 //	t_sphere	shape;
 //	t_inter		i;
-	t_comps		comps;
+//	t_comps		comps;
 	t_color		col;
 //	shape = w.s2;
 //	i = r_intersection(0.5, shape);
 //	comps = prepare_computations(i, ray);
 //	col = shade_hit(w, comps);
+	w.s1.material.ambient = 1;
+	w.s2.material.ambient = 1;
 	col = color_at(w, ray);
 	printf("color:%f, %f, %f\n", col.r, col.g, col.b);
-	printf("inside:%i\n", comps.inside);
-	print_tuple(comps.point);
-	print_tuple(comps.eyev);
-	print_tuple(comps.normalv);
-	arr = r_intersect_world(w, ray);
+	printf("color:%f, %f, %f\n", w.s2.material.color.r, w.s2.material.color.g, w.s2.material.color.b);
+//	printf("inside:%i\n", comps.inside);
+//	print_tuple(comps.point);
+//	print_tuple(comps.eyev);
+//	print_tuple(comps.normalv);
+////////////////	arr = r_intersect_world(w, ray);
 //	printf("world: count:%i, 1:%f, 2:%f, 3:%f, 4:%f\n", arr.count, arr.a[0].t, arr.a[1].t, arr.a[2].t, arr.a[3].t);
 //	t_ray ray2;
 //	ray2 = r_transform(ray, m);
-	t_tup p;
-	t_tup t;
-	t_tup r;
+//	t_tup p;
+//	t_tup t;
+//	t_tup r;
 	//////////////////////////////////////
-	t_color	color;
-	t_material m;
-	t_light li;
-	m = m_create_material();
-	m.color = set_color(1, 0.2, 1);
-	li = l_point_light(v_create(0,10,-10, 1), set_color(1, 1, 1));
+//	t_color	color;
+//	t_material m;
+//	t_light li;
+//	m = m_create_material();
+//	m.color = set_color(1, 0.2, 1);
+//	li = l_point_light(v_create(0,10,-10, 1), set_color(1, 1, 1));
 
 	/////////////////////////////////////
-	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
-	p = v_create(0, -1, 0, 0);
-	t = v_create(0.70710678118, 0.70710678118, 0, 0);
-	r = r_reflect(p, t);
-	print_tuple(r);
+//	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
+//	p = v_create(0, -1, 0, 0);
+//	t = v_create(0.70710678118, 0.70710678118, 0, 0);
+//	r = r_reflect(p, t);
+//	print_tuple(r);
 	
 //	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);

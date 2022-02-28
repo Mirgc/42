@@ -4,6 +4,7 @@
 #include "canvas.h"
 #include "matrix.h"
 #include "ray.h"
+#include "stdio.h"
 
 t_world	default_world()
 {
@@ -41,19 +42,20 @@ t_comps	prepare_computations(t_inter i, t_ray ray)
 t_color	color_at(t_world w, t_ray r)
 {
 	t_arr_inter	arr;
+	t_inter		hit;
 	t_color		col;
-//	t_comps		comps;
-	int			i;
+	t_comps		comps;
 
 	col = set_color(0, 0, 0);
-	i = -1;
 	arr = r_intersect_world(w, r);
 	if (arr.count == 0)
 		return (col);
-//	while (++i < 4)
-//	{
-//		comps = prepare_computations(arr.a[i], r);
-//		col = addcolor(col, shade_hit(w, comps));
-//	}
+	hit = r_hit(arr);
+	comps = prepare_computations(hit, r);
+	col = shade_hit(w, comps);
 	return (col);
+}
+
+t_tup	view_transform(t_tup from, t_tup to, t_tup up)
+{
 }

@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 t_tup	r_position(t_ray a, float i)
 {
@@ -89,24 +90,22 @@ t_arr_inter r_intersections(t_inter i1, t_inter i2)
 	t_arr_inter arr;
 
 	if (i1.t == 0 && i2.t == 0)
-	{
 		arr.count = 0;
-		return (arr);
-	}
+	else
+		arr.count = 2;
 	arr.a = (t_inter *)malloc(sizeof(t_inter) * 2);
-	arr.count = 2;
 	arr.a[0] = i1;
 	arr.a[1] = i2;
 	return(arr);
 }
 
-void	r_order(t_arr_inter wo)
+void	r_order(t_arr_inter wo, int count)
 {
 	int		i;
 	float	tmp;
 
 	i = -1;
-    while ( ++i < 4 )
+    while ( ++i < count )
     {
         if (wo.a[i].t < wo.a[i-1].t )
         {
@@ -133,11 +132,13 @@ t_arr_inter	r_intersect_world(t_world w, t_ray r)
 	wo_arr.a[1] = tmp1_arr.a[1];
 	wo_arr.a[2] = tmp2_arr.a[0];
 	wo_arr.a[3] = tmp2_arr.a[1];
-	r_order(wo_arr);
+	free(tmp1_arr.a);
+	free(tmp2_arr.a);
+	r_order(wo_arr, 4);
 	return (wo_arr);
 }
 
-float	r_hit(t_arr_inter inter)
+/*float	r_hit(t_arr_inter inter)
 {
 	if (inter.count != 0)
 	{
@@ -147,6 +148,27 @@ float	r_hit(t_arr_inter inter)
 			return(fmax(inter.a[0].t, inter.a[1].t));
 	}
 	return(-1);
+}*/
+t_inter r_hit(t_arr_inter inter)
+{
+	int     i;
+	int     co;
+
+	co = 0;
+	i = -1;
+	if (inter.count == 0)
+		return (inter.a[0]);
+	while (++i < inter.count)
+	{
+		if (inter.a[i].t > 0)
+			co++;
+	}
+	if (co == inter.count)
+		return (inter.a[0]);
+	else if (co == 0)
+		return (inter.a[inter.count]);
+	else
+		return (inter.a[inter.count -1]);
 }
 
 t_tup	r_normal_at(t_sphere s, t_tup p)
