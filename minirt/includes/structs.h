@@ -80,14 +80,9 @@ typedef struct	s_light
 typedef struct s_world
 {
 	t_light		li;
-	t_sphere	s1;
-	t_sphere	s2;
-	t_sphere	floor;
-	t_sphere	left_wall;
-	t_sphere	right_wall;
-	t_sphere	middle;
-	t_sphere	right;
-	t_sphere	left;
+	t_sphere	*sp;
+	int			nb;
+	t_arr_inter	arr;
 }	t_world;
 
 typedef struct s_camera

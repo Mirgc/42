@@ -6,12 +6,13 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/28 13:06:39 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:52:53 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <minirt.h>
+#include <stdio.h>
+#include <matrix.h>
 
 void	print_matrix(t_matrix m)
 {
@@ -202,6 +203,23 @@ t_matrix	m_submatrix(t_matrix	a, int row, int col)
 	return (b);
 }
 
+float	m_det(t_matrix	a, int	c)
+{
+	float	det;
+	int	i;
+
+	det = 0;
+	i = -1;
+	if (c == 2)
+		det += a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
+	else
+	{
+		while (++i < c)
+			det += a.m[0][i] * m_cofactor(a, 0, i, c);
+	}
+	return (det);
+}
+
 float	m_minor(t_matrix	a, int row, int col, int c)
 {
 	t_matrix	b;
@@ -219,23 +237,6 @@ float	m_cofactor(t_matrix	a, int row, int	col, int c)
 		return(m_minor(a, row, col, c) * -1);
 	else
 		return(m_minor(a, row, col, c) * 1);
-}
-
-float	m_det(t_matrix	a, int	c)
-{
-	float	det;
-	int	i;
-
-	det = 0;
-	i = -1;
-	if (c == 2)
-		det += a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
-	else
-	{
-		while (++i < c)
-			det += a.m[0][i] * m_cofactor(a, 0, i, c);
-	}
-	return (det);
 }
 
 t_matrix	m_invertible(t_matrix a)
@@ -289,7 +290,7 @@ t_matrix	m_scaling(float	x, float y, float z)
 	return (a);
 }
 
-t_matrix	m_rotationx(int angle)
+t_matrix	m_rotationx(float angle)
 {
 	t_matrix	a;
 	float		rad;
@@ -303,7 +304,7 @@ t_matrix	m_rotationx(int angle)
 	return (a);
 }
 
-t_matrix	m_rotationy(int angle)
+t_matrix	m_rotationy(float angle)
 {
 	t_matrix	a;
 	float		rad;
@@ -317,7 +318,7 @@ t_matrix	m_rotationy(int angle)
 	return (a);
 }
 
-t_matrix	m_rotationz(int angle)
+t_matrix	m_rotationz(float angle)
 {
 	t_matrix	a;
 	float		rad;

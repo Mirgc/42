@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/28 14:34:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:52:59 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ void	render(t_map *map, t_world world)
 	int	y;
 	t_ray	ray;
 	t_color	c_col;
-	int	color;
+//	int	color;
 
 	y = -1;
-	while (++y < map->cam.vsize -1)
+	while (++y < map->cam.hsize -1)
 	{
 		x = -1;
-		while (++x < map->cam.hsize -1)
+		while (++x < map->cam.vsize -1)
 		{
 			ray = ray_for_pixel(map->cam, x, y);
-write(1, "si\n", 3);	
 			c_col = color_at(world, ray);
 			c_col = check_color(c_col);
 			c_col = multicolor(c_col, 255);
-			color = get_trgb(c_col.r, c_col.g, c_col.b);
-			printf("color %d\n", color);
-			draw(map, x, y, color);
+	//		color = get_trgb(c_col.r, c_col.g, c_col.b);
+	//		printf("color %d\n", color);
+	printf("color:%f, %f, %f\n", c_col.r, c_col.g, c_col.b);
+//			draw(map, x, y, color);
 		}
 	}
 }
@@ -95,6 +95,7 @@ int	map_draw(t_map *map)
 	int	h;
 	int	vs_x;
 	int	vs_y;
+	(void) map;
 /*	float	world_x;
 	float	world_y;
 	int color = 0;
@@ -119,43 +120,43 @@ int	map_draw(t_map *map)
 	(void)vs_y;
 //	(void)color;
 
-//	world = default_world();
+	world = default_world(6);
 	world.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 
-	world.floor = r_create_sphere();
-	world.floor.transform = m_scaling(10, 0.01, 10);
-	world.floor.material = m_create_material();
-	world.floor.material.color = set_color(1, 0.9, 0.9);
-	world.floor.material.specular = 0;
+	world.sp[0] = r_create_sphere();
+	world.sp[0].transform = m_scaling(10, 0.01, 10);
+	world.sp[0].material = m_create_material();
+	world.sp[0].material.color = set_color(1, 0.9, 0.9);
+	world.sp[0].material.specular = 0;
 
-	world.left_wall = r_create_sphere();
-	world.left_wall.transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(-0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
-	world.left_wall.material = world.floor.material;
+	world.sp[1] = r_create_sphere();
+	world.sp[1].transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(-0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
+	world.sp[1].material = world.sp[0].material;
 
-	world.right_wall = r_create_sphere();
-	world.right_wall.transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
-	world.right_wall.material = world.floor.material;
+	world.sp[2] = r_create_sphere();
+	world.sp[2].transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
+	world.sp[2].material = world.sp[0].material;
 	
-	world.middle = r_create_sphere();
-	world.middle.transform = m_translation(-0.5, 1, 0.5);
-	world.middle.material = m_create_material();
-	world.middle.material.color = set_color(0.1, 1, 0.5);
-	world.middle.material.diffuse = 0.7;
-	world.middle.material.specular = 0.3;
+	world.sp[3] = r_create_sphere();
+	world.sp[3].transform = m_translation(-0.5, 1, 0.5);
+	world.sp[3].material = m_create_material();
+	world.sp[3].material.color = set_color(0.1, 1, 0.5);
+	world.sp[3].material.diffuse = 0.7;
+	world.sp[3].material.specular = 0.3;
 	
-	world.right = r_create_sphere();
-	world.right.transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
-	world.right.material = m_create_material();
-	world.right.material.color = set_color(0.5, 1, 0.1);
-	world.right.material.diffuse = 0.7;
-	world.right.material.specular = 0.3;
+	world.sp[4] = r_create_sphere();
+	world.sp[4].transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
+	world.sp[4].material = m_create_material();
+	world.sp[4].material.color = set_color(0.5, 1, 0.1);
+	world.sp[4].material.diffuse = 0.7;
+	world.sp[4].material.specular = 0.3;
 
-	world.left = r_create_sphere();
-	world.left.transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
-	world.left.material = m_create_material();
-	world.left.material.color = set_color(1, 0.8, 0.1);
-	world.left.material.diffuse = 0.7;
-	world.left.material.specular = 0.3;
+	world.sp[5] = r_create_sphere();
+	world.sp[5].transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
+	world.sp[5].material = m_create_material();
+	world.sp[5].material.color = set_color(1, 0.8, 0.1);
+	world.sp[5].material.diffuse = 0.7;
+	world.sp[5].material.specular = 0.3;
 
 	map->cam = set_camera(P_HEIGHT, P_WIDTH, 1.0471975);
 	map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
@@ -238,8 +239,8 @@ int	map_draw(t_map *map)
 		}
 		h++;
 	}*/
-	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
-	mlx_destroy_image(map->mlx.init, map->mlx.img);
+//	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
+//	mlx_destroy_image(map->mlx.init, map->mlx.img);
 	return (0);
 }
 
@@ -308,27 +309,34 @@ int	main(int argc, char **argv)
 	b.cols = 4;
 	
 	t_arr_inter arr;
-	(void)arr;
-	t_ray ray;
+	(void)arr;*/
+/*	t_ray ray;
 	t_world w;
-	w = default_world();
+	w = default_world(2);
+	w.sp[0].material.color = set_color(0.8, 1.0, 0.6);
+	w.sp[0].material.diffuse = 0.7;
+	w.sp[0].material.specular = 0.2;
+	w.sp[1].transform = m_scaling(0.5, 0.5, 0.5);
 //	w.li = l_point_light(v_create(0, 0.25, 0, 1), set_color(1, 1, 1));
 //	t_matrix m;
-	ray.ori = v_create(0,0,0.75,1);
-	ray.dir = v_create(0,0,-1,0);
-//	t_sphere	shape;
-//	t_inter		i;
-//	t_comps		comps;
+	ray.ori = v_create(0,0,-5,1);
+	ray.dir = v_create(0,0,1,0);
+//	w.arr = r_intersect_world(w, ray);
+	//printf("world: count:%i, 1:%f, 2:%f, 3:%f, 4:%f\n", w.arr.count, w.arr.a[0].t, w.arr.a[1].t, w.arr.a[2].t, w.arr.a[3].t);
+	t_sphere	shape;
+	t_inter		i;
+	t_comps		comps;
 	t_color		col;
-//	shape = w.s2;
-//	i = r_intersection(0.5, shape);
-//	comps = prepare_computations(i, ray);
-//	col = shade_hit(w, comps);
-	w.s1.material.ambient = 1;
-	w.s2.material.ambient = 1;
-	col = color_at(w, ray);
-	printf("color:%f, %f, %f\n", col.r, col.g, col.b);
-	printf("color:%f, %f, %f\n", w.s2.material.color.r, w.s2.material.color.g, w.s2.material.color.b);
+	shape = w.sp[0];
+	i = r_intersection(4, shape);
+	comps = prepare_computations(i, ray);
+	col = shade_hit(w, comps);
+*/
+//	w.s1.material.ambient = 1;
+//	w.s2.material.ambient = 1;
+	//col = color_at(w, ray);
+	//printf("color:%f, %f, %f\n", col.r, col.g, col.b);
+	//printf("color:%f, %f, %f\n", w.sp[1].material.color.r, w.sp[1].material.color.g, w.sp[1].material.color.b);
 //	printf("inside:%i\n", comps.inside);
 //	print_tuple(comps.point);
 //	print_tuple(comps.eyev);
@@ -336,7 +344,7 @@ int	main(int argc, char **argv)
 ////////////////	arr = r_intersect_world(w, ray);
 //	printf("world: count:%i, 1:%f, 2:%f, 3:%f, 4:%f\n", arr.count, arr.a[0].t, arr.a[1].t, arr.a[2].t, arr.a[3].t);
 //	t_ray ray2;
-//	ray2 = r_transform(ray, m);*/
+//	ray2 = r_transform(ray, m);
 //	t_tup p;
 //	t_tup t;
 //	t_tup r;

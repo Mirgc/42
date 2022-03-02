@@ -49,7 +49,7 @@ void	set_transform(t_sphere *s, t_matrix m)
 	}
 }
 
-t_arr_inter	r_intersect(t_sphere s, t_ray ray)
+t_arr_inter	r_intersect(t_world wo, t_sphere s, t_ray ray)
 {
 	t_tup		sp_to_ray;
 	double	a;
@@ -69,11 +69,11 @@ t_arr_inter	r_intersect(t_sphere s, t_ray ray)
 	t1.t = 0;
 	t2.t = 0;
 	if (i < 0)
-		return (r_intersections(t1, t2));
+		return (r_intersections(wo, t1, t2));
 	i = sqrtf(i);
 	t1 = r_intersection((-b - i) / (2 * a), s);
 	t2 = r_intersection((-b + i) / (2 * a), s);
-	return (r_intersections(t1, t2));
+	return (r_intersections(wo, t1, t2));
 }
 
 t_inter	r_intersection(float t, t_sphere o)
@@ -85,17 +85,25 @@ t_inter	r_intersection(float t, t_sphere o)
 	return (inter);
 }
 
-t_arr_inter r_intersections(t_inter i1, t_inter i2)
+t_arr_inter r_intersections(t_world wo, t_inter i1, t_inter i2)
 {
 	t_arr_inter arr;
+	int			i;
 
 	if (i1.t == 0 && i2.t == 0)
-		arr.count = 0;
+		return (wo.arr);
 	else
-		arr.count = 2;
-	arr.a = (t_inter *)malloc(sizeof(t_inter) * 2);
-	arr.a[0] = i1;
-	arr.a[1] = i2;
+		arr.count = wo.arr.count + 2;
+	arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 2));
+	i = 0;
+	while (i < wo.arr.count)
+	{
+		arr.a[i] = wo.arr.a[i];
+		i++;
+	}
+	arr.a[wo.arr.count] = i1;
+	arr.a[wo.arr.count + 1] = i2;
+	free(wo.arr.a);
 	return(arr);
 }
 
@@ -104,7 +112,7 @@ void	r_order(t_arr_inter wo, int count)
 	int		i;
 	float	tmp;
 
-	i = -1;
+	i = 0;
     while ( ++i < count )
     {
         if (wo.a[i].t < wo.a[i-1].t )
@@ -119,23 +127,31 @@ void	r_order(t_arr_inter wo, int count)
 
 t_arr_inter	r_intersect_world(t_world w, t_ray r)
 {
-	t_arr_inter	wo_arr;
-	t_arr_inter	tmp1_arr;
-	t_arr_inter	tmp2_arr;
+//	t_arr_inter	wo_arr;
+//	t_arr_inter	tmp1_arr;
+//	t_arr_inter	tmp2_arr;
+	int	i;
 
-	wo_arr.a = (t_inter *)malloc(sizeof(t_inter) * 4);
-	tmp1_arr = r_intersect(w.s1, r);
-	tmp2_arr = r_intersect(w.s2, r);
-	wo_arr.count = tmp1_arr.count;
-	wo_arr.count += tmp2_arr.count;
-	wo_arr.a[0] = tmp1_arr.a[0];
-	wo_arr.a[1] = tmp1_arr.a[1];
-	wo_arr.a[2] = tmp2_arr.a[0];
-	wo_arr.a[3] = tmp2_arr.a[1];
-	free(tmp1_arr.a);
-	free(tmp2_arr.a);
-	r_order(wo_arr, 4);
-	return (wo_arr);
+//	wo_arr.a = (t_inter *)malloc(sizeof(t_inter) * 4);
+//	tmp1_arr = r_intersect(w.s1, r);
+//	tmp2_arr = r_intersect(w.s2, r);
+//	wo_arr.count = tmp1_arr.count;
+//	wo_arr.count += tmp2_arr.count;
+//	wo_arr.a[0] = tmp1_arr.a[0];
+//	wo_arr.a[1] = tmp1_arr.a[1];
+//	wo_arr.a[2] = tmp2_arr.a[0];
+//	wo_arr.a[3] = tmp2_arr.a[1];
+//	free(tmp1_arr.a);
+//	free(tmp2_arr.a);
+	i = -1;
+	w.arr.count = 0;
+	while (++i <= w.nb)
+	{
+		w.arr = r_intersect(w, w.sp[i], r);
+	}
+	write(1, "si\n", 3);
+	r_order(w.arr, w.arr.count);
+	return (w.arr);
 }
 
 /*float	r_hit(t_arr_inter inter)

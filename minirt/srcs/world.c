@@ -4,19 +4,22 @@
 #include "canvas.h"
 #include "matrix.h"
 #include "ray.h"
-#include "stdio.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-t_world	default_world()
+t_world	default_world(int nb)
 {
 	t_world	w;
+	int		i;
 
 	w.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
-	w.s1 = r_create_sphere();
-	w.s2 = r_create_sphere();
-	w.s1.material.color = set_color(0.8, 1.0, 0.6);
-	w.s1.material.diffuse = 0.7;
-	w.s1.material.specular = 0.2;
-	w.s2.transform = m_scaling(0.5, 0.5, 0.5);
+	w.nb = nb;
+	w.sp = (t_sphere *)malloc(sizeof(t_sphere) * nb);
+	i = -1;
+	while (++i < nb)
+	{
+		w.sp[i] = r_create_sphere();
+	}
 	return (w);
 }
 
