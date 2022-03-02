@@ -63,13 +63,39 @@ t_color	check_color(t_color col)
 	return (tmp);
 }
 
+void	render(t_map *map, t_world world)
+{
+	int	x;
+	int	y;
+	t_ray	ray;
+	t_color	c_col;
+	int	color;
+
+	y = -1;
+	while (++y < map->cam.vsize -1)
+	{
+		x = -1;
+		while (++x < map->cam.hsize -1)
+		{
+			ray = ray_for_pixel(map->cam, x, y);
+write(1, "si\n", 3);	
+			c_col = color_at(world, ray);
+			c_col = check_color(c_col);
+			c_col = multicolor(c_col, 255);
+			color = get_trgb(c_col.r, c_col.g, c_col.b);
+			printf("color %d\n", color);
+			draw(map, x, y, color);
+		}
+	}
+}
+
 int	map_draw(t_map *map)
 {
 	int	w;
 	int	h;
 	int	vs_x;
 	int	vs_y;
-	float	world_x;
+/*	float	world_x;
 	float	world_y;
 	int color = 0;
 	float wall_z;
@@ -85,14 +111,59 @@ int	map_draw(t_map *map)
 	t_sphere	sp;
 	t_arr_inter		inter;
 	t_light	li;
-	t_color c_col;
+	t_color c_col;*/
+	t_world world;
 	(void)w;
 	(void)h;
 	(void)vs_x;
 	(void)vs_y;
-	(void)color;
+//	(void)color;
 
+//	world = default_world();
+	world.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
+
+	world.floor = r_create_sphere();
+	world.floor.transform = m_scaling(10, 0.01, 10);
+	world.floor.material = m_create_material();
+	world.floor.material.color = set_color(1, 0.9, 0.9);
+	world.floor.material.specular = 0;
+
+	world.left_wall = r_create_sphere();
+	world.left_wall.transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(-0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
+	world.left_wall.material = world.floor.material;
+
+	world.right_wall = r_create_sphere();
+	world.right_wall.transform = m_multi(m_translation(0,0,5), m_multi(m_rotationy(0.7853981), m_multi(m_rotationx(1.570796), m_scaling(10, 0.01, 10))));
+	world.right_wall.material = world.floor.material;
 	
+	world.middle = r_create_sphere();
+	world.middle.transform = m_translation(-0.5, 1, 0.5);
+	world.middle.material = m_create_material();
+	world.middle.material.color = set_color(0.1, 1, 0.5);
+	world.middle.material.diffuse = 0.7;
+	world.middle.material.specular = 0.3;
+	
+	world.right = r_create_sphere();
+	world.right.transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
+	world.right.material = m_create_material();
+	world.right.material.color = set_color(0.5, 1, 0.1);
+	world.right.material.diffuse = 0.7;
+	world.right.material.specular = 0.3;
+
+	world.left = r_create_sphere();
+	world.left.transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
+	world.left.material = m_create_material();
+	world.left.material.color = set_color(1, 0.8, 0.1);
+	world.left.material.diffuse = 0.7;
+	world.left.material.specular = 0.3;
+
+	map->cam = set_camera(P_HEIGHT, P_WIDTH, 1.0471975);
+	map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
+ 
+	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
+	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
+	render(map, world);
+/*
 	sp = r_create_sphere();
 	ray.ori = v_create(0, 0, -5, 1);
 	wall_z = 10;
@@ -132,7 +203,7 @@ int	map_draw(t_map *map)
 		vs_y++;
 	}
 
-
+*/
 //	color = get_trgb(255, 0, 0);
 //	draw(map, 450 - p.x, 225 - p.z, color);
 //	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
@@ -168,7 +239,7 @@ int	map_draw(t_map *map)
 		h++;
 	}*/
 	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
-//	mlx_destroy_image(map->mlx.init, map->mlx.img);
+	mlx_destroy_image(map->mlx.init, map->mlx.img);
 	return (0);
 }
 
@@ -177,7 +248,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-/*	t_map   map;
+	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -191,7 +262,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-*/
+
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;
@@ -275,9 +346,13 @@ int	main(int argc, char **argv)
 //	r = v_create(1, 1, 0, 0);
 //	m = view_transform(p, t, r);
 //	print_matrix(m);
-	t_camera cam;
-	cam = set_camera(125, 200, 1.570796);
-	print_camera(cam);
+//	t_camera cam;
+//	cam = set_camera(201, 101, 1.570796);
+//	t_ray ray;
+//	ray = ray_for_pixel(cam, 0, 0);
+//	print_tuple(ray.ori);
+//	print_tuple(ray.dir);
+//	print_camera(cam);
 	//////////////////////////////////////
 //	t_color	color;
 //	t_material m;

@@ -82,6 +82,12 @@ typedef struct s_world
 	t_light		li;
 	t_sphere	s1;
 	t_sphere	s2;
+	t_sphere	floor;
+	t_sphere	left_wall;
+	t_sphere	right_wall;
+	t_sphere	middle;
+	t_sphere	right;
+	t_sphere	left;
 }	t_world;
 
 typedef struct s_camera
@@ -123,11 +129,12 @@ typedef struct  s_image
 
 typedef struct  s_map
 {
-	int     width;
-	int     height;
-	t_mlx   mlx;
-	t_image image;
-	t_color color;
+	int		width;
+	int		height;
+	t_mlx		mlx;
+	t_image		image;
+	t_color		color;
+	t_camera	cam;
 }	t_map;
 
 

@@ -1,5 +1,6 @@
 #include "structs.h"
 #include "matrix.h"
+#include "tuples.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -36,4 +37,23 @@ t_camera	set_camera(double hsize, double vsize, double fov)
 	cam.pixel_size = (cam.hw * 2) /cam.hsize;
 	cam.transform = m_identity();
 	return (cam);
+}
+
+t_ray	ray_for_pixel(t_camera cam, double px, double py)
+{
+	double	xoffset;
+	double	yoffset;
+	double	world_x;
+	double	world_y;
+	t_tup	pixel;
+	t_ray	ray;
+
+	xoffset = (px + 0.5) * cam.pixel_size;
+	yoffset = (py + 0.5) * cam.pixel_size;
+	world_x = cam.hw - xoffset;
+	world_y = cam.hh - yoffset;
+	pixel = m_multi_tup(m_invertible(cam.transform), v_create(world_x, world_y, -1, 1));
+	ray.ori = m_multi_tup(m_invertible(cam.transform), v_create(0, 0, 0, 1));
+	ray.dir = v_normalize(v_substract(pixel, ray.ori));
+	return (ray);
 }

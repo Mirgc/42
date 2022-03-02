@@ -8,7 +8,7 @@
 # include <math.h>
 # include <stdio.h>
 
-# define P_WIDTH 100 
+# define P_WIDTH 50 
 # define P_HEIGHT 100
 
 
