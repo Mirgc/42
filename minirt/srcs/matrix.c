@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <minirt.h>
+#include <stdio.h>
+#include <matrix.h>
 
 void	print_matrix(t_matrix m)
 {
@@ -68,6 +69,31 @@ t_matrix	m_init(int rows, int cols)
 	a.rows = rows;
 	a.cols = cols;
 	return (a);
+}
+
+t_matrix	m_init_with_tuple(t_tup a, t_tup b, t_tup c)
+{
+	t_matrix        m;
+
+	m.m[0][0] = a.x;
+	m.m[0][1] = a.y;
+	m.m[0][2] = a.z;
+	m.m[0][3] = 0;
+	m.m[1][0] = b.x;
+	m.m[1][1] = b.y;
+	m.m[1][2] = b.z;
+	m.m[1][3] = 0;
+	m.m[2][0] = c.x;
+	m.m[2][1] = c.y;
+	m.m[2][2] = c.z;
+	m.m[2][3] = 0;
+	m.m[3][0] = 0;
+	m.m[3][1] = 0;
+	m.m[3][2] = 0;
+	m.m[3][3] = 1;
+	m.rows = 4;
+	m.cols = 4;
+	return (m);
 }
 
 t_matrix	m_multi(t_matrix a, t_matrix b)
@@ -222,7 +248,7 @@ t_matrix	m_invertible(t_matrix a)
 
 	b = m_init(4, 4);
 	det = m_det(a, 4);
-	if ((int)det != 0)
+	if (det != 0.0)
 	{
 		i = -1;
 		while (++i < 4)
@@ -264,43 +290,43 @@ t_matrix	m_scaling(float	x, float y, float z)
 	return (a);
 }
 
-t_matrix	m_rotationx(int angle)
+t_matrix	m_rotationx(float angle)
 {
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[1][1] = cos(rad);
-	a.m[1][2] = -(sin(rad));
+	a.m[1][2] = sin(rad) * -1.0f;
 	a.m[2][1] = sin(rad);
 	a.m[2][2] = cos(rad);
 	return (a);
 }
 
-t_matrix	m_rotationy(int angle)
+t_matrix	m_rotationy(float angle)
 {
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[0][0] = cos(rad);
 	a.m[0][2] = sin(rad);
-	a.m[2][0] = -(sin(rad));
+	a.m[2][0] = sin(rad) * -1.0f;
 	a.m[2][2] = cos(rad);
 	return (a);
 }
 
-t_matrix	m_rotationz(int angle)
+t_matrix	m_rotationz(float angle)
 {
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[0][0] = cos(rad);
-	a.m[0][1] = -(sin(rad));
+	a.m[0][1] = sin(rad) * -1.0f;
 	a.m[1][0] = sin(rad);
 	a.m[1][1] = cos(rad);
 	return (a);

@@ -71,6 +71,41 @@ typedef struct s_arr_inter
 	t_inter	*a;
 } t_arr_inter;
 
+typedef struct	s_light
+{
+	t_tup	position;
+	t_color	intensity;
+}	t_light;
+
+typedef struct s_world
+{
+        t_light         li;
+        t_sphere        *sp;
+        int                     nb;
+        t_arr_inter     arr;
+}       t_world;
+
+typedef struct s_camera
+{
+	double			hsize;
+	double			vsize;
+	double			fov;
+	double			pixel_size;
+	double			hw;
+	double			hh;
+	t_matrix		transform;
+}       t_camera;
+
+typedef struct s_comps
+{
+        float		t;
+        t_sphere	o;
+        int		inside;
+        t_tup		point;
+        t_tup		eyev;
+        t_tup		normalv;
+}	t_comps;
+
 typedef struct  s_mlx
 {
 	void    *init;
@@ -94,12 +129,8 @@ typedef struct  s_map
 	t_mlx   mlx;
 	t_image image;
 	t_color color;
+	t_camera	cam;
 }	t_map;
 
-typedef struct	s_light
-{
-	t_tup	position;
-	t_color	intensity;
-}	t_light;
 
 #endif

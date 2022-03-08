@@ -16,6 +16,8 @@
 #include "ray.h"
 #include "canvas.h"
 #include "light.h"
+#include "world.h"
+#include "camera.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,9 +63,69 @@ t_color	check_color(t_color col)
 	return (tmp);
 }
 
+void    render(t_map *map, t_world world)
+{
+        int     x;
+        int     y;
+        t_ray   ray;
+        t_color c_col;
+	int	color;
+
+        y = -1;
+        while (++y < map->cam.vsize -1)
+        {
+                x = -1;
+                while (++x < map->cam.hsize -1)
+                {
+                        ray = ray_for_pixel(map->cam, x, y);
+                        c_col = color_at(world, ray);
+			c_col = check_color(c_col);
+			c_col = multicolor(c_col, 255);
+			color = get_trgb(c_col.r, c_col.g, c_col.b);
+			draw(map, x, y, color);
+                }
+        }
+}
+
+
 int	map_draw(t_map *map)
 {
-	int	w;
+	
+	t_world world;
+	t_ray ray;
+
+	world = default_world(6);
+	world.sp[0].transform = m_scaling(10, 0.01, 10);
+        world.sp[0].material.color = set_color(1, 0.9, 0.9);
+        world.sp[0].material.specular = 0;
+
+	world.sp[1].transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+        world.sp[1].material = world.sp[0].material;
+
+	world.sp[2].transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+        world.sp[2].material = world.sp[0].material;
+
+	world.sp[3].transform = m_translation(-0.5, 1.0, 0.5);
+	world.sp[3].material.color = set_color(0.1, 1.0, 0.5);
+	world.sp[3].material.diffuse = 0.7;
+        world.sp[3].material.specular = 0.3;
+
+	world.sp[4].transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
+        world.sp[4].material.color = set_color(0.5, 1, 0.1);
+        world.sp[4].material.diffuse = 0.7;
+        world.sp[4].material.specular = 0.3;
+
+	world.sp[5].transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
+        world.sp[5].material.color = set_color(1, 0.8, 0.1);
+        world.sp[5].material.diffuse = 0.7;
+        world.sp[5].material.specular = 0.3;
+
+	map->cam = set_camera(P_WIDTH, P_HEIGHT, M_PI/3);
+        map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
+	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
+	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
+	render(map, world);
+	/*int	w;
 	int	h;
 	int	vs_x;
 	int	vs_y;
@@ -80,6 +142,7 @@ int	map_draw(t_map *map)
 	t_tup	point;
 	t_tup	normal;
 	t_ray	ray;
+	t_world world;
 	t_sphere	sp;
 	t_arr_inter		inter;
 	t_light	li;
@@ -90,8 +153,8 @@ int	map_draw(t_map *map)
 	(void)vs_y;
 	(void)color;
 
-	
-	sp = r_create_sphere();
+	world = default_world(1);
+	world.sp[0] = r_create_sphere();
 	ray.ori = v_create(0, 0, -5, 1);
 	wall_z = 10;
 	canvas_pixel = 100;
@@ -99,7 +162,7 @@ int	map_draw(t_map *map)
 	pixel_size = wall_size / canvas_pixel;
 	half = wall_size / 2;
 
-	sp.material.color = set_color(1, 1, 0.5);
+	world.sp[0].material.color = set_color(1, 1, 0.5);
 	li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
 	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
@@ -113,13 +176,13 @@ int	map_draw(t_map *map)
 			world_x = -half + (pixel_size * vs_x);
 			p = v_create(world_x, world_y, wall_z, 1);
 			ray.dir = v_normalize(v_substract(p, ray.ori));
-			inter = r_intersect(sp, ray);
+			inter = r_intersect_world(world, ray);
 			hit = r_hit(inter);
 			if (hit != -1)
 			{
 				point = r_position(ray, hit);
-				normal = r_normal_at(inter.a[0].o, point);
-				c_col = lighting(inter.a[0].o.material, li, point, v_negate(ray.dir), normal);
+				normal = r_normal_at(world.sp[0], point);
+				c_col = lighting(world.sp[0].material, world.li, point, v_negate(ray.dir), normal);
 				c_col = check_color(c_col);
 				c_col = multicolor(c_col, 255);
 				color = get_trgb(c_col.r, c_col.g, c_col.b);
@@ -128,7 +191,7 @@ int	map_draw(t_map *map)
 			vs_x++;
 		}
 		vs_y++;
-	}
+	}*/
 
 
 /*	sp = r_create_sphere();
@@ -264,34 +327,42 @@ int	main(int argc, char **argv)
 	b.m[3][2] = 0;
 	b.m[3][3] = 5;
 	b.rows = 4;
-	b.cols = 4;
-	t_arr_inter arr;
+	b.cols = 4;*/
+/*	t_arr_inter	arr;
+	t_world		wo;
+	wo = default_world(2);
+	wo.sp[0].material.color = set_color(0.8, 1.0, 0.6);
+	wo.sp[0].material.diffuse = 0.7;
+	wo.sp[0].material.specular = 0.2;
+	wo.sp[1].transform = m_scaling(0.5, 0.5, 0.5);
 	(void)arr;
 	t_ray ray;
 //	t_matrix m;
 	ray.ori = v_create(0,0,-5,1);
 	ray.dir = v_create(0,0,1,0);
+
+	r_intersect(&wo, wo.sp[0], ray);*/
+	//arr = r_intersect_world(wo, ray);
 //	t_ray ray2;
 //	ray2 = r_transform(ray, m);
-	t_tup p;
-	t_tup t;
-	t_tup r;
+//	t_tup p;
+//	t_tup t;
+//	t_tup r;
 	//////////////////////////////////////
-	t_color	color;
-	t_material m;
-	t_light li;
-	m = m_create_material();
-	m.color = set_color(1, 0.2, 1);
-	li = l_point_light(v_create(0,10,-10, 1), set_color(1, 1, 1));
+//	t_color	color;
+//	t_material m;
+//	t_light li;
+//	m = m_create_material();
+//	m.color = set_color(1, 0.2, 1);
 
 	/////////////////////////////////////
-	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
-	printf("color:%f, %f, %f\n", color.r, color.b, color.g);
-	p = v_create(0, -1, 0, 0);
-	t = v_create(0.70710678118, 0.70710678118, 0, 0);
-	r = r_reflect(p, t);
-	print_tuple(r);
-	*/
+//	color = lighting(m, li, v_create(0, 0, 0, 1), v_create(0, 0, -1, 0), v_create(0, 0, -1, 0));
+//	printf("color:%f, %f, %f\n", color.r, color.b, color.g);
+//	p = v_create(0, -1, 0, 0);
+//	t = v_create(0.70710678118, 0.70710678118, 0, 0);
+//	r = r_reflect(p, t);
+//	print_tuple(r);
+	
 //	s.transform = m_translation(5, 0, 0);
 //	set_transform(&s, m);
 //	arr = r_intersect(s, ray);
