@@ -4,6 +4,7 @@
 #include "canvas.h"
 #include "matrix.h"
 #include "ray.h"
+#include "minirt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -34,6 +35,7 @@ t_comps	prepare_computations(t_inter i, t_ray ray)
 	comps.point = r_position(ray, comps.t);
 	comps.eyev = v_negate(ray.dir);
 	comps.normalv = r_normal_at(comps.o, comps.point);
+	comps.over_point = v_add(comps.point, v_multi(comps.normalv, EPSILON));
 	if (v_dot(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = 1;
@@ -83,4 +85,26 @@ t_matrix	view_transform(t_tup from, t_tup to, t_tup up)
 	true_up = v_cross(left, forward);
 	orientation = m_init_with_tuple(left, true_up, v_negate(forward));
 	return (m_multi(orientation, m_translation(-1 * from.x, -1 * from.y, -1 *  from.z)));	
+}
+
+int	is_shadowed(t_world w, t_tup p)
+{
+	t_tup		v;
+	float		ds;
+	t_ray		ray;
+	t_arr_inter	arr;
+	float		hit;
+
+	v = v_substract(w.li.position, p);
+	ds = v_magnitude(v);
+	ray.ori = p;
+	ray.dir = v_normalize(v);	
+	arr = r_intersect_world(w, ray);
+	if (arr.count != 0)
+	{
+		hit = r_hit(arr);
+		if (hit != -1 && hit < ds)
+			return (1);
+	}
+	return (0);
 }
