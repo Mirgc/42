@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:52:59 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_color	check_color(t_color col)
 		tmp.b = 1;
 	return (tmp);
 }
+
 
 void    render(t_map *map, t_world world)
 {
@@ -129,7 +130,8 @@ int	map_draw(t_map *map)
 	int	h;
 	int	vs_x;
 	int	vs_y;
-	float	world_x;
+	(void) map;
+/*	float	world_x;
 	float	world_y;
 	int color = 0;
 	float wall_z;
@@ -137,7 +139,7 @@ int	map_draw(t_map *map)
 	float canvas_pixel;
 	float pixel_size;
 	float half;
-	float hit;
+	t_inter hit;
 	t_tup	p;
 	t_tup	point;
 	t_tup	normal;
@@ -146,21 +148,27 @@ int	map_draw(t_map *map)
 	t_sphere	sp;
 	t_arr_inter		inter;
 	t_light	li;
-	t_color c_col;
+	t_color c_col;*/
+	t_world world;
 	(void)w;
 	(void)h;
 	(void)vs_x;
 	(void)vs_y;
-	(void)color;
+//	(void)color;
+
+	world = default_world(6);
+	world.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 
 	world = default_world(1);
 	world.sp[0] = r_create_sphere();
+  
 	ray.ori = v_create(0, 0, -5, 1);
 	wall_z = 10;
 	canvas_pixel = 100;
 	wall_size = 7;
 	pixel_size = wall_size / canvas_pixel;
 	half = wall_size / 2;
+
 
 	world.sp[0].material.color = set_color(1, 1, 0.5);
 	li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
@@ -178,7 +186,7 @@ int	map_draw(t_map *map)
 			ray.dir = v_normalize(v_substract(p, ray.ori));
 			inter = r_intersect_world(world, ray);
 			hit = r_hit(inter);
-			if (hit != -1)
+			if (hit.t != -1)
 			{
 				point = r_position(ray, hit);
 				normal = r_normal_at(world.sp[0], point);
@@ -193,39 +201,7 @@ int	map_draw(t_map *map)
 		vs_y++;
 	}*/
 
-
-/*	sp = r_create_sphere();
-	ray.ori = v_create(0, 0, -5, 1);
-	wall_z = 10;
-	canvas_pixel = 100;
-	wall_size = 7;
-	pixel_size = wall_size / canvas_pixel;
-	half = wall_size / 2;
-	color = get_trgb(255, 0, 0);
-
-	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
-	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
-
-	vs_y = 0;
-	while (vs_y < canvas_pixel -1)
-	{
-		world_y = half - (pixel_size * vs_y);
-		vs_x = 0;
-		while (vs_x < canvas_pixel -1)
-		{
-			world_x = -half + (pixel_size * vs_x);
-			p = v_create(world_x, world_y, wall_z, 1);
-			ray.dir = v_normalize(v_substract(p, ray.ori));
-			inter = r_intersect(sp, ray);
-			if (r_hit(inter) != -1)
-			{
-				draw(map, vs_x, vs_y, color);
-			}
-			vs_x++;
-		}
-		vs_y++;
-	}*/
-
+*/
 //	color = get_trgb(255, 0, 0);
 //	draw(map, 450 - p.x, 225 - p.z, color);
 //	p = m_multi_tup(m_multi(m_translation(10, 5, 7), m_rotationy(30)), p);
@@ -260,7 +236,7 @@ int	map_draw(t_map *map)
 		}
 		h++;
 	}*/
-	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
+//	mlx_put_image_to_window(map->mlx.init, map->mlx.win, map->mlx.img, 0, 0);
 //	mlx_destroy_image(map->mlx.init, map->mlx.img);
 	return (0);
 }
@@ -348,6 +324,19 @@ int	main(int argc, char **argv)
 //	t_tup p;
 //	t_tup t;
 //	t_tup r;
+//	t_matrix	m;
+//	p = v_create(1, 3, 2, 1);
+//	t = v_create(4, -2, 8, 1);
+//	r = v_create(1, 1, 0, 0);
+//	m = view_transform(p, t, r);
+//	print_matrix(m);
+//	t_camera cam;
+//	cam = set_camera(201, 101, 1.570796);
+//	t_ray ray;
+//	ray = ray_for_pixel(cam, 0, 0);
+//	print_tuple(ray.ori);
+//	print_tuple(ray.dir);
+//	print_camera(cam);
 	//////////////////////////////////////
 //	t_color	color;
 //	t_material m;

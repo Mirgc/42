@@ -89,16 +89,22 @@ t_inter	r_intersection(float t, t_sphere o)
 /*t_arr_inter r_intersections(t_inter i1, t_inter i2)
 {
 	t_arr_inter arr;
+	int			i;
 
 	if (i1.t == 0 && i2.t == 0)
+		return (wo.arr);
+	else
+		arr.count = wo.arr.count + 2;
+	arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 2));
+	i = 0;
+	while (i < wo.arr.count)
 	{
-		arr.count = 0;
-		return (arr);
+		arr.a[i] = wo.arr.a[i];
+		i++;
 	}
-	arr.a = (t_inter *)malloc(sizeof(t_inter) * 2);
-	arr.count = 2;
-	arr.a[0] = i1;
-	arr.a[1] = i2;
+	arr.a[wo.arr.count] = i1;
+	arr.a[wo.arr.count + 1] = i2;
+	free(wo.arr.a);
 	return(arr);
 }*/
 
@@ -122,7 +128,6 @@ t_arr_inter	r_intersections(t_world wo, t_inter i1, t_inter i2)
         //free(wo.arr.a);
         return(arr);
 }
-
 
 float	r_hit(t_arr_inter inter)
 {

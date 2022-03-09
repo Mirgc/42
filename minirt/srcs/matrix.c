@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/18 20:31:45 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:52:53 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,23 @@ t_matrix	m_submatrix(t_matrix	a, int row, int col)
 	return (b);
 }
 
+float	m_det(t_matrix	a, int	c)
+{
+	float	det;
+	int	i;
+
+	det = 0;
+	i = -1;
+	if (c == 2)
+		det += a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
+	else
+	{
+		while (++i < c)
+			det += a.m[0][i] * m_cofactor(a, 0, i, c);
+	}
+	return (det);
+}
+
 float	m_minor(t_matrix	a, int row, int col, int c)
 {
 	t_matrix	b;
@@ -220,23 +237,6 @@ float	m_cofactor(t_matrix	a, int row, int	col, int c)
 		return(m_minor(a, row, col, c) * -1);
 	else
 		return(m_minor(a, row, col, c) * 1);
-}
-
-float	m_det(t_matrix	a, int	c)
-{
-	float	det;
-	int	i;
-
-	det = 0;
-	i = -1;
-	if (c == 2)
-		det += a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
-	else
-	{
-		while (++i < c)
-			det += a.m[0][i] * m_cofactor(a, 0, i, c);
-	}
-	return (det);
 }
 
 t_matrix	m_invertible(t_matrix a)
@@ -259,12 +259,12 @@ t_matrix	m_invertible(t_matrix a)
 				b.m[j][i] = m_cofactor(a, i, j, 4) / det;
 			}
 		}	
-	}
-	else
-	{
-		b.cols = 0;
-		b.rows = 0;
-	}
+//	}
+//	else
+//	{
+//		b.cols = 0;
+//		b.rows = 0;
+//	}
 	return (b);
 }
 
