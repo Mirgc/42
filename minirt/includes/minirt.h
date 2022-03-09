@@ -8,8 +8,8 @@
 # include <math.h>
 # include <stdio.h>
 
-# define P_WIDTH 800 
-# define P_HEIGHT 400
+# define P_WIDTH 200 
+# define P_HEIGHT 100
 # define PI 3.1415926
 # define EPSILON 0.01
 
