@@ -3,6 +3,7 @@
 #include "tuples.h"
 #include "math.h"
 #include "ray.h"
+#include "world.h"
 #include "stdio.h"
 
 t_light	l_point_light(t_tup pos, t_color col)
@@ -26,7 +27,7 @@ t_material	m_create_material()
 	return (tmp);
 }
 
-t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normalv)
+t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normalv, int shadow)
 {
 	t_color efec;
 	t_color	ambient;
@@ -42,6 +43,11 @@ t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normal
 	lightv = v_normalize(v_substract(li.position, point));
 	ambient = multicolor(efec, m.ambient);
 	ldotnormal = v_dot(lightv, normalv);
+	if (shadow)
+	{
+		printf("%i\n", shadow);
+		return(ambient);
+	}
 	if (ldotnormal < 0)
 	{
 		diffuse = set_color(0, 0, 0);
@@ -65,6 +71,6 @@ t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normal
 
 t_color shade_hit(t_world w, t_comps c)
 {
-	return (lighting(c.o.material, w.li, c.point, c.eyev, c.normalv));
+	return (lighting(c.o.material, w.li, c.over_point, c.eyev, c.normalv, is_shadowed(w, c.over_point)));
 }
 

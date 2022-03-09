@@ -104,6 +104,7 @@ typedef struct s_comps
         t_tup		point;
         t_tup		eyev;
         t_tup		normalv;
+        t_tup		over_point;
 }	t_comps;
 
 typedef struct  s_mlx

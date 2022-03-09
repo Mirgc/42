@@ -2,6 +2,7 @@
 #include "ray.h"
 #include "matrix.h"
 #include "light.h"
+#include "minirt.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
