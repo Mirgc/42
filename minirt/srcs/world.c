@@ -6,12 +6,14 @@
 #include "ray.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 t_world	default_world(int nb)
 {
 	t_world	w;
 	int		i;
 
+	w.arr.count = 0;
 	w.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 	w.nb = nb;
 	w.sp = (t_sphere *)malloc(sizeof(t_sphere) * nb);
@@ -46,15 +48,23 @@ t_color	color_at(t_world w, t_ray r)
 {
 	t_arr_inter	arr;
 	t_inter		hit;
+	float		t;
 	t_color		col;
 	t_comps		comps;
+	int		i;
 
 	col = set_color(0, 0, 0);
 	arr = r_intersect_world(w, r);
 	if (arr.count == 0)
 		return (col);
-	hit = r_hit(arr);
-	comps = prepare_computations(hit, r);
+	t = r_hit(arr);
+	i = -1;
+	while (++i < arr.count)
+	{
+		if (t == arr.a[i].t)
+			break;
+	}
+	comps = prepare_computations(arr.a[i], r);
 	col = shade_hit(w, comps);
 	return (col);
 }
@@ -72,5 +82,5 @@ t_matrix	view_transform(t_tup from, t_tup to, t_tup up)
 	left = v_cross(forward, upn);
 	true_up = v_cross(left, forward);
 	orientation = m_init_with_tuple(left, true_up, v_negate(forward));
-	return (m_multi(orientation, m_translation(-from.x, -from.y, -from.z)));	
+	return (m_multi(orientation, m_translation(-1 * from.x, -1 * from.y, -1 *  from.z)));	
 }

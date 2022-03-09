@@ -19,11 +19,12 @@ SRCS	= $(addprefix $(SRCDIR), $(FILES))
 
 OBJS	= ${SRCS:.c=.o}
 
-CC		= gcc -g3
+CC		= gcc -g3 -fsanitize=address
 
 RM		= rm -f
 
-CFLAGS	= -Wall -Wextra -Werror -I $(HEAD)
+CFLAGS	= -I $(HEAD)
+#CFLAGS	= -Wall -Wextra -Werror -I $(HEAD)
 
 #FLAGS = -L $(LIB)libft -lft -L $(LIB)libvector -lvct
 

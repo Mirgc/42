@@ -63,7 +63,7 @@ t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normal
 	return (addcolor(ambient, addcolor(diffuse, specular)));
 }
 
-t_color	shade_hit(t_world w, t_comps c)
+t_color shade_hit(t_world w, t_comps c)
 {
 	return (lighting(c.o.material, w.li, c.point, c.eyev, c.normalv));
 }

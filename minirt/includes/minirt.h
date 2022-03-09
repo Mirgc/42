@@ -8,10 +8,8 @@
 # include <math.h>
 # include <stdio.h>
 
-# define P_WIDTH 100 
-# define P_HEIGHT 50
-
-
-//float   m_det(t_matrix a, int n);
+# define P_WIDTH 300 
+# define P_HEIGHT 150
+# define PI 3.1415926
 
 #endif

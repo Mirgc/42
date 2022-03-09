@@ -13,16 +13,16 @@ void	print_camera(t_camera cam)
 	printf("----------------\n");
 }
 
-t_camera	set_camera(double hsize, double vsize, double fov)
+t_camera	set_camera(double hsize, double vsize, float fov)
 {
 	t_camera	cam;
-	double		half_view;
-	double		aspect;
-
+	float		half_view;
+	float		aspect;
 	cam.hsize = hsize;
 	cam.vsize = vsize;
 	cam.fov = fov;
-	half_view = tan(cam.fov / 2);
+  
+	half_view = tanf(cam.fov / 2);
 	aspect = cam.hsize / cam.vsize;
 	if (aspect >= 1)
 	{
@@ -41,10 +41,10 @@ t_camera	set_camera(double hsize, double vsize, double fov)
 
 t_ray	ray_for_pixel(t_camera cam, double px, double py)
 {
-	double	xoffset;
-	double	yoffset;
-	double	world_x;
-	double	world_y;
+	float	xoffset;
+	float	yoffset;
+	float	world_x;
+	float	world_y;
 	t_tup	pixel;
 	t_ray	ray;
 

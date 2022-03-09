@@ -73,7 +73,7 @@ t_matrix	m_init(int rows, int cols)
 
 t_matrix	m_init_with_tuple(t_tup a, t_tup b, t_tup c)
 {
-	t_matrix	m;
+	t_matrix        m;
 
 	m.m[0][0] = a.x;
 	m.m[0][1] = a.y;
@@ -248,8 +248,8 @@ t_matrix	m_invertible(t_matrix a)
 
 	b = m_init(4, 4);
 	det = m_det(a, 4);
-//	if ((int)det != 0)
-//	{
+	if (det != 0.0)
+	{
 		i = -1;
 		while (++i < 4)
 		{
@@ -295,10 +295,10 @@ t_matrix	m_rotationx(float angle)
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[1][1] = cos(rad);
-	a.m[1][2] = -(sin(rad));
+	a.m[1][2] = sin(rad) * -1.0f;
 	a.m[2][1] = sin(rad);
 	a.m[2][2] = cos(rad);
 	return (a);
@@ -309,11 +309,11 @@ t_matrix	m_rotationy(float angle)
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[0][0] = cos(rad);
 	a.m[0][2] = sin(rad);
-	a.m[2][0] = -(sin(rad));
+	a.m[2][0] = sin(rad) * -1.0f;
 	a.m[2][2] = cos(rad);
 	return (a);
 }
@@ -323,10 +323,10 @@ t_matrix	m_rotationz(float angle)
 	t_matrix	a;
 	float		rad;
 
-	rad = angle * M_PI / 180;
+	rad = angle;// * M_PI / 180;
 	a = m_identity();
 	a.m[0][0] = cos(rad);
-	a.m[0][1] = -(sin(rad));
+	a.m[0][1] = sin(rad) * -1.0f;
 	a.m[1][0] = sin(rad);
 	a.m[1][1] = cos(rad);
 	return (a);

@@ -49,7 +49,7 @@ void	set_transform(t_sphere *s, t_matrix m)
 	}
 }
 
-t_arr_inter	r_intersect(t_world wo, t_sphere s, t_ray ray)
+float	r_intersect(t_world *wo, t_sphere s, t_ray ray)
 {
 	t_tup		sp_to_ray;
 	double	a;
@@ -59,6 +59,7 @@ t_arr_inter	r_intersect(t_world wo, t_sphere s, t_ray ray)
 	t_inter	t1;
 	t_inter	t2;
 	t_ray	raytr;
+	t_arr_inter	arr;
 	
 	raytr = r_transform(ray, m_invertible(s.transform));
 	sp_to_ray = v_substract(raytr.ori, s.center);
@@ -66,14 +67,14 @@ t_arr_inter	r_intersect(t_world wo, t_sphere s, t_ray ray)
 	b = 2 * v_dot(raytr.dir, sp_to_ray);
 	c = v_dot(sp_to_ray, sp_to_ray) - 1;
 	i = powf(b, 2) - (4 * a * c);
-	t1.t = 0;
-	t2.t = 0;
 	if (i < 0)
-		return (r_intersections(wo, t1, t2));
+		return (-1);
 	i = sqrtf(i);
 	t1 = r_intersection((-b - i) / (2 * a), s);
 	t2 = r_intersection((-b + i) / (2 * a), s);
-	return (r_intersections(wo, t1, t2));
+	arr = r_intersections(*wo, t1, t2);
+	wo->arr = arr;
+	return (0);
 }
 
 t_inter	r_intersection(float t, t_sphere o)
@@ -85,7 +86,7 @@ t_inter	r_intersection(float t, t_sphere o)
 	return (inter);
 }
 
-t_arr_inter r_intersections(t_world wo, t_inter i1, t_inter i2)
+/*t_arr_inter r_intersections(t_inter i1, t_inter i2)
 {
 	t_arr_inter arr;
 	int			i;
@@ -105,86 +106,65 @@ t_arr_inter r_intersections(t_world wo, t_inter i1, t_inter i2)
 	arr.a[wo.arr.count + 1] = i2;
 	free(wo.arr.a);
 	return(arr);
-}
+}*/
 
-void	r_order(t_arr_inter wo, int count)
+t_arr_inter	r_intersections(t_world wo, t_inter i1, t_inter i2)
 {
-	int		i;
-	float	tmp;
+        t_arr_inter arr;
+        int                     i;
 
-	i = 0;
-    while ( ++i < count )
-    {
-        if (wo.a[i].t < wo.a[i-1].t )
+        arr.a = NULL;
+	arr.count = wo.arr.count + 2;
+        arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 2));
+        i = 0;
+        while (i < wo.arr.count)
         {
-            tmp = wo.a[i].t;
-            wo.a[i].t = wo.a[i-1].t;
-			wo.a[i-1].t = tmp;
-			i = 0;
-		}
-	}
+                arr.a[i] = wo.arr.a[i];
+                i++;
+        }
+        arr.a[wo.arr.count] = i1;
+        arr.a[wo.arr.count + 1] = i2;
+	//return(r_hit(arr));
+        //free(wo.arr.a);
+        return(arr);
 }
 
-t_arr_inter	r_intersect_world(t_world w, t_ray r)
+float	r_hit(t_arr_inter inter)
 {
-//	t_arr_inter	wo_arr;
-//	t_arr_inter	tmp1_arr;
-//	t_arr_inter	tmp2_arr;
+	float	t;
 	int	i;
 
-//	wo_arr.a = (t_inter *)malloc(sizeof(t_inter) * 4);
-//	tmp1_arr = r_intersect(w.s1, r);
-//	tmp2_arr = r_intersect(w.s2, r);
-//	wo_arr.count = tmp1_arr.count;
-//	wo_arr.count += tmp2_arr.count;
-//	wo_arr.a[0] = tmp1_arr.a[0];
-//	wo_arr.a[1] = tmp1_arr.a[1];
-//	wo_arr.a[2] = tmp2_arr.a[0];
-//	wo_arr.a[3] = tmp2_arr.a[1];
-//	free(tmp1_arr.a);
-//	free(tmp2_arr.a);
-	i = -1;
-	w.arr.count = 0;
-	while (++i <= w.nb)
-	{
-		w.arr = r_intersect(w, w.sp[i], r);
-	}
-	write(1, "si\n", 3);
-	r_order(w.arr, w.arr.count);
-	return (w.arr);
-}
-
-/*float	r_hit(t_arr_inter inter)
-{
+	t = INFINITY;
 	if (inter.count != 0)
 	{
-		if (inter.a[0].t > 0 && inter.a[1].t > 0)
-			return(fmin(inter.a[0].t, inter.a[1].t));
-		if (inter.a[0].t > 0 || inter.a[1].t > 0)
-			return(fmax(inter.a[0].t, inter.a[1].t));
+		i = 0;
+		while (i < inter.count)
+		{
+			if (inter.a[i].t > 0 && inter.a[i].t < t)
+				t = inter.a[i].t;
+			i++;
+		}
+		if (t == INFINITY)
+			return (-1);
+		return (t);
 	}
 	return(-1);
-}*/
-t_inter r_hit(t_arr_inter inter)
-{
-	int     i;
-	int     co;
+}
 
-	co = 0;
-	i = -1;
-	if (inter.count == 0)
-		return (inter.a[0]);
-	while (++i < inter.count)
-	{
-		if (inter.a[i].t > 0)
-			co++;
-	}
-	if (co == inter.count)
-		return (inter.a[0]);
-	else if (co == 0)
-		return (inter.a[inter.count]);
-	else
-		return (inter.a[inter.count -1]);
+t_arr_inter     r_intersect_world(t_world w, t_ray r)
+{
+        int     i;
+
+        i = 0;
+        while (i < w.nb)
+        {
+                r_intersect(&w, w.sp[i], r);
+		i++;
+        }
+	//printf("----%f, %f,\n", w.arr.a[0].t, w.arr.a[1].t);
+//      if (w.arr.count)
+//              r_order(w.arr, w.arr.count);
+        return (w.arr);
 }
 
 t_tup	r_normal_at(t_sphere s, t_tup p)

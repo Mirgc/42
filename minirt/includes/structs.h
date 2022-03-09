@@ -79,11 +79,11 @@ typedef struct	s_light
 
 typedef struct s_world
 {
-	t_light		li;
-	t_sphere	*sp;
-	int			nb;
-	t_arr_inter	arr;
-}	t_world;
+        t_light         li;
+        t_sphere        *sp;
+        int                     nb;
+        t_arr_inter     arr;
+}       t_world;
 
 typedef struct s_camera
 {
@@ -94,16 +94,16 @@ typedef struct s_camera
 	double			hw;
 	double			hh;
 	t_matrix		transform;
-}	t_camera;
+}       t_camera;
 
 typedef struct s_comps
 {
-	float		t;
-	t_sphere	o;
-	int			inside;
-	t_tup		point;
-	t_tup		eyev;
-	t_tup		normalv;
+        float		t;
+        t_sphere	o;
+        int		inside;
+        t_tup		point;
+        t_tup		eyev;
+        t_tup		normalv;
 }	t_comps;
 
 typedef struct  s_mlx
@@ -124,11 +124,11 @@ typedef struct  s_image
 
 typedef struct  s_map
 {
-	int		width;
-	int		height;
-	t_mlx		mlx;
-	t_image		image;
-	t_color		color;
+	int     width;
+	int     height;
+	t_mlx   mlx;
+	t_image image;
+	t_color color;
 	t_camera	cam;
 }	t_map;
 
