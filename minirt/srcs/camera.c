@@ -18,10 +18,10 @@ t_camera	set_camera(double hsize, double vsize, float fov)
 	t_camera	cam;
 	float		half_view;
 	float		aspect;
+
 	cam.hsize = hsize;
 	cam.vsize = vsize;
 	cam.fov = fov;
-  
 	half_view = tanf(cam.fov / 2);
 	aspect = cam.hsize / cam.vsize;
 	if (aspect >= 1)
