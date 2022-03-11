@@ -107,6 +107,12 @@ typedef struct s_comps
         t_tup		over_point;
 }	t_comps;
 
+typedef struct s_shape
+{
+	t_sphere	sp;
+	char		shape;
+}	t_shape;
+
 typedef struct  s_mlx
 {
 	void    *init;

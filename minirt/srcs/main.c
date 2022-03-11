@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:05:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_map   map;
+/*	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -284,7 +284,10 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
+*/
 
+
+	
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;

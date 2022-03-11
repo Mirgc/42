@@ -34,7 +34,7 @@ t_ray	r_transform(t_ray a, t_matrix m)
 	return (tmp);
 }
 
-void	set_transform(t_sphere *s, t_matrix m)
+void	set_transform(t_matrix *s, t_matrix m)
 {
 	int	w;
 	int	h;
@@ -45,7 +45,7 @@ void	set_transform(t_sphere *s, t_matrix m)
 		h = -1;
 		while (++h < 4)
 		{
-			s->transform.m[w][h] = m.m[w][h];
+			s->.m[w][h] = m.m[w][h];
 		}
 	}
 }

@@ -6,7 +6,7 @@
 t_tup		r_position(t_ray a, float i);
 t_sphere	r_create_sphere();
 t_ray		r_transform(t_ray a, t_matrix m);
-void		set_transform(t_sphere *s, t_matrix m);
+void		set_transform(t_matrix *s, t_matrix m);
 float		r_intersect(t_world *wo, t_sphere s, t_ray ray);
 t_inter		r_intersection(float t, t_sphere o);
 t_arr_inter	r_intersections(t_world wo, t_inter i1, t_inter i2);
