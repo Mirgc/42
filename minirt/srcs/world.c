@@ -17,11 +17,11 @@ t_world	default_world(int nb)
 	w.arr.count = 0;
 	w.li = l_point_light(v_create(-10, 10, -10, 1), set_color(1, 1, 1));
 	w.nb = nb;
-	w.sp = (t_sphere *)malloc(sizeof(t_sphere) * nb);
+	w.sh = (t_shape *)malloc(sizeof(t_shape) * nb);
 	i = -1;
 	while (++i < nb)
 	{
-		w.sp[i] = r_create_sphere();
+		w.sh[i].sp = r_create_sphere();
 	}
 	return (w);
 }
@@ -34,7 +34,7 @@ t_comps	prepare_computations(t_inter i, t_ray ray)
 	comps.o = i.o;
 	comps.point = r_position(ray, comps.t);
 	comps.eyev = v_negate(ray.dir);
-	comps.normalv = r_normal_at(comps.o, comps.point);
+	comps.normalv = r_normal_at(comps.o.sp, comps.point);
 	comps.over_point = v_add(comps.point, v_multi(comps.normalv, EPSILON));
 	if (v_dot(comps.normalv, comps.eyev) < 0)
 	{

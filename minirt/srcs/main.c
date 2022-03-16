@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/03/11 20:05:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,31 +94,31 @@ int	map_draw(t_map *map)
 	t_world world;
 	t_ray ray;
 
-	world = default_world(6);
-	world.sp[0].transform = m_scaling(10, 0.01, 10);
-        world.sp[0].material.color = set_color(1, 0.9, 0.9);
-        world.sp[0].material.specular = 0;
+	world = default_world(4);
+	world.sh[0].pl.transform = m_scaling(10, 0.01, 10);
+        world.sh[0].pl.material.color = set_color(1, 0.9, 0.9);
+        world.sh[0].pl.material.specular = 0;
 
-	world.sp[1].transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
-        world.sp[1].material = world.sp[0].material;
+//	world.sh[1].sp.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+//      world.sh[1].sp.material = world.sh[0].sp.material;
 
-	world.sp[2].transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
-        world.sp[2].material = world.sp[0].material;
+//	world.sh[2].sp.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+//      world.sh[2].sp.material = world.sh[0].sp.material;
 
-	world.sp[3].transform = m_translation(-0.5, 1.0, 0.5);
-	world.sp[3].material.color = set_color(0.1, 1.0, 0.5);
-	world.sp[3].material.diffuse = 0.7;
-        world.sp[3].material.specular = 0.3;
+	world.sh[1].sp.transform = m_translation(-0.5, 1.0, 0.5);
+	world.sh[1].sp.material.color = set_color(0.1, 1.0, 0.5);
+	world.sh[1].sp.material.diffuse = 0.7;
+        world.sh[1].sp.material.specular = 0.3;
 
-	world.sp[4].transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
-        world.sp[4].material.color = set_color(0.5, 1, 0.1);
-        world.sp[4].material.diffuse = 0.7;
-        world.sp[4].material.specular = 0.3;
+	world.sh[2].sp.transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
+        world.sh[2].sp.material.color = set_color(0.5, 1, 0.1);
+        world.sh[4].sp.material.diffuse = 0.7;
+        world.sh[2].sp.material.specular = 0.3;
 
-	world.sp[5].transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
-        world.sp[5].material.color = set_color(1, 0.8, 0.1);
-        world.sp[5].material.diffuse = 0.7;
-        world.sp[5].material.specular = 0.3;
+	world.sh[3].sp.transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
+        world.sh[3].sp.material.color = set_color(1, 0.8, 0.1);
+        world.sh[3].sp.material.diffuse = 0.7;
+        world.sh[3].sp.material.specular = 0.3;
 
 	map->cam = set_camera(P_WIDTH, P_HEIGHT, M_PI/3);
         map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
@@ -270,7 +270,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-/*	t_map   map;
+	t_map   map;
 
 //        if (argc == 2)
 	map.mlx.init = mlx_init();
@@ -284,10 +284,7 @@ int	main(int argc, char **argv)
 //        }
 //        else
 //                ft_putstr_fd("##ERROR## Usage: ./minirt <filename>\n", 1);
-*/
 
-
-	
 	/*t_matrix a;
 	t_matrix b;
 	t_matrix c;

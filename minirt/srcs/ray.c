@@ -34,7 +34,7 @@ t_ray	r_transform(t_ray a, t_matrix m)
 	return (tmp);
 }
 
-void	set_transform(t_matrix *s, t_matrix m)
+void	set_transform(t_sphere *s, t_matrix m)
 {
 	int	w;
 	int	h;
@@ -45,12 +45,12 @@ void	set_transform(t_matrix *s, t_matrix m)
 		h = -1;
 		while (++h < 4)
 		{
-			s->.m[w][h] = m.m[w][h];
+			s->transform.m[w][h] = m.m[w][h];
 		}
 	}
 }
 
-float	r_intersect(t_world *wo, t_sphere s, t_ray ray)
+float	r_intersect(t_world *wo, t_shape s, t_ray ray)
 {
 	t_tup		sp_to_ray;
 	double	a;
@@ -59,13 +59,12 @@ float	r_intersect(t_world *wo, t_sphere s, t_ray ray)
 	double	i;
 	t_inter	t1;
 	t_inter	t2;
-	t_ray	raytr;
 	t_arr_inter	arr;
 	
-	raytr = r_transform(ray, m_invertible(s.transform));
-	sp_to_ray = v_substract(raytr.ori, s.center);
-	a = v_dot(raytr.dir, raytr.dir);
-	b = 2 * v_dot(raytr.dir, sp_to_ray);
+	wo->ray_saved = r_transform(ray, m_invertible(s.sp.transform));
+	sp_to_ray = v_substract(wo->ray_saved.ori, s.sp.center);
+	a = v_dot(wo->ray_saved.dir, wo->ray_saved.dir);
+	b = 2 * v_dot(wo->ray_saved.dir, sp_to_ray);
 	c = v_dot(sp_to_ray, sp_to_ray) - 1;
 	i = powf(b, 2) - (4 * a * c);
 	if (i < 0)
@@ -78,7 +77,23 @@ float	r_intersect(t_world *wo, t_sphere s, t_ray ray)
 	return (0);
 }
 
-t_inter	r_intersection(float t, t_sphere o)
+float	r_intersect_plane(t_world *wo, t_shape s, t_ray ray)
+{
+	float	t;
+	t_inter	i;
+	t_arr_inter	arr;
+
+	if (fabs(ray.dir.y) < EPSILON) {
+                return (0);
+        }
+	t = (-1 * ray.ori.y) / ray.dir.y;
+        i = r_intersection(t, s);
+	arr = r_intersections_plane(*wo, i);
+	wo->arr = arr;
+	return (1);
+}
+
+t_inter	r_intersection(float t, t_shape o)
 {
 	t_inter	inter;
 
@@ -102,6 +117,24 @@ t_inter	r_intersection(float t, t_sphere o)
 	arr.a[1] = i2;
 	return(arr);
 }*/
+
+t_arr_inter	r_intersections_plane(t_world wo, t_inter i1)
+{
+        t_arr_inter arr;
+        int                     i;
+
+        arr.a = NULL;
+	arr.count = wo.arr.count + 1;
+        arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 1));
+        i = 0;
+        while (i < wo.arr.count)
+        {
+                arr.a[i] = wo.arr.a[i];
+                i++;
+        }
+        arr.a[wo.arr.count] = i1;
+        return(arr);
+}
 
 t_arr_inter	r_intersections(t_world wo, t_inter i1, t_inter i2)
 {
@@ -154,7 +187,7 @@ t_arr_inter     r_intersect_world(t_world w, t_ray r)
         i = 0;
         while (i < w.nb)
         {
-                r_intersect(&w, w.sp[i], r);
+                r_intersect(&w, w.sh[i], r);
 		i++;
         }
 	//printf("----%f, %f,\n", w.arr.a[0].t, w.arr.a[1].t);
