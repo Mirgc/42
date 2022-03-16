@@ -21,10 +21,18 @@ t_sphere	r_create_sphere()
 	s.id = 's';
 	s.r = 0;
 	s.transform = m_identity();
-	s.material = m_create_material();
 	return (s);
 }
 
+t_plane		r_create_plane()
+{
+	t_plane	s;
+	
+	s.center = v_create(0,0,0,1);
+	s.id = 'p';
+	s.transform = m_identity();
+	return (s);
+}
 t_ray	r_transform(t_ray a, t_matrix m)
 {
 	t_ray	tmp;
@@ -74,6 +82,8 @@ float	r_intersect(t_world *wo, t_shape s, t_ray ray)
 	t2 = r_intersection((-b + i) / (2 * a), s);
 	arr = r_intersections(*wo, t1, t2);
 	wo->arr = arr;
+	if (!arr.a)
+		free(arr.a);
 	return (0);
 }
 
@@ -83,14 +93,15 @@ float	r_intersect_plane(t_world *wo, t_shape s, t_ray ray)
 	t_inter	i;
 	t_arr_inter	arr;
 
-	if (fabs(ray.dir.y) < EPSILON) {
-                return (0);
-        }
-	t = (-1 * ray.ori.y) / ray.dir.y;
-        i = r_intersection(t, s);
+	if (fabs(ray.dir.y) < EPSILON)
+		return (-1);
+	t = -ray.ori.y / ray.dir.y;
+	i = r_intersection(t, s);
 	arr = r_intersections_plane(*wo, i);
 	wo->arr = arr;
-	return (1);
+	if (!arr.a)
+		free(arr.a);
+	return (0);
 }
 
 t_inter	r_intersection(float t, t_shape o)
@@ -124,7 +135,7 @@ t_arr_inter	r_intersections_plane(t_world wo, t_inter i1)
         int                     i;
 
         arr.a = NULL;
-	arr.count = wo.arr.count + 1;
+		arr.count = wo.arr.count + 1;
         arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 1));
         i = 0;
         while (i < wo.arr.count)
@@ -142,7 +153,7 @@ t_arr_inter	r_intersections(t_world wo, t_inter i1, t_inter i2)
         int                     i;
 
         arr.a = NULL;
-	arr.count = wo.arr.count + 2;
+		arr.count = wo.arr.count + 2;
         arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 2));
         i = 0;
         while (i < wo.arr.count)
@@ -187,8 +198,11 @@ t_arr_inter     r_intersect_world(t_world w, t_ray r)
         i = 0;
         while (i < w.nb)
         {
-                r_intersect(&w, w.sh[i], r);
-		i++;
+			if (w.sh[i].id == 1)
+	            r_intersect(&w, w.sh[i], r);
+			if (w.sh[i].id == 2)
+	            r_intersect_plane(&w, w.sh[i], r);
+			i++;
         }
 	//printf("----%f, %f,\n", w.arr.a[0].t, w.arr.a[1].t);
 //      if (w.arr.count)
@@ -196,15 +210,20 @@ t_arr_inter     r_intersect_world(t_world w, t_ray r)
         return (w.arr);
 }
 
-t_tup	r_normal_at(t_sphere s, t_tup p)
+t_tup	r_normal_at(t_shape s, t_tup p)
 {
 	t_tup	o_point;
 	t_tup	o_normal;
 	t_tup	w_normal;
 
-	o_point = m_multi_tup(m_invertible(s.transform), p);
-	o_normal = v_substract(o_point, s.center);
-	w_normal = m_multi_tup(m_trans(m_invertible(s.transform)), o_normal);
+	if (s.id == 1)
+	{
+		o_point = m_multi_tup(m_invertible(s.sp.transform), p);
+		o_normal = v_substract(o_point, s.sp.center);
+		w_normal = m_multi_tup(m_trans(m_invertible(s.sp.transform)), o_normal);
+	}
+	if (s.id == 2)
+		return (v_create(0, 1, 0, 1));
 	w_normal.w = 0;
 	return(v_normalize(w_normal));
 }

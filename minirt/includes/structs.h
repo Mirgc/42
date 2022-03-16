@@ -56,23 +56,22 @@ typedef struct s_sphere
 	char		id;
 	float		r;
 	t_matrix	transform;
-	t_material	material;
 } t_sphere;
 
 typedef struct s_plane
 {
 	t_tup		center;
 	char		id;
-	float		r;
 	t_matrix	transform;
-	t_material	material;
 } t_plane;
 
 typedef struct s_shape
 {
-        t_sphere        sp;
+	t_sphere        sp;
 	t_plane		pl;
-        char            shape;
+	char            shape;
+	int		id;
+	t_material	material;
 }       t_shape;
 
 typedef struct s_inter
@@ -99,7 +98,7 @@ typedef struct s_world
         t_shape        *sh;
         int                     nb;
         t_arr_inter     arr;
-	t_ray		ray_saved;
+		t_ray		ray_saved;
 }       t_world;
 
 typedef struct s_camera

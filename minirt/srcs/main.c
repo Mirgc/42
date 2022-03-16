@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/02/22 16:17:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/03/16 20:07:10 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void    render(t_map *map, t_world world)
                 x = -1;
                 while (++x < map->cam.hsize -1)
                 {
-                        ray = ray_for_pixel(map->cam, x, y);
-                        c_col = color_at(world, ray);
-			c_col = check_color(c_col);
-			c_col = multicolor(c_col, 255);
-			color = get_trgb(c_col.r, c_col.g, c_col.b);
-			draw(map, x, y, color);
+					ray = ray_for_pixel(map->cam, x, y);
+					c_col = color_at(world, ray);
+					c_col = check_color(c_col);
+					c_col = multicolor(c_col, 255);
+					color = get_trgb(c_col.r, c_col.g, c_col.b);
+					draw(map, x, y, color);
                 }
         }
 }
@@ -93,35 +93,46 @@ int	map_draw(t_map *map)
 	
 	t_world world;
 	t_ray ray;
+	t_arr_inter	arr;
 
-	world = default_world(4);
-	world.sh[0].pl.transform = m_scaling(10, 0.01, 10);
-        world.sh[0].pl.material.color = set_color(1, 0.9, 0.9);
-        world.sh[0].pl.material.specular = 0;
+	world = default_world(6);
+	world.sh[0].pl = r_create_plane();
+//	world.sh[0].pl.transform = m_scaling(10, 0.01, 10);
+    world.sh[0].material.color = set_color(1, 0.9, 0.9);
+    world.sh[0].material.specular = 0;
+	world.sh[0].id = 2;
 
-//	world.sh[1].sp.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
-//      world.sh[1].sp.material = world.sh[0].sp.material;
+	world.sh[1].pl = r_create_plane();
+	world.sh[1].pl.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+      world.sh[1].material = world.sh[0].material;
 
-//	world.sh[2].sp.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
-//      world.sh[2].sp.material = world.sh[0].sp.material;
+	world.sh[2].pl = r_create_plane();
+	world.sh[2].pl.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
+    world.sh[2].material = world.sh[0].material;
 
-	world.sh[1].sp.transform = m_translation(-0.5, 1.0, 0.5);
-	world.sh[1].sp.material.color = set_color(0.1, 1.0, 0.5);
-	world.sh[1].sp.material.diffuse = 0.7;
-        world.sh[1].sp.material.specular = 0.3;
+	world.sh[3].sp = r_create_sphere();
+	world.sh[3].sp.transform = m_translation(-0.5, 1.0, 0.5);
+	world.sh[3].material.color = set_color(0.1, 1.0, 0.5);
+	world.sh[3].material.diffuse = 0.7;
+	world.sh[3].material.specular = 0.3;
+	world.sh[3].id = 1;
 
-	world.sh[2].sp.transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
-        world.sh[2].sp.material.color = set_color(0.5, 1, 0.1);
-        world.sh[4].sp.material.diffuse = 0.7;
-        world.sh[2].sp.material.specular = 0.3;
+	world.sh[4].sp = r_create_sphere();
+	world.sh[4].sp.transform = m_multi(m_translation(1.5, 0.5, -0.5), m_scaling(0.5, 0.5, 0.5));
+	world.sh[4].material.color = set_color(0.5, 1, 0.1);
+	world.sh[4].material.diffuse = 0.7;
+	world.sh[4].material.specular = 0.3;
+	world.sh[4].id = 1;
 
-	world.sh[3].sp.transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
-        world.sh[3].sp.material.color = set_color(1, 0.8, 0.1);
-        world.sh[3].sp.material.diffuse = 0.7;
-        world.sh[3].sp.material.specular = 0.3;
+	world.sh[5].sp = r_create_sphere();
+	world.sh[5].sp.transform = m_multi(m_translation(-1.5, 0.33, -0.75), m_scaling(0.33, 0.33, 0.33));
+	world.sh[5].material.color = set_color(1, 0.8, 0.1);
+	world.sh[5].material.diffuse = 0.7;
+	world.sh[5].material.specular = 0.3;
+	world.sh[5].id = 1;
 
 	map->cam = set_camera(P_WIDTH, P_HEIGHT, M_PI/3);
-        map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
+    map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);
 	map->image.data = mlx_get_data_addr(map->mlx.img, &map->image.bpp, &map->image.size, &map->image.endian);
 	render(map, world);

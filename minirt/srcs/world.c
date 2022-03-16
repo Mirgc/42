@@ -21,7 +21,7 @@ t_world	default_world(int nb)
 	i = -1;
 	while (++i < nb)
 	{
-		w.sh[i].sp = r_create_sphere();
+		w.sh[i].material = m_create_material();
 	}
 	return (w);
 }
@@ -34,7 +34,7 @@ t_comps	prepare_computations(t_inter i, t_ray ray)
 	comps.o = i.o;
 	comps.point = r_position(ray, comps.t);
 	comps.eyev = v_negate(ray.dir);
-	comps.normalv = r_normal_at(comps.o.sp, comps.point);
+	comps.normalv = r_normal_at(comps.o, comps.point);
 	comps.over_point = v_add(comps.point, v_multi(comps.normalv, EPSILON));
 	if (v_dot(comps.normalv, comps.eyev) < 0)
 	{
@@ -66,8 +66,11 @@ t_color	color_at(t_world w, t_ray r)
 		if (t == arr.a[i].t)
 			break;
 	}
-	comps = prepare_computations(arr.a[i], r);
-	col = shade_hit(w, comps);
+	if (t != -1)
+	{
+		comps = prepare_computations(arr.a[i], r);
+		col = shade_hit(w, comps);
+	}
 	return (col);
 }
 
