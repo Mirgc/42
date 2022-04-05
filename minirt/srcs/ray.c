@@ -135,8 +135,10 @@ t_arr_inter	r_intersections_plane(t_world wo, t_inter i1)
         int                     i;
 
         arr.a = NULL;
-		arr.count = wo.arr.count + 1;
+	arr.count = wo.arr.count + 1;
         arr.a = (t_inter *)malloc(sizeof(t_inter) * (wo.arr.count + 1));
+	if (arr.a == NULL)
+		return (arr);
         i = 0;
         while (i < wo.arr.count)
         {
@@ -223,7 +225,10 @@ t_tup	r_normal_at(t_shape s, t_tup p)
 		w_normal = m_multi_tup(m_trans(m_invertible(s.sp.transform)), o_normal);
 	}
 	if (s.id == 2)
-		return (v_create(0, 1, 0, 1));
+	{
+		w_normal = m_multi_tup(m_trans(m_invertible(s.pl.transform)), v_create(0, 1, 0, 1));
+//		return (v_create(0, 1, 0, 1));
+	}
 	w_normal.w = 0;
 	return(v_normalize(w_normal));
 }

@@ -78,7 +78,7 @@ void    render(t_map *map, t_world world)
                 while (++x < map->cam.hsize -1)
                 {
 					ray = ray_for_pixel(map->cam, x, y);
-					c_col = color_at(world, ray);
+					c_col = color_at(world, ray, 4);
 					c_col = check_color(c_col);
 					c_col = multicolor(c_col, 255);
 					color = get_trgb(c_col.r, c_col.g, c_col.b);
@@ -100,15 +100,18 @@ int	map_draw(t_map *map)
 //	world.sh[0].pl.transform = m_scaling(10, 0.01, 10);
     world.sh[0].material.color = set_color(1, 0.9, 0.9);
     world.sh[0].material.specular = 0;
+	world.sh[0].material.reflective = 0.5;
 	world.sh[0].id = 2;
 
 	world.sh[1].pl = r_create_plane();
 	world.sh[1].pl.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
       world.sh[1].material = world.sh[0].material;
+	world.sh[1].id = 2;
 
 	world.sh[2].pl = r_create_plane();
 	world.sh[2].pl.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
     world.sh[2].material = world.sh[0].material;
+	world.sh[2].id = 2;
 
 	world.sh[3].sp = r_create_sphere();
 	world.sh[3].sp.transform = m_translation(-0.5, 1.0, 0.5);

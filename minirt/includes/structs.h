@@ -48,6 +48,7 @@ typedef struct	s_material
 	float	diffuse;
 	float	specular;
 	float	shininess;
+	float	reflective;
 }	t_material;
 
 typedef struct s_sphere
@@ -121,6 +122,7 @@ typedef struct s_comps
         t_tup		eyev;
         t_tup		normalv;
         t_tup		over_point;
+        t_tup		reflectv;
 }	t_comps;
 
 typedef struct  s_mlx

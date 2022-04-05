@@ -24,6 +24,7 @@ t_material	m_create_material()
 	tmp.diffuse = 0.9;
 	tmp.specular = 0.9;
 	tmp.shininess= 200.0;
+	tmp.reflective= 0.0;
 	return (tmp);
 }
 
@@ -69,8 +70,15 @@ t_color lighting(t_material m, t_light li, t_tup point, t_tup eyev, t_tup normal
 	return (addcolor(ambient, addcolor(diffuse, specular)));
 }
 
-t_color shade_hit(t_world w, t_comps c)
+t_color shade_hit(t_world w, t_comps c, int rem)
 {
-	return (lighting(c.o.material, w.li, c.over_point, c.eyev, c.normalv, is_shadowed(w, c.over_point)));
+	int	shadowed;
+	t_color sur;
+	t_color reflect;
+	
+	shadowed = is_shadowed(w, c.over_point);
+	sur = lighting(c.o.material, w.li, c.over_point, c.eyev, c.normalv, shadowed);
+	reflect = reflected_color(w, c, rem);
+	return (addcolor(sur, reflect));
 }
 

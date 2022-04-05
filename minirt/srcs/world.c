@@ -43,10 +43,11 @@ t_comps	prepare_computations(t_inter i, t_ray ray)
 	}
 	else
 		comps.inside = 0;
+	comps.reflectv = r_reflect(ray.dir, comps.normalv);
 	return (comps);
 }
 
-t_color	color_at(t_world w, t_ray r)
+t_color	color_at(t_world w, t_ray r, int rem)
 {
 	t_arr_inter	arr;
 	t_inter		hit;
@@ -69,7 +70,7 @@ t_color	color_at(t_world w, t_ray r)
 	if (t != -1)
 	{
 		comps = prepare_computations(arr.a[i], r);
-		col = shade_hit(w, comps);
+		col = shade_hit(w, comps, rem);
 	}
 	return (col);
 }
@@ -111,3 +112,19 @@ int	is_shadowed(t_world w, t_tup p)
 	}
 	return (0);
 }
+
+t_color	reflected_color(t_world w, t_comps c, int rem)
+{
+	t_ray	reflect_ray;
+	t_color	col;
+
+	if (rem <= 0)
+		return(set_color(0, 0, 0));
+	if (c.o.material.reflective == 0.0)
+		return(set_color(0, 0, 0));
+	reflect_ray.ori = c.over_point;
+	reflect_ray.dir = c.reflectv;
+	col = color_at(w, reflect_ray, rem -1);
+	return (multicolor(col, c.o.material.reflective));
+}
+
