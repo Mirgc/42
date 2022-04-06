@@ -26,7 +26,8 @@ FILES	=	main.c \
 		matrix_trans_two.c \
 		matrix_utils.c \
 		operation_tuple.c \
-		operation_tuple_two.c
+		operation_tuple_two.c \
+		parse/parse.c
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 

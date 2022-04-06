@@ -111,6 +111,12 @@ typedef struct s_light {
 	t_color	i;
 }	t_light;
 
+typedef struct s_amb{
+	int	n;
+	float	r;
+	t_color	col;
+}	t_amb;
+
 typedef struct s_world {
 	t_light		light;
 	int			count;
@@ -134,8 +140,16 @@ typedef struct s_camera {
 	float		hw;
 	float		hh;
 	float		ps;
+	t_tup		pos;
+	t_tup		ori;
 	float		fov;
 	t_matrix	trans;	
 }	t_camera;
+
+typedef struct s_scene {
+	t_amb		amb;
+	t_camera	*cam;
+	t_world		world;
+}
 
 #endif

@@ -122,13 +122,28 @@ void	ft_read_pixel(FILE *f, float red, float green, float blue)
 }*/
 
 
-
+void	ft_init_scene(t_scene *scene)
+{
+	scene->amb.n = 0;
+	scene->amb.r = 0.0;
+	scene->amb.col = set_color(0, 0, 0);
+	scene->cam = NULL;
+	scene->world.light = ft_point_light(ft_point(0, 0, 0), ft_color(0, 0, 0));
+	scene->world.count = 0;
+}
 
 
 int	main(int argc, char **argv)
 {	
 	(void) argc;
 	(void) argv;
+	t_scene	scene;
+	
+	ft_init_scene(&scene);
+
+
+
+
 	t_world		w;
 	t_camera	c;
 //	t_shape	f;
