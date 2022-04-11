@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 18:18:04 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:38:37 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:40:50 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	unsigned char	*s1;

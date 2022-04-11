@@ -6,12 +6,13 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 09:01:14 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/29 11:15:30 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:41:59 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-int	ft_costr(char const *str, char c)
+
+static int	ft_costr(char const *str, char c)
 {
 	int	count;
 
@@ -30,7 +31,25 @@ int	ft_costr(char const *str, char c)
 	return (count);
 }
 
-char	*ft_intro(char const *s, char c)
+static char	**ft_clean(char **p, size_t count)
+{
+	size_t	i;
+
+	if (p)
+	{
+		i = 0;
+		while (i < count)
+		{
+			if (p[i] != NULL)
+				free(p[i]);
+			i++;
+		}
+		free (p);
+	}
+	return (NULL);
+}
+
+static char	*ft_intro(char const *s, char c)
 {
 	char	*str;
 	int		i;
@@ -40,7 +59,7 @@ char	*ft_intro(char const *s, char c)
 		i++;
 	str = (char *) malloc((i + 1) * sizeof(char));
 	if (!str)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (s[i] && s[i] != c)
 	{
@@ -51,18 +70,10 @@ char	*ft_intro(char const *s, char c)
 	return (str);
 }
 
-char	**ft_split(char const *s, char c)
+static char	**ft_in_intro(char const *s, char c, char **tab)
 {
-	int		w;
-	int		a;
-	char	**tab;
+	int	a;
 
-	if (!s)
-		return (NULL);
-	w = ft_costr(s, c);
-	tab = (char **) malloc((w + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
 	a = 0;
 	while (*s)
 	{
@@ -71,11 +82,28 @@ char	**ft_split(char const *s, char c)
 		if (*s && *s != c)
 		{
 			tab[a] = ft_intro(s, c);
+			if (!tab[a])
+				return (ft_clean(tab, a));
 			a++;
 			while (*s && *s != c)
 				s++;
 		}
 	}
 	tab[a] = NULL;
+	return (tab);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		w;
+	char	**tab;
+
+	if (!s)
+		return (NULL);
+	w = ft_costr(s, c);
+	tab = (char **) malloc((w + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	tab = ft_in_intro(s, c, tab);
 	return (tab);
 }

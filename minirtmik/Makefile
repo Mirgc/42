@@ -27,14 +27,16 @@ FILES	=	main.c \
 		matrix_utils.c \
 		operation_tuple.c \
 		operation_tuple_two.c \
-		parse/parse.c
+		parse/parse.c \
+		parse/parse_utils.c \
+		parse/parse_info.c \
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 
 OBJS	= ${SRCS:.c=.o}
 
 CC		= gcc -g3 -fsanitize=address
-
+#CC		= gcc 
 RM		= rm -f
 
 CFLAGS	= -I $(HEAD)

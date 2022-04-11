@@ -6,7 +6,7 @@
 /*   By: mikgarci <mikgarci@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:35:51 by mikgarci          #+#    #+#             */
-/*   Updated: 2022/03/25 20:03:55 by mikgarci         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:06:23 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_matrix	ft_view_trans(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	ft_put_matrix(t_tuple a, t_tuple b, t_tuple c);
 
 //PRINT & ERROR//
-void	ft_error(char *str, int	i);
+int		ft_error(char *str);
+void	ft_exit(char *str, int	i);
 void	ft_print_tup(t_tuple tuple);
 void	ft_print_matrix(t_matrix a);
 void	ft_print_color(t_color c);

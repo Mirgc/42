@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "algft.h"
+#include "../includes/algft.h"
+#include "parse/parse.h"
 #include <fcntl.h>
 
 bool	ft_equal(float a, float b)
@@ -122,39 +123,52 @@ void	ft_read_pixel(FILE *f, float red, float green, float blue)
 }*/
 
 
+
 void	ft_init_scene(t_scene *scene)
 {
 	scene->amb.n = 0;
 	scene->amb.r = 0.0;
-	scene->amb.col = set_color(0, 0, 0);
+	scene->amb.color = ft_color(0, 0, 0);
+	scene->nb_cam = 0;
 	scene->cam = NULL;
-	scene->world.light = ft_point_light(ft_point(0, 0, 0), ft_color(0, 0, 0));
-	scene->world.count = 0;
+	scene->nb_light	= 1;
+	scene->world.light = malloc(sizeof(t_light));
+	scene->world.light[0] = ft_point_light(ft_point(-10, 10, -10), ft_color(0, 0, 0));
+    scene->world.count = 0;
 }
 
+int	main(int argc, char **argv)
+{
+	t_scene	scene;
 
+	if (argc != 2)
+	{
+		printf("Usage: ./miniRT <filename.rt>\n");
+		return (1);
+	}
+	ft_init_scene(&scene);
+	if (!ft_check_file(&scene, argv[1]))
+		return (1);
+}
+
+/*
 int	main(int argc, char **argv)
 {	
 	(void) argc;
 	(void) argv;
-	t_scene	scene;
-	
-	ft_init_scene(&scene);
-
-
 
 
 	t_world		w;
 	t_camera	c;
 //	t_shape	f;
 	t_generic	g;
-/*	t_shape	lw;
+	t_shape	lw;
 	t_shape	rw;
 	t_shape	m;
-	t_shape	r;*/
+	t_shape	r;
 	t_shape	l;
 	t_shape	p;
-//	t_shape cy;
+	t_shape cy;
 
 	p.c = 'p';
 	p.p = ft_plane();
@@ -162,11 +176,11 @@ int	main(int argc, char **argv)
 	p.p.mat = ft_materials();
 	p.p.mat.color = ft_color(1, 0.9, 0.9);
 	p.p.mat.reflective = 0.5;
-	p.p.mat.specular = 0;
 
-//	cy.c = 'c';
-//	cy.cy = ft_cylinder();
-/*	f.c = 's';
+	cy.c = 'c';
+	cy.cy = ft_cylinder();
+	cy.cy.mat = ft_materials();
+	f.c = 's';
 	f.s = ft_sphere(ft_point(0, 0, 0), 1.0);
 	f.s.transform = ft_transla_matrix(-0.5, 1, 0.5);
 	f.s.mat = ft_materials();
@@ -197,7 +211,7 @@ int	main(int argc, char **argv)
 	r.s.mat = ft_materials();
 	r.s.mat.color = ft_color(0.5, 1, 0.1);
 	r.s.mat.diffuse = 0.7;
-	r.s.mat.specular = 0.3;*/
+	r.s.mat.specular = 0.3;
 
 	l.c = 's';
 	l.s = ft_sphere(ft_point(0, 0, 0), 1.0);
@@ -215,7 +229,7 @@ int	main(int argc, char **argv)
 //	w = ft_add_world(w, m);
 	w = ft_add_world(w, l);
 	w = ft_add_world(w, p);
-//	w = ft_add_world(w, cy);
+	w = ft_add_world(w, cy);
 //	w = ft_add_world(w, r);
 	//ft_print_matrix(w.s[1].transform);
 	c = ft_camera(200, 100, M_PI / 3);
@@ -233,7 +247,7 @@ int	main(int argc, char **argv)
 
 	mlx_put_image_to_window(g.mlx, g.mlx_win, g.img.img, 0, 0);
 	mlx_loop(g.mlx);
-}
+}*/
 
 /*int		main(int argc, char **argv)
 {

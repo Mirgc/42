@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:11:23 by migarcia          #+#    #+#             */
-/*   Updated: 2021/06/02 19:34:48 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:40:38 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*dst;

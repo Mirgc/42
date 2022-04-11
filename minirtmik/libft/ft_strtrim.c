@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:21:48 by migarcia          #+#    #+#             */
-/*   Updated: 2021/06/02 19:29:21 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:40:19 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h" 
+
 static int	ft_check_ch(char c, char *set)
 {
 	int	i;

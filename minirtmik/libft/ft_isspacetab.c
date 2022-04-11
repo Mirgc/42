@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iswspace.c                                      :+:      :+:    :+:   */
+/*   ft_isspacetab.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oldurosi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 00:41:40 by oldurosi          #+#    #+#             */
-/*   Updated: 2019/10/16 00:42:01 by oldurosi         ###   ########.fr       */
+/*   Created: 2022/04/05 18:14:06 by migarcia          #+#    #+#             */
+/*   Updated: 2022/04/05 18:14:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/libft.h"
-
-int		ft_iswspace(int c)
+int	ft_isspacetab(char c)
 {
-	if (c == '\t' || c == ' ')
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }

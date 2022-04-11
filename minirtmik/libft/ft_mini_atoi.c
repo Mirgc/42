@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 18:02:16 by migarcia          #+#    #+#             */
-/*   Updated: 2021/10/09 18:43:10 by migarcia         ###   ########.fr       */
+/*   Created: 2021/05/26 18:40:38 by migarcia          #+#    #+#             */
+/*   Updated: 2022/04/09 10:41:41 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memcpy(void *dest, const void *orig, size_t n)
+int	ft_mini_atoi(char **nptr)
 {
-	char	*src;
-	char	*dst;
+	long	i;
+	long	multi;
 
-	src = (char *)orig;
-	dst = (char *)dest;
-	if (!dest && !orig)
-		return (0);
-	while (n--)
-		*(dst++) = *(src++);
-	return (dest);
+	multi = 1;
+	while (**nptr == ' ' || **nptr == '\t' || **nptr == '\n' || **nptr == '\r'
+		|| **nptr == '\v' || **nptr == '\f')
+		(*nptr)++;
+	if (**nptr == '-' || **nptr == '+')
+	{
+		if (**nptr == '-')
+			multi = -1;
+		(*nptr)++;
+	}
+	i = 0;
+	while (**nptr >= 48 && **nptr <= 57)
+	{
+		i *= 10;
+		i += (**nptr - '0');
+		(*nptr)++;
+	}
+	return (i * multi);
 }

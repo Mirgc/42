@@ -1,69 +1,38 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: oldurosi <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/09/16 16:14:07 by oldurosi          #+#    #+#              #
-#    Updated: 2019/10/15 22:34:47 by oldurosi         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SRCS	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_split.c ft_strchr.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c get_next_line.c get_next_line_utils.c ft_isspacetab.c ft_atof.c ft_mini_atoi.c
 
-CC	= gcc
-CFLAGS	= -Wall -Wextra -Werror
-AR	= ar rcs
-RANLIB = ranlib
-S-DIR = ./srcs/
-I-DIR = ./includes/
+BONS	=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstiter.c ft_lstdelone.c ft_lstclear.c ft_lstmap.c
 
-NAME	= libft.a
-HEAD	= libft.h get_next_line.h
-SRCS	= ft_memset.c ft_bzero.c	\
-		  ft_memcpy.c ft_memccpy.c	\
-		  ft_memmove.c ft_memchr.c	\
-		  ft_memcmp.c ft_strlen.c	\
-		  ft_strdup.c ft_strcpy.c	\
-		  ft_strncpy.c ft_strcat.c	\
-		  ft_strncat.c ft_strlcat.c	\
-		  ft_strchr.c ft_strrchr.c	\
-		  ft_strstr.c ft_strnstr.c	\
-		  ft_strcmp.c ft_strncmp.c ft_atoi.c		\
-		  ft_isalpha.c ft_isdigit.c ft_isalnum.c	\
-		  ft_isascii.c ft_isprint.c ft_toupper.c	\
-		  ft_tolower.c ft_memalloc.c ft_memdel.c	\
-		  ft_strnew.c ft_strdel.c ft_strclr.c		\
-		  ft_striter.c ft_striteri.c ft_strmap.c	\
-		  ft_strmapi.c ft_strequ.c ft_strnequ.c		\
-		  ft_strsub.c ft_strjoin.c  ft_strtrim.c	\
-		  ft_strsplit.c ft_split.c ft_itoa.c ft_putchar.c		\
-		  ft_putstr.c ft_putendl.c ft_putnbr.c		\
-		  ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c	\
-		  ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c			\
-		  ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c	\
-		  ft_lstfold.c ft_nbrlen.c ft_wordcount.c \
-		  ft_wordlen.c ft_iswspace.c ft_isspace.c \
-		  get_next_line.c ft_program_name.c \
-		  ft_remove_extension.c ft_puterror.c
+OBJS	= 	${SRCS:.c=.o}
 
-OBJS	= $(SRCS:.c=.o)
+BOBJS	=	${BONS:.c=.o}
 
-.PHONY: all clean fclean re
+NAME	= 	libft.a
 
-all: $(NAME)
+CC		= 	cc
 
-$(NAME):
-	@$(CC) $(CFLAGS) -I ./includes/*.o -c ./srcs/*.c
-	@$(AR) $(NAME) $(OBJS)
-	@$(RANLIB) $(NAME)
-	@echo "[INFO] Library [$(NAME)] created!"
+AR		=	ar rcs
 
+RANLIB	=	ranlib
+
+CFLAGS	= 	-Wall -Wextra -Werror
+
+LFLAGS	=	-I
+
+all:		${NAME}
+
+$(NAME):	${OBJS}
+			${AR} ${NAME} ${OBJS}
+			${RANLIB} ${NAME}	
+
+bonus:		${BOBJS} ${OBJS}
+			${AR} ${NAME} ${BOBJS} ${OBJS}
+			${RANLIB} ${NAME}
 clean:
-	@rm -f $(OBJS)
-	@echo "[INFO] Objects removed!"
-
+		rm -f ${OBJS} ${BOBJS}
+	
 fclean:
-	@rm -f $(NAME) $(OBJS)
-	@echo "[INFO] Library [$(NAME)] removed!"
+		rm -f ${NAME}
 
-re: fclean all
+re: 		fclean all
+
+.PHONY:		all clean fclean

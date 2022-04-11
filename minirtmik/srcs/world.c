@@ -199,11 +199,11 @@ t_color	ft_shade_hit(t_world w, t_comps comps, int rem)
 
 	a = ft_is_shadowed(w, comps.op);
 	if (comps.obj.c == 's')
-		sur = ft_lighting(comps.obj.s.mat, w.light, comps.op, comps.eye, comps.norm, a);
+		sur = ft_lighting(comps.obj.s.mat, w.light[0], comps.op, comps.eye, comps.norm, a);
 	if (comps.obj.c == 'p')
-		sur = ft_lighting(comps.obj.p.mat, w.light, comps.op, comps.eye, comps.norm, a);
+		sur = ft_lighting(comps.obj.p.mat, w.light[0], comps.op, comps.eye, comps.norm, a);
 	if (comps.obj.c == 'c')
-		sur = ft_lighting(comps.obj.cy.mat, w.light, comps.op, comps.eye, comps.norm, a);
+		sur = ft_lighting(comps.obj.cy.mat, w.light[0], comps.op, comps.eye, comps.norm, a);
 	reflect = ft_reflected_color(w, comps, rem);
 	return (ft_add_color(sur, reflect));
 }

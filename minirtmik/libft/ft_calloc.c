@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 15:18:38 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:26:51 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:46:53 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 void	*ft_calloc(size_t n, size_t size)
 {
 	void	*buff;

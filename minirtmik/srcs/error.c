@@ -6,17 +6,23 @@
 /*   By: mikgarci <mikgarci@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:35 by mikgarci          #+#    #+#             */
-/*   Updated: 2022/02/23 20:35:36 by mikgarci         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:27:27 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "algft.h"
+#include "../includes/algft.h"
 
-void	ft_error(char *str, int	i)
+int	ft_error(char *str)
 {
-	printf("Error. %s\n", str);
+	printf("%s\n", str);
+	return (1);
+}
+
+void	ft_exit(char *str, int	i)
+{
+	printf("%s\n", str);
 	exit(i);
 }
 

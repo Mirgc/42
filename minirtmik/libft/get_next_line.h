@@ -3,27 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oldurosi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 20:13:49 by oldurosi          #+#    #+#             */
-/*   Updated: 2019/10/21 01:01:57 by oldurosi         ###   ########.fr       */
+/*   Created: 2021/10/09 18:38:07 by migarcia          #+#    #+#             */
+/*   Updated: 2021/10/09 18:38:20 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
-# define MAXFD 4096
-
-# include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
-# include <fcntl.h>
-# include <sys/uio.h>
-# include <sys/types.h>
 # include <stdio.h>
-# include "libft.h"
+# include <stdlib.h>
 
-int get_next_line(const int fd, char **line);
-
+int		check_ch(char *str);
+int		get_next_line(int fd, char **line);
+int		ft_len(char *str);
+char	*join(char *s1, char *s2);
+char	*ft_dup(char *s1);
+char	*ft_str(char *s, int start, size_t len);
 #endif

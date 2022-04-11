@@ -6,11 +6,12 @@
 /*   By: migarcia <migarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:54:28 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:42:02 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:43:17 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 void	*ft_memccpy(void *dest, const void *orig, int c, size_t n)
 {
 	char	*dst;

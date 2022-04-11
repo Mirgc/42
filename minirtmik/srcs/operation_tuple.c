@@ -21,7 +21,7 @@ t_tuple	ft_add_tup(t_tuple a, t_tuple b)
 	z.z = a.z + b.z;
 	z.w = a.w + b.w;
 	if (a.w == 1 && b.w == 1)
-		ft_error("You can't add two points", 1);
+		ft_error("You can't add two points");
 	return (z);
 }
 

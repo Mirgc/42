@@ -3,30 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oldurosi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/13 21:23:44 by oldurosi          #+#    #+#             */
-/*   Updated: 2019/10/15 22:20:15 by oldurosi         ###   ########.fr       */
+/*   Created: 2021/06/03 14:52:54 by migarcia          #+#    #+#             */
+/*   Updated: 2021/10/09 18:45:47 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/libft.h"
+#include "libft.h"
 
-t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*head;
-	t_list	*iter;
+	t_list	*new;
+	t_list	*save;
 
-	iter = ft_lstnew(NULL, 0);
-	if (!(lst) || !(iter))
+	if (!lst || !f || !del)
 		return (NULL);
-	iter = f(lst);
-	head = iter;
-	while (lst->next)
+	new = ft_lstnew(f(lst->content));
+	if (!new)
+		return (NULL);
+	save = new;
+	while (lst)
 	{
+		new->next = ft_lstnew(f(lst->content));
+		if (!new->next)
+		{
+			ft_lstclear(&save, del);
+			return (NULL);
+		}
+		new = new->next;
 		lst = lst->next;
-		iter->next = f(lst);
-		iter = iter->next;
 	}
-	return (head);
+	new->next = NULL;
+	return (new);
 }

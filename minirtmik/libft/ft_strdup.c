@@ -6,12 +6,13 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 11:15:48 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/29 11:31:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:42:11 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strdup (const char *s)
+
+char	*ft_strdup(const char *s)
 {
 	char	*d;
 	int		len;

@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:52:39 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/31 17:53:39 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:40:57 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char	*str;

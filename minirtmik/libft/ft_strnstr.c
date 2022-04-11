@@ -6,11 +6,12 @@
 /*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 18:23:22 by migarcia          #+#    #+#             */
-/*   Updated: 2021/05/26 18:25:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:40:28 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 char	*ft_strnstr(const char *str, const char *find, size_t len)
 {
 	size_t	i;
