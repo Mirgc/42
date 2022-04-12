@@ -104,6 +104,7 @@ void	ft_render(t_camera c, t_world w, t_generic g)
 		{
 			r = ft_ray_for_pixel(c, x, y);
 			col = ft_color_at(w, r, 4);
+			ft_print_color(col);
 			ft_scale(x, y, &g, col);
 			x++;
 		}

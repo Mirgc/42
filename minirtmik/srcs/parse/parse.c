@@ -21,23 +21,24 @@ int	ft_parsing_type(t_scene *scene, char *str)
 	(void) str;
 	int	check;
 
+	check = 0;
 	if (str[0] == 'A' && ft_isspacetab(str[1]))
 		check = ft_parse_ambient_light(scene, str);
 	else if (str[0] == 'C' && ft_isspacetab(str[1]))
 		check = ft_parse_camera(scene, str);
-/*	else if (str[0] == 'L' && ft_isspacetab(str[1]))
-		check = ft_parse_light(world, str);
+	else if (str[0] == 'L' && ft_isspacetab(str[1]))
+		check = ft_parse_light(scene, str);
 	else if (str[0] == 's' && str[1] == 'p' && ft_isspacetab(str[2]))
-		check = ft_parse_sphere(world, str);
-	else if (str[0] == 'p' && str[1] == 'l' && ft_isspacetab(str[2]))
-		check = ft_parse_plane(world, str);
-	else if (str[0] == 'c' && str[1] == 'y' && ft_isspacetab(str[2]))
-		check = ft_parse_cylinder(world, str);
+		check = ft_parse_sphere(scene, str);
+//	else if (str[0] == 'p' && str[1] == 'l' && ft_isspacetab(str[2]))
+//		check = ft_parse_plane(world, str);
+//	else if (str[0] == 'c' && str[1] == 'y' && ft_isspacetab(str[2]))
+//		check = ft_parse_cylinder(world, str);
 	else if (str[0] == '\n')
 		return (0);
-	else
-		check = return (ft_error("character invalid.\n", 2));*/
-	return (0);
+//	else
+//		return(ft_error("character invalid."));
+	return (check);
 }
 
 int	ft_parse(t_scene *scene, char *file)
@@ -58,6 +59,8 @@ int	ft_parse(t_scene *scene, char *file)
 		check = ft_parsing_type(scene, line);
 		free(line);
 	}
+	if (!check)
+		free(line);
 	close (fd);
 	return (0);
 }

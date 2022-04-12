@@ -34,7 +34,7 @@ bool	ft_is_shadowed(t_world w, t_tuple p)
 	t_arr_inter	x;
 	float	h;
 
-	v = ft_sub_tup(w.light[0].pos, p);
+	v = ft_sub_tup(w.light.pos, p);
 	d = ft_mag_vec(v);
 	v = ft_norm_vec(v);
 	r = ft_ray(p, v);

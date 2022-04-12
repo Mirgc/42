@@ -25,7 +25,6 @@ t_color	ft_color_at(t_world w, t_ray r, int rem)
 	hit = ft_hit(x);
 	if (!hit)
 		return (ft_color(0, 0, 0));
-	comps = ft_prep_comps(x.a[0], r);
 	pos = -1;
 	while (++pos < x.count)
 	{

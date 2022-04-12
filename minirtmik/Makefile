@@ -30,6 +30,7 @@ FILES	=	main.c \
 		parse/parse.c \
 		parse/parse_utils.c \
 		parse/parse_info.c \
+		parse/parse_obj.c \
 
 SRCS	= $(addprefix $(SRCDIR), $(FILES))
 

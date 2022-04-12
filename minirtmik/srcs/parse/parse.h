@@ -13,5 +13,9 @@ t_tuple ft_parse_coor(char **str);
 //PARSE_INFO//
 int     ft_parse_ambient_light(t_scene *scene, char *str);
 int     ft_parse_camera(t_scene *scene, char *str);
+int     ft_parse_light(t_scene *scene, char *str);
+
+//PARSE_OBJ//
+int	ft_parse_sphere(t_scene *scene, char *str);
 
 #endif 

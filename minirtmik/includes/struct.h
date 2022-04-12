@@ -108,11 +108,12 @@ typedef struct s_arr_inter {
 
 typedef struct s_light {
 	t_tuple	pos;
+	float	bright;
 	t_color	i;
 }	t_light;
 
 typedef struct s_world {
-	t_light		*light;
+	t_light		light;
 	int			count;
 	t_shape		*s;
 }	t_world;
@@ -149,9 +150,9 @@ typedef	struct s_ambient {
 typedef	struct s_scene {
 	t_ambient	amb;
 	int		nb_cam;
-	t_camera	*cam;
+	t_camera	cam;
 	t_generic	g;
-	int			nb_light;
+	int		nb_light;
 	t_world		world;
 } t_scene;
 

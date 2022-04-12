@@ -14,6 +14,8 @@
 # define ALGFT_H
 
 # define EPSILON 0.001
+# define W_WIN 200
+# define H_WIN 100
 
 # include "mlx.h"
 # include "struct.h"
