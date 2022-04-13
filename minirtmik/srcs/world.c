@@ -29,7 +29,6 @@
 	w = ft_add_world(w, s1);
 	s2 = ft_sphere(ft_point(0, 0, 0), 1.0);
 	s2.transform = ft_scal_matrix(0.5, 0.5, 0.5);
-	w = ft_add_world(w, s2);
 	return (w);
 }*/
 

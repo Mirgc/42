@@ -89,7 +89,7 @@ void	ft_scale(int	x, int y, t_generic *g, t_color c)
 	my_mlx_pixel_put(&g->img, a, b, value);
 }
 
-void	ft_render(t_camera c, t_world w, t_generic g)
+void	ft_render(t_scene s)
 {
 	int		y;
 	int		x;
@@ -97,15 +97,16 @@ void	ft_render(t_camera c, t_world w, t_generic g)
 	t_color	col;
 
 	y = 0;
-	while (y < c.vsize - 1)
+	while (y < s.cam.vsize - 1)
 	{
 		x = 0;
-		while (x < c.hsize - 1)
+		while (x < s.cam.hsize - 1)
 		{
-			r = ft_ray_for_pixel(c, x, y);
-			col = ft_color_at(w, r, 4);
-			ft_print_color(col);
-			ft_scale(x, y, &g, col);
+			r = ft_ray_for_pixel(s.cam, x, y);
+			col = ft_color_at(s.world, r, 4);
+			ft_print_color(s.amb.color);
+//			col = ft_mult_color(col, s.amb.color);
+			ft_scale(x, y, &s.g, col);
 			x++;
 		}
 		y++;

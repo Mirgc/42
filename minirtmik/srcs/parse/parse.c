@@ -16,7 +16,7 @@
 #include "./parse.h"
 #include <fcntl.h>
 
-int	ft_parsing_type(t_scene *scene, char *str)
+int	ft_parsing_type(t_scene *scene, t_camera *c, t_world *world, char *str)
 {
 	(void) str;
 	int	check;
@@ -25,23 +25,23 @@ int	ft_parsing_type(t_scene *scene, char *str)
 	if (str[0] == 'A' && ft_isspacetab(str[1]))
 		check = ft_parse_ambient_light(scene, str);
 	else if (str[0] == 'C' && ft_isspacetab(str[1]))
-		check = ft_parse_camera(scene, str);
+		check = ft_parse_camera(scene, c, str);
 	else if (str[0] == 'L' && ft_isspacetab(str[1]))
-		check = ft_parse_light(scene, str);
+		check = ft_parse_light(scene, world, str);
 	else if (str[0] == 's' && str[1] == 'p' && ft_isspacetab(str[2]))
 		check = ft_parse_sphere(scene, str);
-//	else if (str[0] == 'p' && str[1] == 'l' && ft_isspacetab(str[2]))
-//		check = ft_parse_plane(world, str);
-//	else if (str[0] == 'c' && str[1] == 'y' && ft_isspacetab(str[2]))
-//		check = ft_parse_cylinder(world, str);
+	else if (str[0] == 'p' && str[1] == 'l' && ft_isspacetab(str[2]))
+		check = ft_parse_plane(scene, str);
+	else if (str[0] == 'c' && str[1] == 'y' && ft_isspacetab(str[2]))
+		check = ft_parse_cylinder(scene, str);
 	else if (str[0] == '\n')
 		return (0);
-//	else
-//		return(ft_error("character invalid."));
+	else
+		return(ft_error("character invalid."));
 	return (check);
 }
 
-int	ft_parse(t_scene *scene, char *file)
+int	ft_parse(t_scene *scene, t_camera *c, t_world *world, char *file)
 {
 	int		fd;
 	char	*line;
@@ -56,7 +56,7 @@ int	ft_parse(t_scene *scene, char *file)
 		check = get_next_line(fd, &line);
 		if (!check)
 			break ;
-		check = ft_parsing_type(scene, line);
+		check = ft_parsing_type(scene, c, world, line);
 		free(line);
 	}
 	if (!check)
@@ -65,7 +65,7 @@ int	ft_parse(t_scene *scene, char *file)
 	return (0);
 }
 
-int	ft_check_file(t_scene *scene, char *file)
+int	ft_check_file(t_scene *scene, t_camera *cam, t_world *world, char *file)
 {
 	int	fd;
 	int	len;
@@ -83,5 +83,5 @@ int	ft_check_file(t_scene *scene, char *file)
 		e_len--;
 		len--;
 	}*/
-	return (ft_parse(scene, file));
+	return (ft_parse(scene, cam, world, file));
 }

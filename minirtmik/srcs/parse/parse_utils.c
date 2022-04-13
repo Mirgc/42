@@ -27,14 +27,20 @@ t_color	ft_get_color(char **str)
 	r = ft_mini_atoi(str);
 	if (r < 0 || r > 255)
 		r = -1;
+	else
+		r /= 255;
 	ft_comma(str);
 	g = ft_mini_atoi(str);
 	if (g < 0 || g > 255)
 		r = -1;
+	else	
+		g /= 255;
 	ft_comma(str);
 	b = ft_mini_atoi(str);	
 	if (b < 0 || b > 255)
 		r = -1;
+	else
+		b /= 255;
 	return (ft_color(r, g, b));
 }
 

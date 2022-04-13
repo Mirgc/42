@@ -126,7 +126,7 @@ t_comps	ft_prep_comps(t_inter i, t_ray r);
 //CAMERA//
 t_camera	ft_camera(int hsize, int vsize, float fov);
 t_ray		ft_ray_for_pixel(t_camera c, float px, float py);
-void		ft_render(t_camera c, t_world w, t_generic g);
+void		ft_render(t_scene scene);
 
 /*//SHAPE//
 t_shape		ft_shape(void);

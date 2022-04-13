@@ -18,28 +18,30 @@ int     ft_parse_ambient_light(t_scene *scene, char *str)
         scene->amb.color = ft_get_color(&str);
         if (scene->amb.color.r == -1)
                 return (ft_error("Ambient lighting color out of range."));
+	scene->amb.color = ft_escal_color(scene->amb.color, scene->amb.r);
+	ft_print_color(scene->amb.color);
         return (0);
 }
 
-int     ft_parse_camera(t_scene *scene, char *str)
+int     ft_parse_camera(t_scene *scene, t_camera *c, char *str)
 {
 	str++;
 	if (scene->nb_cam > 0)
                 return (ft_error("Camera is already declared."));
 	scene->nb_cam++;
         ft_skipspace(&str);
-        scene->cam.point = ft_parse_coor(&str);
+        c->point = ft_parse_coor(&str);
         ft_skipspace(&str);
 //        scene->cam.orient = ft_norm_vec(ft_parse_coor(&str));
-        scene->cam.orient = ft_parse_coor(&str);
-        if (scene->cam.orient.x < -1.0 || scene->cam.orient.x > 1.0 || scene->cam.orient.y < -1.0 ||
-		scene->cam.orient.y > 1.0 || scene->cam.orient.z < -1.0 || scene->cam.orient.z > 1.0)
+        c->orient = ft_parse_coor(&str);
+        if (c->orient.x < -1.0 || c->orient.x > 1.0 || c->orient.y < -1.0 ||
+		c->orient.y > 1.0 || c->orient.z < -1.0 || c->orient.z > 1.0)
                 return (ft_error("Camera orientation out of range."));
         ft_skipspace(&str);
-        scene->cam.fov = ft_atof(&str);
-        if (scene->cam.fov < 0.0 || scene->cam.fov > 180.0)
+        c->fov = ft_atof(&str);
+        if (c->fov < 0.0 || c->fov > 180.0)
                 return (ft_error("Camera fov out of range."));
-	scene->cam.trans = ft_view_trans(scene->cam.point, scene->cam.orient, scene->cam.orient);
+	c->trans = ft_view_trans(c->point, c->orient, c->orient);
 	return (0);	
 }
 
@@ -73,19 +75,24 @@ int     ft_parse_camera(t_scene *scene, char *str)
         return (0);
 }*/
 
-int     ft_parse_light(t_scene *scene, char *str)
+int     ft_parse_light(t_scene *scene, t_world *world, char *str)
 {
+	t_tuple	pos;
+	t_color	col;
+
         str++;
         ft_skipspace(&str);
-        scene->world.light.pos = ft_parse_coor(&str);
+        pos = ft_parse_coor(&str);
         ft_skipspace(&str);
-        scene->world.light.bright = ft_atof(&str);
-        if (scene->world.light.bright < 0.0 || scene->world.light.bright > 1.0)
+        world->light.bright = ft_atof(&str);
+        if (world->light.bright < 0.0 || world->light.bright > 1.0)
                 return (ft_error("Light brightness out of range."));
         ft_skipspace(&str);
-        scene->world.light.i = ft_get_color(&str);
-        if (scene->world.light.i.r == -1)
+        col = ft_get_color(&str);
+        if (col.r == -1)
                 return (ft_error("Light color out of range."));
+	col = ft_escal_color(col, world->light.bright);
+	world->light = ft_point_light(pos, col);
 	return (0);	
 }
 
