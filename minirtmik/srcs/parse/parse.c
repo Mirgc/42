@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:12:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/04/06 20:06:13 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:37:27 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	ft_parsing_type(t_scene *scene, t_camera *c, t_world *world, char *str)
 		check = ft_parse_cylinder(scene, str);
 	else if (str[0] == '\n')
 		return (0);
-	else
-		return(ft_error("character invalid."));
+//	else
+//		return(ft_error("character invalid."));
 	return (check);
 }
 

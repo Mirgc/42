@@ -19,9 +19,9 @@ int	ft_comma(char **str)
 
 t_color	ft_get_color(char **str)
 {
-	int	r;
-	int	g;
-	int	b;
+	float	r;
+	float	g;
+	float	b;
 
 	ft_skipspace(str);
 	r = ft_mini_atoi(str);

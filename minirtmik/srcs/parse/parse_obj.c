@@ -74,10 +74,10 @@ int	ft_parse_cylinder(t_scene *scene, char *str)
         ft_skipspace(&str);
 	hi = ft_atof(&str);
 	cy.c = 'c';
-	pl.cy = ft_cylinder();
+	cy.cy = ft_cylinder();
         ft_skipspace(&str);
 	cy.cy.mat.color = ft_get_color(&str);
-        if (pl.cy.mat.color.r == -1)
+        if (cy.cy.mat.color.r == -1)
                 return (ft_error("Cylinder color out of range."));
 	scene->world = ft_add_world(scene->world, cy);
         return (0);
