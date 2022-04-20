@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/31 20:31:01 by migarcia          #+#    #+#             */
-/*   Updated: 2022/01/31 21:08:42 by migarcia         ###   ########.fr       */
+/*   Created: 2021/10/09 18:45:33 by migarcia          #+#    #+#             */
+/*   Updated: 2021/10/09 18:45:36 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-float		m_multi_array(float *a, float *b)
+#include "libft.h"
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	float tmp;
+	t_list	*aux;
 
-	while(*a && *b)
+	while (*lst)
 	{
-		tmp += *a * *b;
-		a++;
-		b++;
+		aux = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = aux;
 	}
-	return (tmp);
-}
-
-float	**m_multi(float **a, float **b)
-{
-	int	w;
-	int	h;
-	int i;
-	float **tmp;
-
-	w = -1;
-	h = -1;
-	while (a[++w])
-	{
-		i = 0;
-		while (b[++h])
-			tmp[w][h] = m_multi_array(a[w], b[h]);
-	}
-	return (tmp);
 }
