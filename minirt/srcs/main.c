@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:15:04 by migarcia          #+#    #+#             */
-/*   Updated: 2022/03/16 20:07:10 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:48:13 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,19 @@ int	map_draw(t_map *map)
 	t_ray ray;
 	t_arr_inter	arr;
 
-	world = default_world(6);
+	world = default_world(2);
 	world.sh[0].pl = r_create_plane();
 //	world.sh[0].pl.transform = m_scaling(10, 0.01, 10);
     world.sh[0].material.color = set_color(1, 0.9, 0.9);
     world.sh[0].material.specular = 0;
-	world.sh[0].material.reflective = 0.5;
+//	world.sh[0].material.reflective = 0.5;
 	world.sh[0].id = 2;
 
+	world.sh[1].cu = r_create_cube();
+    world.sh[1].material.color = set_color(0.1, 1.0, 0.5);
+    world.sh[1].material.specular = 0;
+	world.sh[1].id = 3;
+/*
 	world.sh[1].pl = r_create_plane();
 	world.sh[1].pl.transform = m_multi(m_multi(m_translation(0, 0, 5), m_rotationy(-M_PI_2 / 2)), m_multi(m_rotationx(M_PI_2), m_scaling(10, 0.01, 10)));
       world.sh[1].material = world.sh[0].material;
@@ -133,7 +138,7 @@ int	map_draw(t_map *map)
 	world.sh[5].material.diffuse = 0.7;
 	world.sh[5].material.specular = 0.3;
 	world.sh[5].id = 1;
-
+*/
 	map->cam = set_camera(P_WIDTH, P_HEIGHT, M_PI/3);
     map->cam.transform = view_transform(v_create(0, 1.5, -5, 1), v_create(0, 1, 0, 1), v_create(0, 1, 0, 0));
 	map->mlx.img = mlx_new_image(map->mlx.init, P_WIDTH, P_HEIGHT);

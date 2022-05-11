@@ -66,10 +66,23 @@ typedef struct s_plane
 	t_matrix	transform;
 } t_plane;
 
+typedef struct s_cube {
+    t_tup     org;
+	char		id;
+    t_matrix    transform;
+}   t_cube;
+
+typedef struct  s_minmax{
+    float   *x;
+    float   *y;
+    float   *z;
+}   t_minmax;
+
 typedef struct s_shape
 {
 	t_sphere        sp;
 	t_plane		pl;
+	t_cube		cu;
 	char            shape;
 	int		id;
 	t_material	material;

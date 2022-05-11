@@ -33,6 +33,17 @@ t_plane		r_create_plane()
 	s.transform = m_identity();
 	return (s);
 }
+
+t_cube		r_create_cube()
+{
+	t_cube	cu;
+	
+	cu.org = v_create(0,0,0,1);
+	cu.id = 'u';
+	cu.transform = m_identity();
+	return (cu);
+}
+
 t_ray	r_transform(t_ray a, t_matrix m)
 {
 	t_ray	tmp;
@@ -80,6 +91,64 @@ float	r_intersect(t_world *wo, t_shape s, t_ray ray)
 	i = sqrtf(i);
 	t1 = r_intersection((-b - i) / (2 * a), s);
 	t2 = r_intersection((-b + i) / (2 * a), s);
+	arr = r_intersections(*wo, t1, t2);
+	wo->arr = arr;
+	if (!arr.a)
+		free(arr.a);
+	return (0);
+}
+
+static float    *check_axis(float o, float d)
+{
+    float   tmin_n;
+    float   tmax_n;
+    float   *t;
+
+    t = malloc(2 * sizeof(float));
+    tmin_n = -1.0 - o;
+    tmax_n = 1.0 - o;
+    if (fabs(d) >= EPSILON)
+    {
+        t[0] = tmin_n / d;
+        t[1] = tmax_n / d;
+    }
+    else
+    {
+        t[0] = tmin_n * (-1 * (log(0)));
+        t[1] = tmax_n * (-1 * log(0));
+    }
+    if (t[0] > t[1])
+    {
+        tmin_n = t[0];
+        t[0] = t[1];
+        t[1] = tmin_n;
+    }
+    return (t);
+}
+
+float	r_intersect_cube(t_world *wo, t_shape s, t_ray ray)
+{
+	t_minmax    t;
+    float       tmin;
+    float       tmax;
+	t_inter	t1;
+	t_inter	t2;
+	t_arr_inter	arr;
+
+	arr.count = 0;
+    arr.a = NULL;
+    t.x = check_axis(ray.ori.x, ray.dir.x);
+    t.y = check_axis(ray.ori.y, ray.dir.y);
+    t.z = check_axis(ray.ori.z, ray.dir.z);
+    tmin = fmax(t.x[0], fmax(t.y[0], t.z[0]));
+    tmax = fmin(t.x[1], fmin(t.y[1], t.z[1]));
+    free(t.x);
+    free(t.z);
+    free(t.y);
+    if (tmin > tmax)
+        return (-1);	
+	t1 = r_intersection(tmin, s);
+	t2 = r_intersection(tmax, s);
 	arr = r_intersections(*wo, t1, t2);
 	wo->arr = arr;
 	if (!arr.a)
@@ -204,6 +273,8 @@ t_arr_inter     r_intersect_world(t_world w, t_ray r)
 	            r_intersect(&w, w.sh[i], r);
 			if (w.sh[i].id == 2)
 	            r_intersect_plane(&w, w.sh[i], r);
+			if (w.sh[i].id == 3)
+	            r_intersect_cube(&w, w.sh[i], r);
 			i++;
         }
 	//printf("----%f, %f,\n", w.arr.a[0].t, w.arr.a[1].t);
@@ -228,6 +299,17 @@ t_tup	r_normal_at(t_shape s, t_tup p)
 	{
 		w_normal = m_multi_tup(m_trans(m_invertible(s.pl.transform)), v_create(0, 1, 0, 1));
 //		return (v_create(0, 1, 0, 1));
+	}
+	if (s.id == 3)
+	{
+		float maxc;
+
+		maxc = fmax(fabs(p.x), fmax(fabs(p.y), fabs(p.z)));
+	    if (maxc == fabs(p.x))
+    	    return (v_create(p.x, 0, 0, 0));
+	    if (maxc == fabs(p.y))
+    	    return (v_create(0, p.y, 0, 0));
+	    return (v_create(0, 0, p.z, 0));
 	}
 	w_normal.w = 0;
 	return(v_normalize(w_normal));
