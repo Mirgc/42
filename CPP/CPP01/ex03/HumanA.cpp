@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.cpp                                         :+:      :+:    :+:   */
+/*   HumanA.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/05/13 11:41:10 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:56:29 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-#include <cstdio>
+#include "HumanA.hpp"
 
-Zombie::Zombie( std::string name ):_name(name){
+HumanA::HumanA( std::string name, Weapon &weapon ):_name(name), _weapon(weapon){
 	return ;
 }
 
-Zombie::Zombie(void){
+HumanA::~HumanA(void){
 	return ;
 }
 
-Zombie::~Zombie(void){
-	std::cout << Zombie::_name << " DiiiiiiieeeddD..." << std::endl;
-	return ;
+void HumanA::attack( void ){
+	std::cout << _name << " attacks with " << _weapon.getType() << std::endl;
 }
 
-void Zombie::announce(void){
-	std::cout << Zombie::_name << " BraiiiiiiinnnzzzZ..." << std::endl;
-}
-
-void Zombie::set_name( std::string name){
-	this->_name = name;
-}

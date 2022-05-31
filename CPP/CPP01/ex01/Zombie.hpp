@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/05/11 18:57:08 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:40:49 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Zombie{
 		Zombie();
 		~Zombie();		
 		void announce(void);
+		void set_name( std::string name );
 };
 
 Zombie* zombieHorde( int N, std::string name );

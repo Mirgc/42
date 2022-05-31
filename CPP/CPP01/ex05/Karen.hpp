@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   Karen.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
+/*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/11 17:24:52 by migarcia          #+#    #+#             */
-/*   Updated: 2022/05/16 07:56:09 by migarcia         ###   ########.fr       */
+/*   Created: 2022/05/19 14:07:26 by migarcia          #+#    #+#             */
+/*   Updated: 2022/05/19 16:30:57 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-
-Zombie* zombieHorde( int N, std::string name ){
-	Zombie *zom = new Zombie[N];
-	
-	for (int i = 0; i < N; i++)
-		zom[i].set_name(name + std::to_string(i + 1));
-	return (zom);
-}
+class Karen{
+	private:
+		void debug( void );
+		void info( void );
+		void warning( void );
+		void error( void );
+	public:
+		Karen();
+		~Karen();	
+		void complain( std::string level );
+		typedef void (Karen::*Cb)(void);
+};
