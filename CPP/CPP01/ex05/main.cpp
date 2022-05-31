@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Karen.hpp                                          :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 14:07:26 by migarcia          #+#    #+#             */
-/*   Updated: 2022/05/31 19:10:54 by migarcia         ###   ########.fr       */
+/*   Created: 2022/05/31 18:54:20 by migarcia          #+#    #+#             */
+/*   Updated: 2022/05/31 19:10:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "Karen.hpp"
 
-class Karen{
-	private:
-		void debug( void );
-		void info( void );
-		void warning( void );
-		void error( void );
-	public:
-		Karen();
-		~Karen();	
-		void complain( std::string level );
-};
+int main ()
+{
+	Karen	karen;
+
+	karen.complain("DEBUG");
+	karen.complain("INFO");
+	karen.complain("WARNING");
+	karen.complain("ERROR");
+	karen.complain("kk");
+	return (0);
+}

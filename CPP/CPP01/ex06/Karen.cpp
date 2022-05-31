@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:12:36 by migarcia          #+#    #+#             */
-/*   Updated: 2022/05/31 19:10:51 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:33:14 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,31 @@ Karen::~Karen()
 
 void Karen::complain(std::string level)
 {
-	const std::string level_ref[4] = { "DEBUG", "INFO", "WARNING", "ERROR" };
-	void (Karen::*function[4])(void) = { &Karen::debug, 
-		&Karen::info, &Karen::warning, &Karen::error };
+	int i = 0;
+	std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	for (int i = 0; i < 4; i++)
+	while (i < 4)
 	{
-		if (!level.compare(level_ref[i]))
-			(this->*function[i])();
+		if (!levels[i].compare(level))
+			break;
+		i++;
 	}
+    switch (i) {
+       	case 0:
+			this->debug();
+			break;
+		case 1:
+			this->info();
+			break;
+		case 2:
+			this->warning();
+			break;
+		case 3:
+			this->error();
+			break;
+		default:
+			std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+    }
 }
 
 void Karen::debug()
