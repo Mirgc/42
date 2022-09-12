@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
+/*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 07:22:22 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 14:17:26 by migarcia         ###   ########.fr       */
+/*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
+/*   Updated: 2022/09/12 15:10:02 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_H
-# define SCAVTRAP_H
-# include "ClapTrap.hpp"
+#include "Brain.hpp"
 
-class ScavTrap: public ClapTrap{
-	public:
-		ScavTrap();
-		ScavTrap(std::string name);
-		~ScavTrap();
-		void guardGate();
-};
+Brain::Brain(void){
+}
 
-#endif
+Brain::~Brain(void){
+}
+

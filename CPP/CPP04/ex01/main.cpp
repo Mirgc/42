@@ -6,29 +6,41 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/07/08 08:57:21 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:36:27 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
 int main()
 {
-	ScavTrap a("Mir");
-	ClapTrap b("Pao");
+	int	i;
+	int	j;
 
-	a.setAttackDamage(5);
-	b.setAttackDamage(6);
-
-	a.attack("pao");
-	b.takeDamage(a.getAttackDamage());
-	b.beRepaired(2);
-	b.attack("mir");
-	a.takeDamage(b.getAttackDamage());
-	a.guardGate();
-
-	std::cout << "Mir has " << a.getEnergyPoints() << " energy points and " << a.getHitPoints() << " hit points." << std::endl; 
-	std::cout << "Pao has " << b.getEnergyPoints() << " energy points and " << b.getHitPoints() << " hit points." << std::endl; 
+	std::cout << "Insert how many animals do yo want: ";
+	std::cin >> i;
+	if (i <= 0)
+		std::cout << "ERROR. Try Again!" << std::endl;
+	else {
+		const Animal* meta[i];
+		j = -1;
+		while (i > ++j) {
+			if (i % 2)
+				meta[j] = new Dog();
+			else
+				meta[j] = new Cat();
+		}
+		j = -1;
+		while (i > ++j) 
+			std::cout << "Animal: " << meta[i]->getType() << std::endl;
+		j = -1;
+		while (i > ++j) 
+			delete meta[i];
+		
+	}
 	return 0;
 }
