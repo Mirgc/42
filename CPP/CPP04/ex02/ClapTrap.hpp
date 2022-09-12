@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 15:26:21 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/07/08 08:56:06 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define CLAPTRAP_H
 # include <string>
 # include <iostream>
-
-/* https://es.wikibooks.org/wiki/Programaci%C3%B3n_en_C%2B%2B/Herencia */
 
 class ClapTrap{
 	protected:

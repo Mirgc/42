@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 15:26:21 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/12 10:28:42 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLAPTRAP_H
-# define CLAPTRAP_H
+#ifndef ANIMAL_H
+# define ANIMAL_H
 # include <string>
 # include <iostream>
 
-/* https://es.wikibooks.org/wiki/Programaci%C3%B3n_en_C%2B%2B/Herencia */
-
-class ClapTrap{
+class Animal{
 	protected:
-		std::string _name;
-		unsigned int _hitpoints;
-		unsigned int _energypoints;
-		unsigned int _attackdamage;
+		std::string _type;
 	
 	public:
-		ClapTrap();
-		ClapTrap(std::string name);
-		~ClapTrap();
-		void		attack(std::string const &target);
-		void		takeDamage(unsigned int amount);
-		void		beRepaired(unsigned int amount);
-		unsigned int	getHitPoints(void);
-		void    	setHitPoints(int hp);
-		unsigned int	getEnergyPoints(void);
-		void		setEnergyPoints(int ep);
-		unsigned int	getAttackDamage(void);
-		void		setAttackDamage(int ad);
+		Animal();
+		Animal(std::string type);
+		virtual ~Animal();
+		std::string	getType(void) const;
+		virtual void	makeSound(void) const;
 };
 
 #endif

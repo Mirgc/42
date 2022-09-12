@@ -1,11 +1,10 @@
 NAME	= clap
 CC		= clang++
-CFLAGS	= -Wall -Wextra -Werror -Wshadow
+CFLAGS	= -Wall -Wextra -Werror
 
 SRCS	= ClapTrap.cpp \
 		ScavTrap.cpp \
 		FragTrap.cpp \
-		DiamondTrap.cpp \
 		main.cpp
 OBJS	= $(SRCS:cpp=o)
 
