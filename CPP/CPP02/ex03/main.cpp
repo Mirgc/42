@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/06/08 15:04:22 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:15:11 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(void)
 {
 	Point	a(4, 5);
 	Point	b(6, 2);
-	Point	c(2, 2);
+	Point	c(-1.9, -2);
 
 	std::cout << "Point a" << a << std::endl;
 	std::cout << "Point b" << b << std::endl;
@@ -42,5 +42,7 @@ int main(void)
 	check_bsp(bsp(a, b, c, Point(5.9, 2.1)));
 	std::cout << "Test 6:" << std::endl << "Point " << Point(1.9, 2.2) << std::endl;
 	check_bsp(bsp(a, b, c, Point(1.9, 2.2)));
+	std::cout << "Test 7:" << std::endl << "Point " << Point(-1.9, -2.2) << std::endl;
+	check_bsp(bsp(a, b, c, Point(-1.9, -2.2)));
 	return (0);
 }

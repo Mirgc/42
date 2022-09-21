@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/06/07 08:58:50 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:42:45 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int main( void ) {
 	std::cout << b << std::endl;
 
 	std::cout << Fixed::max( a, b ) << std::endl;
+	
+	std::cout << Fixed( 10 ) / Fixed (5) << std::endl;
 
 	return 0;
 }

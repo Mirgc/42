@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 15:08:16 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/21 20:00:06 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ class Brain{
 	
 	public:
 		Brain();
-		virtual ~Brain();
+		Brain(const Brain &copy);
+		~Brain();
+		Brain &operator=(const Brain &obj);
 };
 
 #endif

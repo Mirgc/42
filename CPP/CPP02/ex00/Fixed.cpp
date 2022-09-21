@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/06/03 09:37:23 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:53:06 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ Fixed &Fixed::operator=(const Fixed &fixOb){
 int Fixed::getRawBits(void) const
 {
 	std::cout << "getRawBits member function called" << std::endl;
-	return _fix;
+	return this->_fix;
 }
 
 void Fixed::setRawBits( int const fix ){

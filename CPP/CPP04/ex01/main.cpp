@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 15:36:27 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/21 20:00:08 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,22 @@ int main()
 		std::cout << "ERROR. Try Again!" << std::endl;
 	else {
 		const Animal* meta[i];
-		j = -1;
-		while (i > ++j) {
-			if (i % 2)
-				meta[j] = new Dog();
+		std::cout << i << std::endl;
+		j = 0;
+		while (j < i) {
+			if (j % 2){
+				meta[j++] = new Dog();
+				meta[j]->_brain = "Dogsbrain";
+			}
 			else
-				meta[j] = new Cat();
+				meta[j++] = new Cat();
 		}
 		j = -1;
-		while (i > ++j) 
-			std::cout << "Animal: " << meta[i]->getType() << std::endl;
+		while (++j < i) 
+			std::cout << "Animal: " << meta[j]->getType() << j << std::endl;
 		j = -1;
-		while (i > ++j) 
-			delete meta[i];
-		
+		while (++j < i) 
+			delete meta[j];
 	}
 	return 0;
 }

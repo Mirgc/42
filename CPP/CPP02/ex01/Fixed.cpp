@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/06/09 07:36:07 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:26:56 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ Fixed::Fixed(const int integer):_fix(integer << _frac){
 	return ;
 }
 
-Fixed::Fixed(const float fraction):_fix((int)roundf(fraction * (1 << _frac))){
-	
+//Fixed::Fixed(const float fraction):_fix((int)roundf(fraction * (1 << _frac))){
+Fixed::Fixed(const float fraction):_fix(roundf(fraction * (1 << _frac))){
 	std::cout << "Float constructor called" << std::endl;
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:42:41 by migarcia          #+#    #+#             */
-/*   Updated: 2022/06/08 14:59:11 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:12:10 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ bool bsp(Point const a, Point const b, Point const c, Point const point)
 	float	areaBCP = orient(b, c, point);
 	float	areaCAP = orient(c, a, point);
 
+	std::cout << "Areas: " << areaABP << " " << areaBCP << " " << areaCAP << std::endl;
 	// Si las tres orientaciones son positivas esta dentro
 	bool PosArea = areaABP >= 0 && areaBCP >= 0 && areaCAP >= 0;
 	// Si las tres orientaciones son negativas esta dentro
