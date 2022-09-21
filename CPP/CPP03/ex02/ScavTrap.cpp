@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 07:21:42 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 15:20:32 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/19 14:48:32 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,20 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name){
 	_attackdamage = 20;
 }
 
+ScavTrap::ScavTrap(const ScavTrap &copy){
+	std::cout << "Copy constructor called" << std::endl,
+	*this = copy; //llamamos al operador que hemos declarado.
+	return ;
+}
+
 ScavTrap::~ScavTrap() {
 	std::cout << "ScavTrap destructor called" << std::endl;
+}
+
+ScavTrap &ScavTrap::operator=(const ScavTrap &obj){
+	std::cout << "Assignation operator called" << std::endl;
+	ClapTrap::operator=(obj);
+	return *this;
 }
 
 void ScavTrap::guardGate() {
