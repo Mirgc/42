@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:06:06 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 14:42:04 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:05:41 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ class DiamondTrap: public FragTrap, public ScavTrap{
 	public:
 		DiamondTrap();
 		DiamondTrap(std::string name);
+		DiamondTrap(const DiamondTrap &copy);
 		~DiamondTrap();
+		DiamondTrap &operator=(const DiamondTrap &obj);
 		void	attack(std::string const &target);
 		void	whoAmI();
 };

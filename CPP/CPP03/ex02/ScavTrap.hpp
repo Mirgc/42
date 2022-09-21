@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 07:22:22 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/19 14:41:45 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:15:15 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SCAVTRAP_H
 # include "ClapTrap.hpp"
 
-class ScavTrap: public ClapTrap{
+class ScavTrap: virtual public ClapTrap{
 	public:
 		ScavTrap();
 		ScavTrap(std::string name);

@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/07/07 22:38:55 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:56:02 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,27 @@ ClapTrap::ClapTrap(std::string name):_name(name),_hitpoints(10), _energypoints(1
 	return ;
 }
 
+ClapTrap::ClapTrap(const ClapTrap &copy){
+	std::cout << "Copy constructor called" << std::endl,
+	*this = copy; //llamamos al operador que hemos declarado.
+	return ;
+}
+
 ClapTrap::~ClapTrap(void){
 	std::cout << "Destructor called" << std::endl;
 	return ;
 }
+
+ClapTrap &ClapTrap::operator=(const ClapTrap &obj){
+	std::cout << "Assignation operator called" << std::endl;
+	if (this != &obj){ //Comprueba que no se esté intentando igualar un objeto a sí mismo
+		this->_hitpoints = obj.getHitPoints();
+		this->_energypoints = obj.getEnergyPoints();
+		this->_attackdamage = obj.getAttackDamage();
+	}
+	return *this;
+}
+
 
 void ClapTrap::attack(std::string const &target){
 	if (this->_energypoints != 0 && this->_hitpoints != 0) {
@@ -46,7 +63,7 @@ void ClapTrap::beRepaired(unsigned int amount){
 	}	
 }
 
-unsigned int	ClapTrap::getHitPoints(void){
+unsigned int	ClapTrap::getHitPoints(void) const{
 	return this->_hitpoints;
 }
 
@@ -54,7 +71,7 @@ void    ClapTrap::setHitPoints(int hp){
 	this->_hitpoints = hp;
 }
 
-unsigned int	ClapTrap::getEnergyPoints(void){
+unsigned int	ClapTrap::getEnergyPoints(void) const{
 	return this->_energypoints;
 }
 
@@ -62,7 +79,7 @@ void	ClapTrap::setEnergyPoints(int ep){
 	this->_energypoints = ep;
 }
 
-unsigned int	ClapTrap::getAttackDamage(void){
+unsigned int	ClapTrap::getAttackDamage(void) const{
 	return this->_attackdamage;
 }
 

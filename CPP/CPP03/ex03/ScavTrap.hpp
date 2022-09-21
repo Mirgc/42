@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 07:22:22 by migarcia          #+#    #+#             */
-/*   Updated: 2022/08/01 14:25:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:15:15 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ class ScavTrap: virtual public ClapTrap{
 	public:
 		ScavTrap();
 		ScavTrap(std::string name);
+		ScavTrap(const ScavTrap &copy);
 		~ScavTrap();
+		ScavTrap &operator=(const ScavTrap &obj);
 		void guardGate();
 };
 
