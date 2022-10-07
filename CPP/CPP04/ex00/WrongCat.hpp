@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 10:22:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/07 08:16:55 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ class WrongCat: public WrongAnimal{
 	public:
 		WrongCat();
 		WrongCat(std::string type);
+		WrongCat(const WrongCat &copy);
 		virtual ~WrongCat();
+		WrongCat &operator=(const WrongCat &obj);
 		void makeSound(void) const;
 };
 

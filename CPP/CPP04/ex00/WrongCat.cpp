@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 10:53:54 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/07 08:16:15 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,19 @@ WrongCat::WrongCat(std::string type):WrongAnimal(type) {
 //	std::cout << "Wrong cat constructor called" << std::endl;
 }
 
+WrongCat::WrongCat(const WrongCat &copy){
+	*this= copy;
+	return ;
+}
+
 WrongCat::~WrongCat(void){
 //	std::cout << "Wrong cat destructor called" << std::endl;
+}
+
+WrongCat &WrongCat::operator=(const WrongCat &obj){
+	if (this != &obj)
+		this->_type = obj._type;
+	return *this;
 }
 
 void	WrongCat::makeSound(void) const{

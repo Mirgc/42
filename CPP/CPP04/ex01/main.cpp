@@ -6,15 +6,13 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/21 20:00:08 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/07 08:43:04 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
 
 int main()
 {
@@ -30,10 +28,8 @@ int main()
 		std::cout << i << std::endl;
 		j = 0;
 		while (j < i) {
-			if (j % 2){
+			if (j % 2)
 				meta[j++] = new Dog();
-				meta[j]->_brain = "Dogsbrain";
-			}
 			else
 				meta[j++] = new Cat();
 		}

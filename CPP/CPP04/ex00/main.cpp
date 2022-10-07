@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 10:58:44 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/07 08:17:42 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int main()
 	meta->makeSound();
 
 	const WrongAnimal* x = new WrongAnimal();
-        const WrongAnimal* y = new WrongCat();
+	const WrongAnimal* y = new WrongCat();
 
 	std::cout << "Wrong animal say: ";
-        x->makeSound();
+	x->makeSound();
 	std::cout << "Wrong cat say: ";
-        y->makeSound();
+	y->makeSound();
 
 	delete meta;
 	delete j;

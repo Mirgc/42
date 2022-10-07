@@ -6,8 +6,6 @@ SANITIZE = -fsanitize=address -g3
 SRCS	= Animal.cpp \
 		Dog.cpp \
 		Cat.cpp \
-		WrongAnimal.cpp \
-		WrongCat.cpp \
 		Brain.cpp \
 		main.cpp
 
