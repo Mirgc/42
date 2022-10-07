@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/09/12 11:23:58 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:45:48 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ class Animal{
 	public:
 		Animal();
 		Animal(std::string type);
+		Animal(const Animal &copy);
 		virtual ~Animal();
+		Animal &operator=(const Animal &obj);
 		std::string	getType(void) const;
 		virtual void	makeSound(void) const;
 };
