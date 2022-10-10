@@ -1,22 +1,26 @@
-NAME	= clap
+NAME	= animal
 CC		= clang++
 CFLAGS	= -Wall -Wextra -Werror
+SANITIZE = -fsanitize=address -g3
 
-SRCS	= ClapTrap.cpp \
-		ScavTrap.cpp \
-		FragTrap.cpp \
+SRCS	= Animal.cpp \
+		Dog.cpp \
+		Cat.cpp \
+		Brain.cpp \
 		main.cpp
+
 OBJS	= $(SRCS:cpp=o)
 
+$(NAME): 
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
-.PHONY: all
 all: $(NAME)
+
+s: 
+	$(CC) $(CFLAGS) $(SANITIZE) $(SRCS) -o $(NAME)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $<
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)
@@ -25,3 +29,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all
