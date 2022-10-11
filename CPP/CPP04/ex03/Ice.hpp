@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Ice.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/10/10 19:57:13 by migarcia         ###   ########.fr       */
+/*   Created: 2022/10/10 13:06:23 by migarcia          #+#    #+#             */
+/*   Updated: 2022/10/10 19:52:44 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AMateria.hpp"
-#include "Ice.hpp"
+#ifndef ICE_H
+#define ICE_H
+# include <iostream>
+# include "AMateria.hpp"
 
-int main()
+class Ice: public AMateria
 {
-	Ice ice;
+	public:
+		Ice();
+		Ice(const Ice &copy);
+		virtual ~Ice();
+		Ice &operator=(const Ice &obj);
 
-	std::cout << ice.getType() << std::endl;
-	return 0;
-}
+		std::string const & getType() const; //Returns the materia type
+		virtual AMateria* clone() const;
+		//virtual void use(ICharacter& target);
+};
+
+#endif

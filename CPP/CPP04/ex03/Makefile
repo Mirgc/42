@@ -1,11 +1,9 @@
-NAME	= clap
+NAME	= materia
 CC		= clang++
 CFLAGS	= -Wall -Wextra -Werror -Wshadow
 
-SRCS	= ClapTrap.cpp \
-		ScavTrap.cpp \
-		FragTrap.cpp \
-		DiamondTrap.cpp \
+SRCS	= AMateria.cpp \
+		Ice.cpp \
 		main.cpp
 OBJS	= $(SRCS:cpp=o)
 
