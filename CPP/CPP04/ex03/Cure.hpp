@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Ice.hpp                                            :+:      :+:    :+:   */
+/*   Cure.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:06:23 by migarcia          #+#    #+#             */
-/*   Updated: 2022/10/12 08:22:24 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/12 08:30:08 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICE_H
-#define ICE_H
+#ifndef CURE_H
+#define CURE_H
 # include <iostream>
 # include "AMateria.hpp"
 
-class Ice: public AMateria
+class Cure: public AMateria
 {
 	public:
-		Ice();
-		Ice(const Ice &copy);
-		virtual ~Ice();
-		Ice &operator=(const Ice &obj);
+		Cure();
+		Cure(const Cure &copy);
+		virtual ~Cure();
+		Cure &operator=(const Cure &obj);
 
 		std::string const & getType() const; //Returns the materia type
 		virtual AMateria* clone() const;

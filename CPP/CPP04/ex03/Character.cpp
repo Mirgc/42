@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:53:35 by migarcia          #+#    #+#             */
-/*   Updated: 2022/10/11 16:45:33 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/12 08:30:16 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void Character::unequip(int idx){
 }
 
 void Character::use(int idx, ICharacter& target){
-	
+	this->_mat[idx -1].use(target);	
 }
