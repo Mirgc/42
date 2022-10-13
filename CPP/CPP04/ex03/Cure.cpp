@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cure.cpp                                            :+:      :+:    :+:   */
+/*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:16:26 by migarcia          #+#    #+#             */
-/*   Updated: 2022/10/12 08:21:12 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:56:32 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cure.hpp"
 
-Cure::Cure(): AMateria("ice"){
+Cure::Cure(): AMateria("cure"){
 }
 
 Cure::Cure(const Cure &copy){
@@ -34,9 +34,7 @@ std::string const &Cure::getType() const{
 }
 
 AMateria *Cure::clone() const{
-	AMateria *Clone;
-	Clone = new Cure();
-	return Clone;
+	return (new Cure(*this));
 }
 
 void Cure::use(ICharacter& target)

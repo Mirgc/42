@@ -1,9 +1,13 @@
 NAME	= materia
 CC		= clang++
-CFLAGS	= -Wall -Wextra -Werror -Wshadow
+CFLAGS	= -Wall -Wextra -Werror -Wshadow 
+SANITI	= -fsanitize=address -g3
 
 SRCS	= AMateria.cpp \
 		Ice.cpp \
+		Cure.cpp \
+		Character.cpp \
+		MateriaSource.cpp \
 		main.cpp
 OBJS	= $(SRCS:cpp=o)
 
@@ -22,5 +26,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+
 
 re: fclean all
