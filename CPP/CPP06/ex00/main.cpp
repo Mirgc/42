@@ -6,11 +6,11 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/20 12:32:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:08:24 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
+#include "Cast.hpp"
 
 int main()
 {
