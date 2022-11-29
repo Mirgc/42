@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::.     ::::::::   */
-/*   Cast.hpp                                     :+:      :+:    :+:   */
+/*   Cast.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/29 14:26:00 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:23:04 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CAST_H
 # define CAST_H
-# include <string>
+# include <cstring>
 # include <iostream>
 # include <iomanip>
+# include <limits.h>
 
-# define CHAR 1
+# define CHAR 0
+# define INT 1
 # define FLOAT 2
 # define DOUBLE 3
-# define INT 4
-# define INVALID 5
+# define INVALID 4
 
 class Cast{
 	private:
@@ -50,10 +51,10 @@ class Cast{
 		void	printFloat() const;
 		void	printDouble() const;
 		
-		void	castChar(const char *argv);
-		void	castInt(const char *argv);
-		void	castFloat(const char *argv);
-		void	castDouble(const char *argv);
+		void	castChar();
+		void	castInt();
+		void	castFloat();
+		void	castDouble();
 };
 
 std::ostream &operator<<(std::ostream &o, const Cast &bureaucrat);

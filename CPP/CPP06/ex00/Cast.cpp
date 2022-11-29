@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::.     ::::::::   */
-/*   Cast.cpp                                     :+:      :+:    :+:   */
+/*   Cast.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/29 14:26:31 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:24:03 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Cast::Cast(void): _char(0), _int(0), _float(0.0f), _double(0.0), _str(""), _type
 
 Cast::Cast(const char *argv): _char(0), _int(0), _float(0.0f), _double(0.0), _str(""), _type(INVALID), _isWrong(false){
 	this->_str = argv;
-	void (Cast::*function[4])(const char *) = {&Cast::castChar, &Cast::castInt, &Cast::castFloat, &Cast::castDouble};
+	void (Cast::*function[4])() = {&Cast::castChar, &Cast::castInt, &Cast::castFloat, &Cast::castDouble};
 
 	std::string _limits[4] = {"inf", "+inf", "-inf", "nan"};
 	for (int i = 0; i < 4; i++){
@@ -40,7 +40,7 @@ Cast::Cast(const char *argv): _char(0), _int(0), _float(0.0f), _double(0.0), _st
 	if (_type == INVALID)
 		_isWrong = true;
 	else
-		(this->*(function[_type]))(argv);
+		(this->*function[_type])();
 }
 
 Cast::Cast(const Cast &copy){
@@ -146,16 +146,16 @@ void	Cast::printDouble() const{
 		std::cout << this->_str << std::endl;
 }
 
-void	Cast::castChar(const char *argv){
-	this->_char = argv[0];
+void	Cast::castChar(){
+	this->_char = atoi(this->_str.c_str());
 	this->_int = static_cast<int>(this->_char);
 	this->_float = static_cast<float>(this->_char);
 	this->_double = static_cast<double>(this->_char);
 }
 
-void	Cast::castInt(const char *argv){
+void	Cast::castInt(){
 	if (std::stol(this->_str) >= INT_MIN && std::stol(this->_str) <= INT_MAX){
-		this->_int = std::stoi(argv);
+		this->_int = std::stoi(this->_str);
 		this->_char = static_cast<char>(this->_int);
 		this->_float = static_cast<float>(this->_int);
 		this->_double = static_cast<double>(this->_int);
@@ -164,15 +164,15 @@ void	Cast::castInt(const char *argv){
 		this->_isWrong = true;
 }
 
-void	Cast::castFloat(const char *argv){
-	this->_float = std::stof(argv);
+void	Cast::castFloat(){
+	this->_float = std::stof(this->_str);
 	this->_char = static_cast<char>(this->_float);
 	this->_int = static_cast<int>(this->_float);
 	this->_double = static_cast<double>(this->_float);
 }
 
-void	Cast::castDouble(const char *argv){
-	this->_double = std::stod(argv);
+void	Cast::castDouble(){
+	this->_double = std::stod(this->_str);
 	this->_char = static_cast<char>(this->_double);
 	this->_int = static_cast<int>(this->_double);
 	this->_float = static_cast<float>(this->_double);

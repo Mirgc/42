@@ -1,7 +1,7 @@
 NAME	= convert
 CC		= clang++
-#CFLAGS	= -Wall -fsanitize=address -g3  #-Wextra -Werror 
-CFLAGS	= -Wall #-Wextra -Werror 
+CFLAGS	= -Wall -fsanitize=address -g3  #-Wextra -Werror 
+#CFLAGS	= -Wall #-Wextra -Werror 
 
 SRCS	= Cast.cpp \
 		main.cpp
