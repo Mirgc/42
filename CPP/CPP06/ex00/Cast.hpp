@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/28 12:08:04 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:26:00 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,46 @@
 # define CAST_H
 # include <string>
 # include <iostream>
+# include <iomanip>
+
+# define CHAR 1
+# define FLOAT 2
+# define DOUBLE 3
+# define INT 4
+# define INVALID 5
 
 class Cast{
 	private:
+		char _char;
+		int _int; 
+		float _float;
+	   	double _double;
 		std::string _str;
-		int _grade;
+		int _type;
+		bool _isWrong;
 	
 	public:
 		Cast();
-		Cast(std::string name, int grade);
+		Cast(const char *argv);
 		Cast(const Cast &copy);
 		~Cast();
 
 		Cast		&operator=(const Cast &obj);
-		const std::string	getName(void) const;
-		int			getGrade(void) const;
-		void			checkGrade(void);
-		void			incrementGrade(void);
-		void			decrementGrade(void);
 
-		class gradeTooHighException: public std::exception {
-			public:
-				const char * what() const throw();
-		};
-		class gradeTooLowException: public std::exception {
-			public:
-				const char * what()const throw();
-		};
+		int		getType() const;
+		void	setType(int type);
+		void	checkType(const char *val);
+
+		void	print();
+		void	printChar() const;
+		void	printInt() const;
+		void	printFloat() const;
+		void	printDouble() const;
+		
+		void	castChar(const char *argv);
+		void	castInt(const char *argv);
+		void	castFloat(const char *argv);
+		void	castDouble(const char *argv);
 };
 
 std::ostream &operator<<(std::ostream &o, const Cast &bureaucrat);

@@ -1,8 +1,9 @@
-NAME	= bureaucrat
+NAME	= convert
 CC		= clang++
-CFLAGS	= -Wall -Wextra -Werror
+#CFLAGS	= -Wall -fsanitize=address -g3  #-Wextra -Werror 
+CFLAGS	= -Wall #-Wextra -Werror 
 
-SRCS	= Bureaucrat.cpp \
+SRCS	= Cast.cpp \
 		main.cpp
 OBJS	= $(SRCS:cpp=o)
 
