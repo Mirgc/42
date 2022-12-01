@@ -6,26 +6,29 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/12/01 11:05:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:29:21 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cast.hpp"
+#include "iter.hpp"
 
-int main(int argc, char **argv)
-{
-	if (argc !=2){
-		std::cerr << "USAGE: " << argv[0] << " value" << std::endl;
-		return (1);
-	}
-	try{
-		Cast	conv(argv[1]);
-		if (conv.getType() != PSEUDO)
-			conv.print();
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-		std::cout << "ERROR: Can't cast because of the reason above. Check your arguments!" << std::endl;
-	}
-	return (0);
+int main( void ) {
+	// INT
+	int size = 10;
+	int a[size];
+
+	for (int i = 0; i < size; i++)
+		a[i] = i + 1;
+	
+	::iter(a, 10, Print);
+
+	//STRING
+	char str[10];
+
+	for (int i = 0; i < size; i++)
+		str[i] = static_cast<char>(i);
+	
+	::iter(str, 10, Print);
+	
+	return 0;
 }

@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::.     ::::::::   */
-/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
+/*   B.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migarcia <migarcia@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 17:39:24 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/20 18:37:45 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 09:44:10 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHRUBBERYCREATIONFORM_HPP
-# define SHRUBBERYCREATIONFORM_HPP
-# include <fstream>
-# include "Form.hpp"
+#ifndef B_H
+# define B_H
+# include "Base.hpp"
 
-class ShrubberyCreationForm: public Form {
-	private:
-		const std::string _target;
-
+class B: public Base{
 	public:
-		ShrubberyCreationForm();
-		ShrubberyCreationForm(const std::string target);
-		ShrubberyCreationForm(const ShrubberyCreationForm &copy);
-		virtual ~ShrubberyCreationForm();
-		ShrubberyCreationForm	&operator=(const ShrubberyCreationForm &obj);
-		std::string		getTarget() const;
-		void			execute(const Bureaucrat& executor) const;
+		B();
+		virtual ~B();
 };
 
 #endif

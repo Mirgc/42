@@ -6,26 +6,28 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/12/01 11:05:56 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:02:14 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cast.hpp"
+#include <iostream>
+#include "Whatever.hpp"
 
-int main(int argc, char **argv)
-{
-	if (argc !=2){
-		std::cerr << "USAGE: " << argv[0] << " value" << std::endl;
-		return (1);
-	}
-	try{
-		Cast	conv(argv[1]);
-		if (conv.getType() != PSEUDO)
-			conv.print();
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-		std::cout << "ERROR: Can't cast because of the reason above. Check your arguments!" << std::endl;
-	}
-	return (0);
+int main( void ) {
+	int a = 2;
+	int b = 3;
+	
+	::swap( a, b );
+	std::cout << "a = " << a << ", b = " << b << std::endl;
+	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
+	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+
+	std::string c = "chaine1";
+	std::string d = "chaine2";
+	
+	::swap(c, d);
+	std::cout << "c = " << c << ", d = " << d << std::endl;
+	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
+	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+	return 0;
 }

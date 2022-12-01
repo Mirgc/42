@@ -1,12 +1,8 @@
-NAME	= base
+NAME	= templ
 CC		= clang++
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror 
 
-SRCS	= Base.cpp \
-		A.cpp \
-		B.cpp \
-		C.cpp \
-		main.cpp
+SRCS	= main.cpp 
 OBJS	= $(SRCS:cpp=o)
 
 

@@ -1,14 +1,8 @@
-NAME	= bureaucrat
+NAME	= iter
 CC		= clang++
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror 
 
-SRCS	= Bureaucrat.cpp \
-		Form.cpp \
-		ShrubberyCreationForm.cpp \
-		RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp \
-		Intern.cpp \
-		main.cpp
+SRCS	= main.cpp 
 OBJS	= $(SRCS:cpp=o)
 
 

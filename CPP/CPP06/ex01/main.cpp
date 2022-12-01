@@ -6,60 +6,41 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/20 13:42:49 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 09:28:39 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "Data.hpp"
+#include <iostream>
+
+uintptr_t serialize(Data *ptr){
+	return (reinterpret_cast<uintptr_t>(ptr));
+}
+
+Data *deserialize(uintptr_t raw){
+	return (reinterpret_cast<Data *>(raw));
+}
 
 int main()
 {
 	try {
-		std::cout << "## PEPE - FORMULARIO 50 ##" << std::endl;
-		Bureaucrat pepe = Bureaucrat("Pepe", 1);
-		Form fo = Form("Formulario 50", 50, 30);
-	
-		std::cout << pepe << std::endl;
-		std::cout << fo << std::endl;
-		pepe.signForm(fo);
-		std::cout << fo << std::endl;
+		Data dat("abc");
+		Data *seri_dat;
+		uintptr_t intdat;
+
+		std::cout << "Data name: " << dat.getName() << ", in address: " << &dat << "." << std::endl;
+		intdat = serialize(&dat);
+		std::cout << "Casted " << dat.getName() << " to uintptr_t: " << std::hex << intdat << std::endl;
+		seri_dat = deserialize(intdat);
+		std::cout << "Casting " << intdat<< " to Data:" << std::endl;
+		std::cout << "Data name: " << seri_dat->getName() << ", in address: " << &seri_dat << "." << std::endl;
 
 	}
 	catch (std::exception &e) {
 		std::cout << e.what() << std::endl;
+		std::cout << "ERROR: Can't convert because of the reason above." << std::endl;
 	}
 	std::cout << std::endl;
 	
-	try {
-		std::cout << "## PAQUI - FORMULARIO 149 ##" << std::endl;
-		Bureaucrat paqui = Bureaucrat("Paqui", 150);
-		Form fo = Form("Formulario 149", 149, 30);
-	
-		std::cout << paqui << std::endl;
-		std::cout << fo << std::endl;
-		paqui.signForm(fo);
-		paqui.incrementGrade();
-		std::cout << paqui << std::endl;
-		paqui.signForm(fo);
-		std::cout << fo << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl;
-
-	try {
-		std::cout << "## MANOLI - FORMULARIO 0##" << std::endl;
-		Bureaucrat manoli = Bureaucrat("Manoli", 150);
-		std::cout << manoli << std::endl;
-		Form fo = Form("Formulario 0", 0, 3); //This print exception
-	
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl;
-
 	return 0;
 }

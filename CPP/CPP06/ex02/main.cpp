@@ -6,77 +6,78 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/21 11:29:14 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:13:51 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
-#include "Form.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include <iostream>
+#include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
+
+Base *generate(void){
+	int random;
+
+	random = rand() % 3 + 1;
+	if (random == 1)
+		return (new A());
+	if (random == 2)
+		return (new B());
+	return (new C());
+}
+
+void identify(Base *p){
+	if (dynamic_cast<A *>(p) != 0){
+		std::cout << "Type A" << std::endl;
+		return ;
+	}
+	if (dynamic_cast<B *>(p) != 0){
+		std::cout << "Type B" << std::endl;
+		return ;
+	}
+	if (dynamic_cast<C *>(p) != 0){
+		std::cout << "Type C" << std::endl;
+		return ;
+	}
+}
+
+void check(Base &p){
+	try{
+		(void)dynamic_cast<A &>(p);
+		std::cout << "Base is Type A" << std::endl;
+	}
+	catch(const std::exception& e) {
+		std::cout << "Base is not type A." << std::endl;
+	}
+	try{
+		(void)dynamic_cast<B &>(p);
+		std::cout << "Base is Type B" << std::endl;
+	}
+	catch(const std::exception& e) {
+		std::cout << "Base is not type B." << std::endl;
+	}
+	try{
+		(void)dynamic_cast<C &>(p);
+		std::cout << "Base is Type C" << std::endl;
+	}
+	catch(const std::exception& e) {
+		std::cout << "Base is not type C." << std::endl;
+	}
+}
 
 int main()
 {
-	// ShrubberyCreationForm
-	std::cout << "## ShrubberyCreationForm ##" << std::endl;
-	Form		*tree = new ShrubberyCreationForm("Tree");
-	Bureaucrat	corr1("Pepe", 137);
-	Bureaucrat	corr2("Juan", 140);
-	Bureaucrat	corr3("Maria", 148);
-
-	std::cout << corr1 << std::endl;
-	std::cout << corr2 << std::endl;
-	std::cout << corr3 << std::endl;
-	corr3.executeForm(*tree);
-	corr3.signForm(*tree);
-	corr2.signForm(*tree);
-	std::cout << *tree << std::endl;
-	corr1.executeForm(*tree);
-	corr2.executeForm(*tree);
-	corr3.executeForm(*tree);
-	std::cout << std::endl;
-	delete tree;
-
-	// RobotomyRequestForm
-	std::cout << "## RobotomyRequestForm ##" << std::endl;
-	Form		*robot = new RobotomyRequestForm("Robot");
-
-	corr1 = Bureaucrat("Pepe", 35);
-	corr2 = Bureaucrat("Juan", 47);
-	corr3 = Bureaucrat("Maria", 85);
-	std::cout << corr1 << std::endl;
-	std::cout << corr2 << std::endl;
-	std::cout << corr3 << std::endl;
-	corr3.executeForm(*robot);
-	corr3.signForm(*robot);
-	corr2.signForm(*robot);
-	std::cout << *robot << std::endl;
-	corr1.executeForm(*robot);
-	corr2.executeForm(*robot);
-	corr3.executeForm(*robot);
-	std::cout << std::endl;
-	delete robot;
-
-	// PresidentialPardonForm
-	std::cout << "## PresidentialPardonForm ##" << std::endl;
-	Form		*pardon = new PresidentialPardonForm("Thief");
-
-	corr1 = Bureaucrat("Pepe", 5);
-	corr2 = Bureaucrat("Juan", 7);
-	corr3 = Bureaucrat("Maria", 28);
-	std::cout << corr1 << std::endl;
-	std::cout << corr2 << std::endl;
-	std::cout << corr3 << std::endl;
-	corr3.executeForm(*pardon);
-	corr3.signForm(*pardon);
-	corr2.signForm(*pardon);
-	std::cout << *pardon << std::endl;
-	corr1.executeForm(*pardon);
-	corr2.executeForm(*pardon);
-	corr3.executeForm(*pardon);
-	std::cout << std::endl;
-	delete pardon;
+	srand(time(NULL));
+	Base *base;
+	
+	std::cout << "Generating new Base..." << std::endl;
+	base = generate();
+	std::cout << "Identify type via pointer:" << std::endl;
+	identify(base);
+	std::cout << "Identify type via reference:" << std::endl;
+	check(*base);
+	delete base;
 
 	return 0;
 }

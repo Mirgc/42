@@ -1,9 +1,8 @@
-NAME	= bureaucrat
+NAME	= data
 CC		= clang++
 CFLAGS	= -Wall -Wextra -Werror
 
-SRCS	= Bureaucrat.cpp \
-		Form.cpp \
+SRCS	= Data.cpp \
 		main.cpp
 OBJS	= $(SRCS:cpp=o)
 

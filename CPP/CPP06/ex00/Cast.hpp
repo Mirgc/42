@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:40:16 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/29 17:23:04 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:03:18 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define FLOAT 2
 # define DOUBLE 3
 # define INVALID 4
+# define PSEUDO 5
 
 class Cast{
 	private:
@@ -56,7 +57,5 @@ class Cast{
 		void	castFloat();
 		void	castDouble();
 };
-
-std::ostream &operator<<(std::ostream &o, const Cast &bureaucrat);
 
 #endif

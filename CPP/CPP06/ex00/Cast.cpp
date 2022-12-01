@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:44:40 by migarcia          #+#    #+#             */
-/*   Updated: 2022/11/29 17:24:03 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:04:05 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ Cast::Cast(const char *argv): _char(0), _int(0), _float(0.0f), _double(0.0), _st
 			//print double
 			toPrint = _limits[i];
 			std::cout << "double: " << toPrint << std::endl;
+			_type = PSEUDO;
 			return ;
 		}
 	}
@@ -55,13 +56,6 @@ Cast &Cast::operator=(const Cast &obj){
 	return *this;
 }
 
-std::ostream		&operator<<(std::ostream &o, const Cast &bureaucrat)
-{
-	(void)bureaucrat;
-//	o << bureaucrat.getName() << ", grade " << bureaucrat.getGrade();
-	return (o);
-}
-
 int Cast::getType() const{
 	return this->_type;
 }
@@ -75,6 +69,7 @@ void Cast::checkType(const char *val){
 	int _dot = 0;
 	int _f = 0;
 	int _num = 0;
+	int _let = 0;
 
 	while (val[i]){
 		if ((val[i] == '-' || val[i] == '+') && val == 0)
@@ -85,6 +80,8 @@ void Cast::checkType(const char *val){
 			_dot = 1;
 		else if (val[i] == 'f' && (int)std::strlen(val) - 1  == i)
 			_f = 1;
+		else if (std::isalpha(val[i]))
+			_let = 1;
 		i++;
 	}
 	if (i == 1)
@@ -93,7 +90,7 @@ void Cast::checkType(const char *val){
 		this->setType(FLOAT);
 	else if (_num == 1 && _dot == 1 && _f == 0)
 		this->setType(DOUBLE);
-	else if (_num == 1 && _dot == 0 && _f == 0)
+	else if (_num == 1 && _dot == 0 && _f == 0 && _let == 0)
 		this->setType(INT);
 	else
 		this->setType(INVALID);
@@ -108,7 +105,9 @@ void	Cast::print(){
 
 void	Cast::printChar() const{
 	std::cout << "char: ";
-	if (this->_char >= 32 && this->_char <= 126)
+	if (this->_type == INVALID)
+		std::cout << "Non displayable." << std::endl;
+	else if (this->_char >= 32 && this->_char <= 126)
 		std::cout << this->_char << std::endl;
 	else
 		std::cout << "Non displayable." << std::endl;
