@@ -6,7 +6,7 @@
 /*   By: migarcia <migarcia@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:08:37 by migarcia          #+#    #+#             */
-/*   Updated: 2022/10/12 18:37:18 by migarcia         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:31:46 by migarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void mine()
 	std::cout << "##### MINE #####" << std::endl;
 	ICharacter	*mir = new Character("Mir");
         AMateria	*ice = new Ice();
+
+		ICharacter a = mir;
+		a->equip(new Ice());
+        a->equip(ice);
 
         mir->equip(new Ice());
         mir->equip(ice);
