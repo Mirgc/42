@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build:
+      context: requirements/nginx
+      dockerfile: Dockerfile
+      args: 
+        DOMAIN_NAME: $DOMAIN_NAME
+    env_file:
+        - .env
+    ports:
+        - "443:8443"
+    volumes:
+        - ./log:/var/log/nginx/
+    restart: always
+
