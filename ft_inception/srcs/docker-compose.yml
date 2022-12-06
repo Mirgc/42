@@ -1,19 +1,81 @@
 version: "3"
 
 services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build:
+      context: requirements/mariadb/
+      args:
+        DB_NAME: $DB_NAME
+        DB_USER: $DB_USER
+        DB_PASSWORD: $DB_PASSWORD
+        DB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    env_file:
+      - .env
+    volumes:
+      - mariadb:/var/lib/mysql/
+    networks:
+      - default
+    restart:  always
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: requirements/wordpress
+      args:
+        WP_VERSION: $WP_VERSION
+        WP_SHA1: $WP_SHA1
+        DB_NAME: $DB_NAME
+        DB_USER: $DB_USER
+        DB_PASSWORD: $DB_PASSWORD
+        DB_HOST: $DB_HOST
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/nginx/html/
+    networks:
+      - default
+    restart: always
+
   nginx:
     image: nginx
     container_name: nginx
+    depends_on:
+      - wordpress
     build:
       context: requirements/nginx
-      dockerfile: Dockerfile
       args: 
         DOMAIN_NAME: $DOMAIN_NAME
     env_file:
-        - .env
+      - .env
     ports:
-        - "443:8443"
+      - "443:8443"
     volumes:
-        - ./log:/var/log/nginx/
+      - wordpress:/var/nginx/html/
+      - ./log:/var/log/nginx/
+    networks:
+      - default
     restart: always
 
+networks:
+    default:
+        driver: bridge
+
+volumes:
+    mariadb:
+       driver: local
+       driver_opts:
+         type: none
+         device: /home/migarcia/data/mariadb
+         o: bind
+
+    wordpress:
+      driver: local
+      driver_opts:
+        type: none  # ?
+        device: /home/migarcia/data/wordpress
+        o: bind     
