@@ -1,44 +1,51 @@
 version: "3"
 
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/migarcia/data/db
+      o: bind
+
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/migarcia/data/wp
+      o: bind     
+
 services:
   mariadb:
     image: mariadb
     container_name: mariadb
-    build:
-      context: requirements/mariadb/
-      args:
-        DB_NAME: $DB_NAME
-        DB_USER: $DB_USER
-        DB_PASSWORD: $DB_PASSWORD
-        DB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
-    env_file:
-      - .env
+    build: requirements/mariadb/
+    env_file: .env
+    ports:
+      - "3306:3306"
     volumes:
-      - mariadb:/var/lib/mysql/
+      - db:/var/lib/mysql/
     networks:
-      - default
-    restart:  always
+      - inception
+    restart: always
 
   wordpress:
     image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
-    build:
-      context: requirements/wordpress
-      args:
-        WP_VERSION: $WP_VERSION
-        WP_SHA1: $WP_SHA1
-        DB_NAME: $DB_NAME
-        DB_USER: $DB_USER
-        DB_PASSWORD: $DB_PASSWORD
-        DB_HOST: $DB_HOST
-    env_file:
-      - .env
+    build: requirements/wordpress
+    env_file: .env
+    ports:
+      - "9000:9000"
     volumes:
-      - wordpress:/var/nginx/html/
+      - wp:/var/www/html/
     networks:
-      - default
+      - inception
     restart: always
 
   nginx:
@@ -46,36 +53,13 @@ services:
     container_name: nginx
     depends_on:
       - wordpress
-    build:
-      context: requirements/nginx
-      args: 
-        DOMAIN_NAME: $DOMAIN_NAME
-    env_file:
-      - .env
+    build: requirements/nginx
+    env_file: .env
     ports:
       - "443:8443"
     volumes:
-      - wordpress:/var/nginx/html/
+      - wp:/var/www/html/
       - ./log:/var/log/nginx/
     networks:
-      - default
+      - inception
     restart: always
-
-networks:
-    default:
-        driver: bridge
-
-volumes:
-    mariadb:
-       driver: local
-       driver_opts:
-         type: none
-         device: /home/migarcia/data/mariadb
-         o: bind
-
-    wordpress:
-      driver: local
-      driver_opts:
-        type: none  # ?
-        device: /home/migarcia/data/wordpress
-        o: bind     
