@@ -56,10 +56,25 @@ services:
     build: requirements/nginx
     env_file: .env
     ports:
-      - "443:8443"
+      - "443:443"
     volumes:
       - wp:/var/www/html/
       - ./log:/var/log/nginx/
     networks:
       - inception
     restart: always
+
+  ftp-server:
+    image: ftp-server
+    container_name: ftp-server
+    build: requirements/ftp-server
+    env_file: .env
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wp:/var/www/html
+    networks:
+     - inception
+    restart: always
+

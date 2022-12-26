@@ -14,4 +14,4 @@ CMD chmod -x wordpress_startup.sh
 
 EXPOSE 9000
 
-ENTRYPOINT sh ./wordpress_startup.sh
+CMD sh ./wordpress_startup.sh

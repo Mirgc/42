@@ -10,7 +10,7 @@ files :
 		mkdir -p /home/migarcia/data/wp; \
 	fi
 	@if ! grep -q "migarcia.42.fr" /etc/hosts; then \
-		echo "127/0/0/1 migarcia.42.fr" >> /etc/hosts; \
+		echo "127.0.0.1 migarcia.42.fr" >> /etc/hosts; \
 	fi
 
 build : files
@@ -18,6 +18,12 @@ build : files
 
 down :
 	@docker-compose -f srcs/docker-compose.yml down
+
+stop :
+	@docker-compose -f srcs/docker-compose.yml stop
+
+start :
+	@docker-compose -f srcs/docker-compose.yml start
 
 ps :
 	@docker-compose -f srcs/docker-compose.yml ps
