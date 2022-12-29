@@ -19,9 +19,15 @@ volumes:
       device: /home/migarcia/data/wp
       o: bind     
 
+  ssl:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/migarcia/data/ssl
+      o: bind
+
 services:
   mariadb:
-    image: mariadb
     container_name: mariadb
     build: requirements/mariadb/
     env_file: .env
@@ -34,7 +40,6 @@ services:
     restart: always
 
   wordpress:
-    image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
@@ -49,7 +54,6 @@ services:
     restart: always
 
   nginx:
-    image: nginx
     container_name: nginx
     depends_on:
       - wordpress
@@ -59,22 +63,55 @@ services:
       - "443:443"
     volumes:
       - wp:/var/www/html/
-      - ./log:/var/log/nginx/
     networks:
       - inception
     restart: always
 
-  ftp-server:
-    image: ftp-server
-    container_name: ftp-server
-    build: requirements/ftp-server
+  ftp:
+    container_name: ftp
+    build: requirements/ftp
     env_file: .env
     ports:
       - "21:21"
-      - "21100-21110:21100-21110"
+      - "21100:21100"
     volumes:
       - wp:/var/www/html
     networks:
      - inception
     restart: always
 
+  redis:
+    container_name: redis
+    build: requirements/redis
+    ports:
+      - "6379:6379"
+    networks:
+     - inception
+    restart: always
+
+  adminer:
+    container_name: adminer
+    build: requirements/adminer
+    ports:
+      - "8080:8080"
+    networks:
+     - inception
+    restart: always
+
+  apache:
+    container_name: apache
+    build: requirements/apache
+    ports:
+      - "8081:8081"
+    networks:
+      - inception
+    restart: always
+
+  haproxy:
+    container_name: haproxy
+    build: requirements/haproxy
+    ports:
+      - "80:80"
+    networks:
+     - inception
+    restart: always

@@ -1,5 +1,5 @@
 echo "Creating WP DB"
-if [ ! -d /var/lib/mysql/${DB_NAME} ]; then
+if [ ! -f /var/lib/mysql/mariadb.kk ]; then
 	service mysql start
     	until mysqladmin ping; do
 		sleep 2
@@ -12,6 +12,8 @@ if [ ! -d /var/lib/mysql/${DB_NAME} ]; then
 
 	sed -i "s|bind-address|#bind-address|g" /etc/mysql/mariadb.conf.d/50-server.cnf
 	cat /etc/mysql/mariadb.conf.d/50-server.cnf |grep "bind-add"
+
+	touch /var/lib/mysql/mariadb.kk
 else
 	echo "Wordpress database already exits"
 fi

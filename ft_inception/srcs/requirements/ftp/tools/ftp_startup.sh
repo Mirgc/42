@@ -1,6 +1,6 @@
 if [ ! -f "/etc/vsftpd.kk" ]; then
 
-        touch /etc/vsftpd.kk
+	mkdir -p /var/run/vsftpd/empty
 
         adduser $FTP_USER --disabled-password
         echo "$FTP_USER:$FTP_PASS" | /usr/sbin/chpasswd &> /dev/null
@@ -8,7 +8,6 @@ if [ ! -f "/etc/vsftpd.kk" ]; then
 
         echo $FTP_USER | tee -a /etc/vsftpd.userlist &> /dev/null
 
+        touch /etc/vsftpd.kk
 fi
-
-/usr/sbin/vsftpd #/etc/vsftpd.conf
-
+/usr/sbin/vsftpd
