@@ -20,7 +20,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &obj){
 
 void    PmergeMe::run(char **input){
     std::clock_t start, end;
-	double Vtime;
+	double time;
     int i = 1;
     int j;
     int dig;
@@ -44,13 +44,20 @@ void    PmergeMe::run(char **input){
 		_dataDeq.push_back(dig);
 		i++;
 	}
+	std::cout << "Before: ";
     printList(_dataVec);
     start = clock();
     quicksort(_dataVec, 0, _dataVec.size() - 1);
     end = clock();
-    Vtime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+    time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
     std::cout << std::fixed << std::setprecision(3);
-	std::cout << "Time to process a range of "<< _dataVec.size() <<  " elements with std::vector : " << Vtime << " ms\n";
+	std::cout << "After: ";
     printList(_dataVec);
-    printList(_dataDeq);
+	std::cout << "Time to process a range of "<< _dataVec.size() <<  " elements with std::vector : " << time << " ms\n";
+    start = clock();
+    quicksort(_dataDeq, 0, _dataDeq.size() - 1);
+    end = clock();
+    time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+    std::cout << std::fixed << std::setprecision(3);
+	std::cout << "Time to process a range of "<< _dataDeq.size() <<  " elements with std::queue : " << time << " ms\n";
 }
