@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "BitcoinExchange.hpp"
+#include "PmergeMe.hpp"
 
 int main(int argc, char **argv) {
-	if (argc != 2)
+	if (argc < 1)
 	{
-		std::cout << "usage : ./btc 'input.txt'" << std::endl;
+		std::cout << "usage : ./PmergeMe 3 5 9 7 4" << std::endl;
 		return (1);
 	}
-	BitcoinExchange	btc;
-	btc.run (argv[1]);
+	PmergeMe	merge;
+	merge.run(argv);
 	return 0;
 }

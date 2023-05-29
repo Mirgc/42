@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
 
 int main(int argc, char **argv) {
 	if (argc != 2)
 	{
-		std::cout << "usage : ./btc 'input.txt'" << std::endl;
+		std::cout << "usage : ./RPN \"x y *\"" << std::endl;
 		return (1);
 	}
-	BitcoinExchange	btc;
-	btc.run (argv[1]);
+	RPN	rpn;
+	rpn.run (argv[1]);
 	return 0;
 }
