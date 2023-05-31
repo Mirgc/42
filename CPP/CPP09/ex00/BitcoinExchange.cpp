@@ -97,6 +97,7 @@ void    BitcoinExchange::print_info(std::string date, float value){
         bit = it->second;
     else {
         it = _data.lower_bound(date);
+		it--;
         bit = it->second;
     }
     std::cout << std::setprecision(3) << date << " => " << value << " = " << bit * value << std::endl;
