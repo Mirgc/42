@@ -1,50 +1,34 @@
-#include "../includes/fdf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/08 17:51:37 by migarcia          #+#    #+#             */
+/*   Updated: 2021/10/23 10:11:46 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    ft_error(char *str)
+#include "../include/fdf.h"
+#include "../libft/libft.h"
+#include <fcntl.h>
+#include <stdlib.h>
+
+long	isisnum(char *str)
 {
-    ft_putstr_fd(str, 2);
-    exit(0);
-}
+	long	num;
 
-void	mix_color(t_map *map)
-{
-	map->color.r = (rand() % 0x7f);
-	map->color.g = (rand() % 0x7f);
-	map->color.b = (rand() % 0x7f);
-}
-
-long    isisnum(char *str)
-{
-    long num;
-
-    num = ft_atoi(str);
-    if (str[0] == 48)
-        return (1);
-    else if ((str[0] == 43 || str[0] == 45) && str[1] == 48)
-        return (1);
-    else if (str[0] == '\n')
-        return (1);
-    else if (num <= 2148473647 && num >= -2148473648)
-       return (num);
-    return (0);
-}
-
-
-void	nomalize_map(t_map *map)
-{
-	map->coord_x = 0;
-	map->coord_y = 0;
-	map->z_value = 1.00;
-	map->angle_x = cos(M_PI / 3);
-	map->angle_y = map->angle_x * sin(M_PI / 6);
-	if (map->width > map->height)
-        map->zoom = (P_WIDTH / map->width) + MAGNIFY;
-    else
-		map->zoom = (P_HEIGHT / map->height) + MAGNIFY;
-	map->isometric = 1;
-	map->color.r = 0x4F;
-	map->color.g = 0x4F;
-	map->color.b = 0x4F;
+	num = ft_atoi(str);
+	if (str[0] == 48)
+		return (1);
+	else if ((str[0] == 43 || str[0] == 45) && str[1] == 48)
+		return (1);
+	else if (str[0] == '\n')
+		return (1);
+	else if (num <= 2148473647 && num >= -2148473648)
+		return (num);
+	return (0);
 }
 
 void	fill_matrix(t_map *map, int x, int y, char *line)
@@ -52,14 +36,89 @@ void	fill_matrix(t_map *map, int x, int y, char *line)
 	int		i;
 	char	**tab;
 
-	if ((tab = ft_split(line, ' ')))
+	tab = ft_split(line, ' ');
+	if ((tab))
 	{
 		i = 0;
 		while (tab[i] && (x != map->width))
 		{
-			map->matrix[y][x] = ft_atoi(tab[i++]);
+			map->matrix[y][x] = ft_atoi(tab[i]);
+			free(tab[i++]);
 			x++;
 		}
 		free(tab);
 	}
+}
+
+int	ft_wdcount(char *line)
+{
+	int		count;
+	char	**tab;
+
+	count = 0;
+	tab = ft_split(line, ' ');
+	while (tab[count])
+	{
+		free(tab[count]);
+		count++;
+	}
+	free(tab);
+	return (count);
+}
+
+int	line_count(char *argv, t_map *map)
+{
+	int		rows;
+	int		len;
+	int		fd;
+	char	*line;
+
+	fd = open(argv, O_RDONLY);
+	rows = 0;
+	map->width = 0;
+	while (get_next_line(fd, &line) == 1)
+	{
+		if (*line == '\0')
+			break ;
+		len = ft_wdcount(line);
+		if (map->width == 0)
+			map->width = len;
+		if (map->width == len)
+			rows ++;
+		else
+			ft_error("##ERROR##Not a valid file!\n");
+		free(line);
+	}
+	free(line);
+	close(fd);
+	return (rows);
+}
+
+void	map_read(char *str, t_map *map)
+{
+	int		fd;
+	int		x;
+	char	*line;
+	int		y;
+
+	x = 0;
+	y = 0;
+	map->height = line_count(str, map);
+	fd = open(str, O_RDONLY);
+	if (fd < 0)
+		ft_error("##ERROR## Can't open file!\n");
+	map->matrix = (int **)malloc(sizeof(int *) * map->height);
+	while (get_next_line(fd, &line) == 1 && y != map->height)
+	{
+		map->matrix[y] = (int *)malloc(sizeof(int) * map->width);
+		if (!(isisnum(line)))
+		{
+			free(map->matrix);
+			ft_error("##ERROR## Wrong Map!!\n");
+		}
+		fill_matrix(map, x, y++, line);
+		free(line);
+	}
+	free(line);
+	close(fd);
 }

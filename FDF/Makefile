@@ -1,76 +1,33 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: oldurosi <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/01/03 19:29:45 by oldurosi          #+#    #+#              #
-#    Updated: 2020/01/17 12:08:42 by oldurosi         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-# Program Name
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
+INCLUDE = -I mlx
+LIBS = libft/libft.a -framework OpenGL -framework AppKit
+SRC = src
+SRC_FILES = $(SRC)/main.c $(SRC)/draw.c $(SRC)/read.c $(SRC)/aux.c
+OBJ_DIR = obj
+OBJ_FILES = $(patsubst $(SRC)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-# Compilation flags
-FLAGS = -Wall -Wextra -Werror -g
+all : $(NAME)
 
-# DIR
-SRC_DIR = ./src/
-OBJ_DIR = ./obj/
-INC_DIR = ./includes/
-LIBFT_DIR = ./libft/
-MINILIBX_DIR = ./minilibx_x11/
 
-# Source Files & Object Files
-SRC_FILES = main.c read.c draw.c
-OBJ_FILES = $(SRC_FILES:.c=.o)
+$(NAME) : $(OBJ_FILES)
+	@make -C libft
+	@make -C mlx
+	$(CC) -o $(NAME) $(OBJ_FILES) $(LIBS) mlx/libmlx.a
 
-# PATHS
-SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
-LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
-MINILIBX = $(addprefix $(MINILIBX_DIR), libmlx.a)
-
-# Library Linking
-LINK = -L $(LIBFT_DIR) -lft -L $(MINILIBX_DIR) \
-			-lmlx -lm -lpthread -lXext -lX11
-#	 		-lmlx -framework OpenGL -framework Appkit 
-
-# all rule
-all: obj $(LIBFT) $(MINILIBX) $(NAME)
-
-obj:
+$(OBJ_DIR)/%.o: $(SRC)/%.c
 	@mkdir -p $(OBJ_DIR)
-$(OBJ_DIR)%.o:$(SRC_DIR)%.c
-	@gcc $(FLAGS) -I $(MINILIBX_DIR) -I $(LIBFT_DIR) -I $(INC_DIR) -o $@ -c $<
-$(LIBFT):
-	@make -C $(LIBFT_DIR)
-$(MINILIBX):
-	@make -C $(MINILIBX_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
-# compiling 
-$(NAME): $(OBJ)
-	@echo "Compiling... Wait a sec."
-	@gcc $(OBJ) $(LINK) -lm -o $(NAME)
-	@echo "$(NAME) generated!"
+clean :
+	rm -f $(OBJ_FILES)
+	@make -C libft clean
+	@make -C mlx clean
 
-# clean rule
-clean:
-	@rm -Rf $(OBJ_DIR)
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(MINILIBX_DIR) clean
-	@echo "Objects Removed!"
+fclean : clean
+	rm -f $(NAME)
+	@make -C libft clean
+	@make -C mlx clean
 
-# fclean rule
-fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIBFT_DIR) fclean
-	@echo "$(NAME) Removed!"
-
-# re rule
-re: fclean all
-
-# phony
-.PHONY: all clean fclean re
+re : fclean all

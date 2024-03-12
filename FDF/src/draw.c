@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarcia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/08 17:51:56 by migarcia          #+#    #+#             */
+/*   Updated: 2021/10/23 10:03:03 by migarcia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../include/fdf.h"
+#include "../mlx/mlx.h"
+#include <math.h>
 
-static void	draw(t_map *map, int x, int y, double color)
+void	draw(t_map *map, int x, int y, int color)
 {
 	int		point;
 
@@ -11,11 +24,11 @@ static void	draw(t_map *map, int x, int y, double color)
 		map->image.data[point] = map->color.r + color;
 		map->image.data[point + 1] = map->color.g + color;
 		map->image.data[point + 2] = map->color.b + color;
-		map->image.data[point + 3] = 0x4f + color;
+		map->image.data[point + 3] = map->color.t + color;
 	}
 }
 
-static void	draw_pix(t_map *map, int color)
+void	draw_pix(t_map *map, int color)
 {
 	double	x;
 	double	y;
@@ -39,11 +52,11 @@ static void	draw_pix(t_map *map, int color)
 	}
 }
 
-static void	draw_to_xaxis(t_map *map, int x, int y)
+void	draw_to_xaxis(t_map *map, int x, int y)
 {
-	int		dx;
-	int		dy;
-	int		color;
+	int	dx;
+	int	dy;
+	int	color;
 
 	color = map->matrix[(int)y][(int)x];
 	dx = x - map->width / 2;
@@ -61,11 +74,11 @@ static void	draw_to_xaxis(t_map *map, int x, int y)
 	draw_pix(map, color);
 }
 
-static void	draw_to_yaxis(t_map *map, int x, int y)
+void	draw_to_yaxis(t_map *map, int x, int y)
 {
-	int		dx;
-	int		dy;
-	int		color;
+	int	dx;
+	int	dy;
+	int	color;
 
 	color = map->matrix[(int)y][(int)x];
 	dx = x - map->width / 2;
@@ -83,7 +96,7 @@ static void	draw_to_yaxis(t_map *map, int x, int y)
 	draw_pix(map, color);
 }
 
-int			map_draw(t_map *map)
+int	map_draw(t_map *map)
 {
 	int	x;
 	int	y;
